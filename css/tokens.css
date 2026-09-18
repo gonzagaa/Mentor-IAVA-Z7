@@ -306,9 +306,6 @@
   /* halo azul muito suave atrás de uma grade de cards */
   --halo-grade: radial-gradient(ellipse 55% 50% at 50% 50%, rgb(0 128 201 / 11%) 0%, rgb(0 59 102 / 8%) 45%, transparent 75%);
 
-  /* ícone 3D dos cards: brilho que ele ganha no hover */
-  --brilho-icone: drop-shadow(0 0 0.75rem rgb(31 163 255 / 55%));
-
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);
   --barra-acesa: var(--azul-eletrico);

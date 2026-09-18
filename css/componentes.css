@@ -2,7 +2,11 @@
    ou duração aqui (CONTEXTO.md, regra 6).
 
    Estados forçados (.is-hover, .is-active, .is-focus, .is-disabled) existem para a
-   amostra mostrar os estados lado a lado. Usam as mesmas regras do estado real. */
+   amostra mostrar os estados dos BOTÕES lado a lado. Usam as mesmas regras do estado
+   real.
+
+   INTERAÇÃO: hover e cursor pointer só em <a href> e <button> (aqui, .botao).
+   Nada que não seja clicável reage ao mouse — `npm run tokens` fiscaliza. */
 
 /* ═════════════════════════════ TIPOGRAFIA ═════════════════════════════
    Degraus: tamanho + entrelinha + tracking andam juntos. Servem ao corpo (Inter)
@@ -324,7 +328,9 @@
   }
 }
 
-/* ═══════════════════════════════ CARDS ═══════════════════════════════ */
+/* ═══════════════════════════════ CARDS ═══════════════════════════════
+   Card não é clicável: NÃO reage ao mouse (sem hover, sem cursor). Regra do
+   CONTEXTO.md: hover e cursor pointer só em <a href> e <button>. */
 
 .card {
   position: relative;
@@ -335,45 +341,18 @@
   border: var(--borda);
   border-radius: var(--raio-card); /* assinatura Zero7 */
   background: var(--gradiente-card), var(--superficie);
-  transition:
-    border-color var(--dur-media) var(--saida),
-    box-shadow var(--dur-lenta) var(--saida);
-}
-
-/* hover só em dispositivo com hover e com movimento permitido */
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .card:hover {
-    border-color: var(--linha-acesa);
-    box-shadow: var(--glow-sutil);
-  }
-
-  .card--destaque:hover {
-    border-color: transparent;
-    box-shadow: var(--glow-forte);
-  }
-}
-
-.card:focus-within,
-.card.is-hover {
-  border-color: var(--linha-acesa);
-  box-shadow: var(--glow-sutil);
 }
 
 .card > p {
   color: var(--texto-2);
 }
 
-/* destaque: o elemento mais importante de uma seção — borda neon + glow médio */
+/* destaque: o elemento mais importante de uma seção — borda neon + glow médio,
+   EM REPOUSO (estético, não de interação) */
 .card--destaque {
   border-color: transparent;
   background: var(--gradiente-card-destaque);
   box-shadow: var(--glow-medio);
-}
-
-.card--destaque:focus-within,
-.card--destaque.is-hover {
-  border-color: transparent;
-  box-shadow: var(--glow-forte);
 }
 
 /* ═════════════════════════════ BORDA NEON ═════════════════════════════

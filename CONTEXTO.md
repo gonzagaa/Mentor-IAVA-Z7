@@ -62,6 +62,11 @@ verificação (Playwright) em `scripts/`. Nada de `node_modules` em produção.
     `.pids/`) e têm timeout próprio: `vigiar()` / `abrirNavegador()` em
     `scripts/comum.mjs` (padrão 10 min, `--tempo-max=MIN`); `npm run servir` encerra
     sozinho em 120 min (`--minutos=N`). Sobras: `npm run parar` (só pelos PIDs de `.pids/`).
+12. **Hover e cursor pointer só em `<a href>` e `<button>`. Nada que não seja clicável
+    reage ao mouse.** Cards, ícones, textos e blocos não têm `:hover`, `:active` nem
+    `cursor: pointer`. Revelação no scroll e barras acesas da #dor são animação de
+    entrada, não interação — continuam. `npm run tokens` falha se achar `:hover`/`:active`
+    ou `cursor: pointer` fora de `a`, `button` ou `.botao`.
 
 ## Direção visual
 
@@ -197,7 +202,7 @@ servidor sozinhos.
 | `npm run pendentes` | lista os pendentes da página, com seção e descrição |
 | `npm run shots -- <rótulo>` | página inteira em `shots/<rótulo>/<largura>.png` |
 | `npm run medir -- <rótulo>` | tabela de medidas em `medidas/<rótulo>.md` |
-| `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, contraste |
+| `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, hover/cursor fora de clicável, contraste |
 | `npm run pintura` | trace do Chrome: custo de pintura das animações da hero (tudo × parado) |
 | `npm run lcp` | LCP em 390 e 1474, local e em 4G lento simulado, com o elemento de LCP |
 | `npm run parar` | encerra só os processos que os scripts do projeto abriram (PIDs em `.pids/`) |
@@ -240,8 +245,7 @@ esqueleto sem estilo.
   semibold, descrição) + card destaque do chat. Grade: 1 coluna até 640px; 2 colunas
   até 1080px (item 7 e chat ocupam a linha inteira); 3 acima (item 7 + chat em 2
   colunas fecham a última linha). Halo azul suave atrás da grade. Cards revelam em
-  sequência; hover (só com hover e sem reduced-motion): borda acende, ícone brilha e
-  sobe 2px. Nada focável na seção.
+  sequência; não reagem ao mouse (não são clicáveis). Nada focável na seção.
 - **Animações contínuas (3)**: respiro da luz e pulso do selo (hero, zero pintura) e a
   borda neon girando no card do chat. Mais as revelações, uma vez cada.
 - **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).

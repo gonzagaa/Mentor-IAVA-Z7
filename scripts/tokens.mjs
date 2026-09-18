@@ -5,7 +5,9 @@
 // 2. Falha se var(--fonte-display) for usada em qualquer seletor que não seja a
 //    classe utilitária .display (em nenhum CSS, nem em HTML), e se a .display não
 //    declarar text-transform: uppercase. NCS Radhiumz: sempre caixa alta.
-// 3. Mede o contraste WCAG de --texto-2 e --texto-3 sobre --superficie-2 (os valores
+// 3. Falha se houver :hover/:active ou cursor: pointer em elemento não clicável
+//    (só <a href>, <button> e .botao). Lista arquivo, linha e seletor.
+// 4. Mede o contraste WCAG de --texto-2 e --texto-3 sobre --superficie-2 (os valores
 //    lidos do próprio tokens.css) e falha se algum ficar abaixo de 4.5:1.
 
 import fs from 'node:fs'
@@ -110,6 +112,50 @@ for (const nome of fs.readdirSync(RAIZ).filter(f => f.endsWith('.html')).sort())
 
 const displayMaiuscula = regraDisplay && /text-transform\s*:\s*uppercase/.test(regraDisplay.corpo)
 
+// ── interação só em elemento clicável ──
+// Regra (CONTEXTO.md): hover e cursor pointer só em <a href> e <button>. Falha se um
+// seletor tiver :hover ou :active num elemento que não seja clicável, ou se uma regra
+// com cursor: pointer não mirar um clicável. Clicável = a, button, ou a classe de
+// botão do projeto (.botao e variantes, que só vão em <a href>/<button>).
+const CLICAVEL = /(^|[\s>+~(])(a|button)(\[[^\]]*\])*$|\.botao(--[\w-]+)?$/
+const interacoesProibidas = []
+
+// o "sujeito" da pseudo-classe: o composto (tag/classes/atributos) logo antes dela
+const sujeito = (seletor, pseudo) => {
+  const i = seletor.indexOf(pseudo)
+  const antes = seletor.slice(0, i)
+  return antes.replace(/:[\w-]+(\([^)]*\))?/g, '').trim()
+}
+
+function varrerInteracao(css, arquivo) {
+  const limpo = semComentarios(css)
+  for (const bloco of limpo.matchAll(/\{([^{}]*)\}/g)) {
+    const antes = limpo.slice(0, bloco.index)
+    const corte = Math.max(antes.lastIndexOf('}'), antes.lastIndexOf('{'), antes.lastIndexOf(';'))
+    const seletorGrupo = antes.slice(corte + 1).trim().replace(/\s+/g, ' ')
+    if (seletorGrupo.startsWith('@')) continue
+    const linha = linhaDe(limpo, corte + 1 + (antes.slice(corte + 1).length - antes.slice(corte + 1).trimStart().length))
+    const seletores = seletorGrupo.split(',').map(x => x.trim()).filter(Boolean)
+    for (const sel of seletores) {
+      for (const pseudo of [':hover', ':active']) {
+        if (!sel.includes(pseudo)) continue
+        const alvo = sujeito(sel, pseudo)
+        if (!CLICAVEL.test(alvo)) interacoesProibidas.push({ arquivo, linha, seletor: sel, motivo: `${pseudo} em não clicável` })
+      }
+    }
+    if (/cursor\s*:\s*pointer/.test(bloco[1])) {
+      for (const sel of seletores) {
+        const alvo = sel.replace(/:[\w-]+(\([^)]*\))?/g, '').trim()
+        if (!CLICAVEL.test(alvo)) interacoesProibidas.push({ arquivo, linha, seletor: sel, motivo: 'cursor: pointer em não clicável' })
+      }
+    }
+  }
+}
+
+for (const nome of fs.readdirSync(path.join(RAIZ, 'css')).filter(f => f.endsWith('.css')).sort()) {
+  varrerInteracao(fs.readFileSync(path.join(RAIZ, 'css', nome), 'utf8'), `css/${nome}`)
+}
+
 // ── contraste ──
 const tokensCss = semComentarios(fs.readFileSync(path.join(RAIZ, TOKENS), 'utf8'))
 const valorToken = nome => {
@@ -178,6 +224,14 @@ if (usosDisplay.length) {
   console.error(`\nFALHOU · ${CLASSE_DISPLAY} (${regraDisplay.arquivo}) não declara text-transform: uppercase`)
 } else {
   console.log(`--fonte-display só em ${CLASSE_DISPLAY} (${regraDisplay.arquivo}), com text-transform: uppercase`)
+}
+
+if (interacoesProibidas.length) {
+  falhou = true
+  console.error('\nFALHOU · interação em elemento não clicável (hover/cursor só em <a href> e <button>):')
+  for (const x of interacoesProibidas) console.error(`  ${x.arquivo}:${x.linha}   ${x.seletor}   → ${x.motivo}`)
+} else {
+  console.log(':hover, :active e cursor: pointer só em elementos clicáveis (a, button, .botao)')
 }
 
 console.log(`\ncontraste sobre ${FUNDO} (${valorToken(FUNDO)}):`)

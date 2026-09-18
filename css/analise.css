@@ -140,9 +140,6 @@
   display: flex;
   align-items: center;
   block-size: var(--tamanho-icone);
-  transition:
-    transform var(--dur-media) var(--saida),
-    filter var(--dur-media) var(--saida);
 }
 
 .analise__icone > img {
@@ -181,10 +178,4 @@
   color: var(--texto);
 }
 
-/* hover — só em dispositivo com hover, e nada disso com reduced-motion */
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .analise__card:hover .analise__icone {
-    transform: translateY(calc(var(--deslocamento-hover) * 2)); /* sobe 2px */
-    filter: var(--brilho-icone);
-  }
-}
+/* cards não são clicáveis: nenhum hover (regra do CONTEXTO.md) */
