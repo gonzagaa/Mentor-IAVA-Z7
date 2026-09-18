@@ -132,6 +132,10 @@
     3.5rem
   ); /* 22,9 · 27,1 · 28,3 · 31,4 · 38,1 · 43,1 · 48,2 · 52 · 56 */
   --fs-6: clamp(2.5rem, 1.638rem + 4.333vw, 5.625rem); /* 40 → 90   manchete */
+  /* destaque: entre o H2 e o H1 (média dos dois) — ex.: a pergunta da #dor */
+  --fs-destaque: calc((var(--fs-4) + var(--fs-5)) / 2);
+  /* frase de virada: corpo grande, sempre acima do lead (--fs-2) e do h3 */
+  --fs-virada: max(calc(var(--fs-2) * 1.15), var(--fs-3));
 
   /* corpo (Inter) — entrelinha e tracking por degrau */
   --lh-0: 1.45;
@@ -167,6 +171,8 @@
   --ls-display-4: 0.02em;
   --ls-display-5: 0.01em;
   --ls-display-6: 0.005em;
+  --lh-display-destaque: 1.1;
+  --ls-display-destaque: 0.015em;
 
   --medida-leitura: 65ch;
   --respiro-descendente: 0.12em; /* texto com gradiente não corta a cedilha */
@@ -191,7 +197,9 @@
 
   --largura-max: 75rem; /* 1200 */
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem); /* 16 → 40 */
-  --secao-y: clamp(4rem, 2.6rem + 7vw, 8rem); /* 64 → 128 */
+  /* RITMO: respiro vertical entre seções — todas as seções usam este token */
+  --respiro-secao: clamp(6rem, 4.8906rem + 5.546vw, 10rem); /* 96 → 160 */
+  --coluna-estreita: 40rem; /* 640: seções de leitura em sequência (#dor) */
   --alvo-toque: 2.75rem; /* 44 */
 
   /* ───────────────────────────── FORMA ───────────────────────────── */
@@ -277,6 +285,20 @@
     rgb(0 59 102 / 10%) 56deg,
     transparent 64deg 360deg);
   --respiro-luz: 0.72; /* opacidade mínima do ciclo; o máximo é 1 */
+
+  /* feixe-ponte: luz vertical fina (núcleo de 2px + halo) que liga uma seção à próxima */
+  --gradiente-ponte: linear-gradient(90deg,
+    transparent 0,
+    rgb(0 128 201 / 12%) calc(50% - 1.25rem),
+    rgb(31 163 255 / 45%) calc(50% - 3px),
+    var(--ciano) calc(50% - 1px) calc(50% + 1px),
+    rgb(31 163 255 / 45%) calc(50% + 3px),
+    rgb(0 128 201 / 12%) calc(50% + 1.25rem),
+    transparent 100%);
+
+  /* lista com barra acesa (ref. 04) */
+  --barra-apagada: var(--linha-forte);
+  --barra-acesa: var(--azul-eletrico);
   --banner-opacidade: 0.7; /* banner de teste da hero, um pouco apagado */
 
   /* hero: H1 branco iluminado de cima */
@@ -316,6 +338,7 @@
   --mascara-arco: linear-gradient(180deg, transparent 0%, #000 40%, #000 72%, transparent 100%);
   --mascara-cone: linear-gradient(180deg, #000 0%, #000 25%, transparent 100%);
   --mascara-baixo: linear-gradient(180deg, #000 0%, #000 45%, transparent 100%); /* some para baixo */
+  --mascara-ponte: linear-gradient(180deg, transparent 0%, #000 14%, #000 62%, transparent 100%);
   --mascara-palco-piso: radial-gradient(ellipse 75% 110% at 50% 0%, #000 25%, transparent 100%);
   --mascara-radial: radial-gradient(ellipse 70% 65% at 50% 35%, #000 25%, transparent 75%);
   --mascara-vertical: linear-gradient(180deg, transparent 0%, #000 18%, #000 70%, transparent 100%);
@@ -333,6 +356,9 @@
   --dur-giro: 6s; /* borda neon */
   --dur-respiro: 6s; /* luz de cima */
   --dur-pulso: 2.4s; /* ponto "ao vivo" do selo */
+  /* revelação no scroll (js/revelar.js) */
+  --revelar-deslocamento: 0.75rem; /* 12px de subida, dentro do limite de 16 */
+  --revelar-passo: 150ms; /* data-revelar-atraso="N" espera N passos */
   --vai-e-volta: cubic-bezier(0.45, 0, 0.55, 1); /* só para ciclos contínuos e lentos */
   --saida: cubic-bezier(0.22, 1, 0.36, 1); /* firme, desacelera forte */
   --saida-suave: cubic-bezier(0.33, 1, 0.68, 1);

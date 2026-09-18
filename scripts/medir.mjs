@@ -51,19 +51,18 @@ const medicoes = await porLargura(
       const h1 = document.querySelector('h1')
       const fsH1 = h1 && visivel(h1) ? px(getComputedStyle(h1).fontSize) : null
 
-      // linhas do H1, palavra por palavra: cada palavra vira um Range; o topo de cada
-      // retângulo diz em que linha ela está. Palavra com retângulos em 2 topos = partida.
-      // Regra de quebra (CONTEXTO.md): proibida linha só com palavra CURTA (≤ 5
+      // Quebra de um título, palavra por palavra: cada palavra vira um Range; o topo de
+      // cada retângulo diz em que linha ela está. Palavra com retângulos em 2 topos =
+      // partida. Regra (CONTEXTO.md): proibida linha só com palavra CURTA (≤ 5
       // caracteres, contando a pontuação); palavra longa sozinha é permitida.
       const CURTA = 5
-      let linhasH1 = null, curtaSozinha = [], longaSozinha = [], partidas = [], foraDaCaixa = []
-      if (h1 && visivel(h1)) {
-        const caixa = h1.getBoundingClientRect()
-        const est = getComputedStyle(h1)
+      const analisarTitulo = el => {
+        const caixa = el.getBoundingClientRect()
+        const est = getComputedStyle(el)
         const esq = caixa.left + parseFloat(est.paddingLeft)
         const dir = caixa.right - parseFloat(est.paddingRight)
         const palavras = []
-        const andar = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT)
+        const andar = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
         for (let n = andar.nextNode(); n; n = andar.nextNode()) {
           for (const m of n.nodeValue.matchAll(/\S+/g)) {
             const r = document.createRange()
@@ -76,8 +75,6 @@ const medicoes = await porLargura(
             palavras.push({ p: m[0], topos, fora })
           }
         }
-        partidas = palavras.filter(w => w.topos.length > 1).map(w => w.p)
-        foraDaCaixa = palavras.filter(w => w.fora).map(w => w.p)
         const linhas = []
         for (const w of palavras) {
           const topo = w.topos[0]
@@ -85,10 +82,35 @@ const medicoes = await porLargura(
           if (linha) linha.palavras.push(w.p)
           else linhas.push({ topo, palavras: [w.p] })
         }
-        linhasH1 = linhas.length
         const sozinhas = linhas.filter(l => l.palavras.length === 1).map(l => l.palavras[0])
-        curtaSozinha = sozinhas.filter(p => p.length <= CURTA)
-        longaSozinha = sozinhas.filter(p => p.length > CURTA)
+        return {
+          id: el.closest('[data-copy]')?.getAttribute('data-copy') || el.tagName.toLowerCase(),
+          linhas: linhas.length,
+          curtaSozinha: sozinhas.filter(p => p.length <= CURTA),
+          longaSozinha: sozinhas.filter(p => p.length > CURTA),
+          partidas: palavras.filter(w => w.topos.length > 1).map(w => w.p),
+          foraDaCaixa: palavras.filter(w => w.fora).map(w => w.p),
+        }
+      }
+
+      let linhasH1 = null, curtaSozinha = [], longaSozinha = [], partidas = [], foraDaCaixa = []
+      if (h1 && visivel(h1)) {
+        ;({ linhas: linhasH1, curtaSozinha, longaSozinha, partidas, foraDaCaixa } = analisarTitulo(h1))
+      }
+
+      // os demais títulos em .display (a regra de quebra vale para todos)
+      const outrosTitulos = [...document.querySelectorAll('.display')]
+        .filter(el => el !== h1 && visivel(el))
+        .map(analisarTitulo)
+      const violacoesTitulos = outrosTitulos
+        .filter(t => t.curtaSozinha.length || t.partidas.length || t.foraDaCaixa.length)
+        .map(t => `${t.id}: ${[...t.curtaSozinha.map(p => `curta "${p}"`), ...t.partidas.map(p => `partida "${p}"`), ...t.foraDaCaixa.map(p => `fora "${p}"`)].join(', ')}`)
+
+      // menor fonte visível de cada seção
+      const menorPorSecao = {}
+      for (const sec of document.querySelectorAll('main > section[id]')) {
+        const dentro = comTexto.filter(el => sec.contains(el))
+        if (dentro.length) menorPorSecao[sec.id] = Math.min(...dentro.map(el => px(getComputedStyle(el).fontSize)))
       }
 
       // H2 e H3 do sistema (.display.degrau-4/3) e o corpo (.degrau-1), medidos com
@@ -163,6 +185,9 @@ const medicoes = await porLargura(
         fsH2,
         fsH3,
         fsCorpo,
+        outrosTitulos: outrosTitulos.length,
+        violacoesTitulos,
+        menorPorSecao,
         fsP,
         pLongoId: pLongo ? pLongo.getAttribute('data-copy') : null,
         menorFonte,
@@ -265,6 +290,20 @@ const tabelaH1 = tabelaMd(
   })
 )
 
+// demais títulos .display (regra de quebra) e menor fonte das seções já montadas
+const tabelaSecoes = tabelaMd(
+  ['largura', 'outros títulos .display', 'quebra', 'menor fonte #hero', 'menor fonte #dor'],
+  medicoes.map(m => [
+    `**${m.largura}**`,
+    n(m.outrosTitulos),
+    m.violacoesTitulos?.length ? `**${m.violacoesTitulos.join(' · ')}**` : 'ok',
+    m.menorPorSecao?.hero !== undefined ? `${m.menorPorSecao.hero}px` : '—',
+    m.menorPorSecao?.dor !== undefined
+      ? m.menorPorSecao.dor >= 16 ? `${m.menorPorSecao.dor}px` : `**${m.menorPorSecao.dor}px**`
+      : '—',
+  ])
+)
+
 // botão principal na primeira dobra, medido na altura real de tela
 const comDobra = medicoes.filter(m => m.dobra)
 const tabelaDobra = comDobra.length
@@ -296,6 +335,10 @@ const md = [
   '',
   tabelaH1,
   '',
+  '## Outros títulos e seções',
+  '',
+  tabelaSecoes,
+  '',
   ...(tabelaDobra ? ['## Botão principal na primeira dobra', '', tabelaDobra, ''] : []),
   '## Notas',
   '',
@@ -320,5 +363,6 @@ fs.writeFileSync(arquivo, md, 'utf8')
 
 console.log(tabela)
 console.log('\n' + tabelaH1)
+console.log('\n' + tabelaSecoes)
 if (tabelaDobra) console.log('\n' + tabelaDobra)
 console.log(`\nsalvo em medidas/${rotulo}.md`)

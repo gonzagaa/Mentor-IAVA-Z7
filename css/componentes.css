@@ -15,6 +15,8 @@
 .degrau-4 { --degrau-fs: var(--fs-4); --degrau-lh: var(--lh-4); --degrau-ls: var(--ls-4); --degrau-lh-display: var(--lh-display-4); --degrau-ls-display: var(--ls-display-4); }
 .degrau-5 { --degrau-fs: var(--fs-5); --degrau-lh: var(--lh-5); --degrau-ls: var(--ls-5); --degrau-lh-display: var(--lh-display-5); --degrau-ls-display: var(--ls-display-5); }
 .degrau-6 { --degrau-fs: var(--fs-6); --degrau-lh: var(--lh-6); --degrau-ls: var(--ls-6); --degrau-lh-display: var(--lh-display-6); --degrau-ls-display: var(--ls-display-6); }
+/* destaque: entre o H2 e o H1 */
+.degrau-destaque { --degrau-fs: var(--fs-destaque); --degrau-lh: var(--lh-4); --degrau-ls: var(--ls-4); --degrau-lh-display: var(--lh-display-destaque); --degrau-ls-display: var(--ls-display-destaque); }
 
 .degrau-0,
 .degrau-1,
@@ -22,7 +24,8 @@
 .degrau-3,
 .degrau-4,
 .degrau-5,
-.degrau-6 {
+.degrau-6,
+.degrau-destaque {
   font-size: var(--degrau-fs);
   line-height: var(--degrau-lh);
   letter-spacing: var(--degrau-ls);
@@ -43,6 +46,93 @@
   color: var(--texto);
   text-wrap: balance;
   overflow-wrap: break-word;
+}
+
+/* ═══════════════════════════ SEÇÃO E RITMO ═══════════════════════════
+   Toda seção depois da hero: gutter nos lados e o respiro entre seções embaixo.
+   Como a seção anterior termina com o mesmo respiro, o espaço entre duas seções é
+   sempre exatamente --respiro-secao. */
+
+.secao {
+  position: relative;
+  padding: 0 var(--gutter) var(--respiro-secao);
+}
+
+/* ═════════════════════════ REVELAÇÃO NO SCROLL ═════════════════════════
+   js/revelar.js. PROGRESSIVE ENHANCEMENT: o estado "escondido" só existe quando o
+   script põe .revelar-ativo no <html> — sem JS, ou se ele falhar, tudo aparece.
+   Com prefers-reduced-motion o script nem liga: tudo já no estado final.
+     data-revelar            → entra com opacidade + subida curta
+     data-revelar="acender"  → não some: fica apagado e acende (ex.: .lista-barra)
+     data-revelar-atraso="N" → espera N × --revelar-passo (sequência) */
+
+[data-revelar] {
+  transition:
+    opacity var(--dur-lenta) var(--saida),
+    transform var(--dur-lenta) var(--saida);
+  transition-delay: calc(var(--revelar-atraso, 0) * var(--revelar-passo));
+}
+
+.revelar-ativo [data-revelar]:not([data-revelar='acender']):not(.revelado) {
+  opacity: 0;
+  transform: translateY(var(--revelar-deslocamento));
+}
+
+/* ═══════════════════════ LISTA COM BARRA ACESA ═══════════════════════
+   Itens com uma barra vertical à esquerda (ref. 04). Com data-revelar="acender",
+   cada item entra apagado (barra em --barra-apagada, texto em --texto-3) e acende
+   ao entrar na tela: a barra cresce em azul com brilho e o texto vai a --texto. */
+
+.lista-barra {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  text-align: start;
+}
+
+.lista-barra > li {
+  position: relative;
+  padding: var(--esp-4) var(--esp-6) var(--esp-4) var(--esp-10);
+  border: var(--borda);
+  border-radius: var(--raio-card);
+  background: var(--superficie);
+  color: var(--texto);
+  transition: color var(--dur-lenta) var(--saida);
+  transition-delay: calc(var(--revelar-atraso, 0) * var(--revelar-passo));
+}
+
+/* a barra: trilho apagado embaixo, luz azul por cima */
+.lista-barra > li::before,
+.lista-barra > li::after {
+  content: '';
+  position: absolute;
+  inset-block: var(--esp-4);
+  inset-inline-start: var(--esp-5);
+  inline-size: 2px;
+  border-radius: var(--raio-pilula);
+}
+
+.lista-barra > li::before {
+  background: var(--barra-apagada);
+}
+
+.lista-barra > li::after {
+  background: var(--barra-acesa);
+  box-shadow: var(--glow-sutil);
+  transform-origin: 50% 0;
+  transition:
+    transform var(--dur-lenta) var(--saida),
+    opacity var(--dur-lenta) var(--saida);
+  transition-delay: calc(var(--revelar-atraso, 0) * var(--revelar-passo));
+}
+
+.revelar-ativo .lista-barra > li[data-revelar]:not(.revelado) {
+  color: var(--texto-3);
+}
+
+.revelar-ativo .lista-barra > li[data-revelar]:not(.revelado)::after {
+  opacity: 0;
+  transform: scaleY(0);
 }
 
 /* ═══════════════════════════════ BOTÕES ═══════════════════════════════ */

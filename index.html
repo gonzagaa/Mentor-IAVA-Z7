@@ -12,7 +12,9 @@
   <link rel="stylesheet" href="css/componentes.css">
   <link rel="stylesheet" href="css/fundos.css">
   <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/dor.css">
   <link rel="stylesheet" href="css/pendente.css">
+  <script src="js/revelar.js" defer></script>
 </head>
 <body>
 
@@ -39,14 +41,19 @@
     </section>
 
     <!-- d2 · segunda dobra (dor) -->
-    <section id="dor">
-      <p data-copy="d2.p1">Sabe quando você termina uma operação e pensa:</p>
-      <p data-copy="d2.p2">“Onde foi que eu errei?” Sem ter ninguém para responder essa pergunta?</p>
-      <p data-copy="d2.p3">Talvez você até saiba que foi por impulso.</p>
-      <p data-copy="d2.p4">Talvez por ter operado mais do que deveria.</p>
-      <p data-copy="d2.p5">Ou talvez tenha até terminado o dia no lucro e, mesmo assim, não saiba muito bem o que fez de diferente.</p>
-      <p data-copy="d2.p6">O ponto é, lembrar das operações não é o mesmo que analisá-las.</p>
-      <p data-copy="d2.p7">É aí que o IAVA entra.</p>
+    <section id="dor" class="secao dor">
+      <div class="dor__coluna">
+        <p class="degrau-2 dor__abertura" data-copy="d2.p1" data-revelar>Sabe quando você termina uma operação e pensa:</p>
+        <p class="dor__pergunta" data-copy="d2.p2" data-revelar data-revelar-atraso="1"><span class="display degrau-destaque dor__pergunta-grande">“Onde foi que eu errei?”</span> <span class="degrau-2 dor__resposta">Sem ter ninguém para responder essa pergunta?</span></p>
+        <ul class="lista-barra dor__talvez">
+          <li class="degrau-2" data-revelar="acender"><p data-copy="d2.p3">Talvez você até saiba que foi por impulso.</p></li>
+          <li class="degrau-2" data-revelar="acender" data-revelar-atraso="3"><p data-copy="d2.p4">Talvez por ter operado mais do que deveria.</p></li>
+          <li class="degrau-2" data-revelar="acender" data-revelar-atraso="6"><p data-copy="d2.p5">Ou talvez tenha até terminado o dia no lucro e, mesmo assim, não saiba muito bem o que fez de diferente.</p></li>
+        </ul>
+        <p class="dor__virada" data-copy="d2.p6" data-revelar>O ponto é, lembrar das operações não é o mesmo que analisá-las.</p>
+        <p class="display degrau-4 dor__entrada" data-copy="d2.p7" data-revelar>É aí que o IAVA entra.</p>
+      </div>
+      <div class="dor__ponte" aria-hidden="true"></div>
     </section>
 
     <!-- d3 · terceira dobra (o que o IAVA analisa) -->

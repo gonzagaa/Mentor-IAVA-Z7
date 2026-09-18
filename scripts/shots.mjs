@@ -4,16 +4,23 @@
 //          em shots/<rótulo>/<largura>x<altura>.png.
 // --brilho=meio: SEM reduced-motion; antes de capturar congela as animações da hero
 //          com a luz de cima no pico (o H1 não tem mais faixa de brilho: é estático).
+// --secao=dor: só a seção #dor inteira, em shots/<rótulo>/<largura>-dor.png.
+// --sem-js: com JavaScript desligado (confere que nada fica escondido sem o script).
+// Revelações no scroll: a página é rolada até o fim e a captura espera as
+// transições terminarem.
 // Só grava depois que fontes e CSS estão confirmados.
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { RAIZ, lerLarguras, lerRotulo, lerPagina, lerMovimento, porLargura } from './comum.mjs'
+import { RAIZ, lerLarguras, lerRotulo, lerPagina, lerMovimento, lerSemJs, porLargura } from './comum.mjs'
 
 const rotulo = lerRotulo()
 const larguras = lerLarguras()
 const pagina = lerPagina()
 const dobra = process.argv.includes('--dobra')
+const semJs = lerSemJs()
+const argSecao = process.argv.find(a => a.startsWith('--secao='))
+const secao = argSecao ? argSecao.slice('--secao='.length) : null
 const argBrilho = process.argv.find(a => a.startsWith('--brilho='))
 const brilho = argBrilho ? argBrilho.slice('--brilho='.length) : null
 if (brilho && brilho !== 'meio') {
@@ -31,8 +38,9 @@ const destino = path.join(RAIZ, 'shots', rotulo)
 const capturas = await porLargura(
   larguras,
   async ({ page, largura }) => {
-    // rola até o fim e volta, para disparar tudo que for preguiçoso
-    await page.evaluate(async () => {
+    // rola até o fim e volta, para disparar tudo que for preguiçoso. Sem JS não há
+    // nada preguiçoso — e o Chrome nem roda requestAnimationFrame: pula.
+    if (!semJs) await page.evaluate(async () => {
       const passo = innerHeight
       for (let y = 0; y < document.body.scrollHeight; y += passo) {
         scrollTo(0, y)
@@ -41,6 +49,8 @@ const capturas = await porLargura(
       scrollTo(0, 0)
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
     })
+    // espera as revelações (maior atraso + duração) terminarem
+    if (movimento && !semJs) await page.waitForTimeout(2000)
     if (brilho === 'meio') {
       const congeladas = await page.evaluate(congelar => {
         const feitas = []
@@ -56,18 +66,27 @@ const capturas = await porLargura(
       if (faltou.length) throw new Error(`--brilho=meio: animação não encontrada em ${largura}px: ${faltou.join(', ')}`)
       await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))
     }
-    const buffer = await page.screenshot({ fullPage: !dobra })
-    const altura = await page.evaluate(d => (d ? innerHeight : document.documentElement.scrollHeight), dobra)
+    let buffer, altura
+    if (secao) {
+      const el = page.locator('#' + secao)
+      if (!(await el.count())) throw new Error(`--secao=${secao}: #${secao} não existe`)
+      buffer = await el.screenshot()
+      altura = Math.round((await el.boundingBox()).height)
+    } else {
+      buffer = await page.screenshot({ fullPage: !dobra })
+      altura = await page.evaluate(d => (d ? innerHeight : document.documentElement.scrollHeight), dobra)
+    }
     return { largura, buffer, altura }
   },
-  { pagina, movimento, dobra }
+  { pagina, movimento, dobra, semJs }
 )
 
 // nada é escrito antes de todas as larguras passarem
 fs.rmSync(destino, { recursive: true, force: true })
 fs.mkdirSync(destino, { recursive: true })
 for (const c of capturas) {
-  const arquivo = path.join(destino, dobra ? `${c.largura}x${c.altura}.png` : `${c.largura}.png`)
+  const nome = secao ? `${c.largura}-${secao}.png` : dobra ? `${c.largura}x${c.altura}.png` : `${c.largura}.png`
+  const arquivo = path.join(destino, nome)
   fs.writeFileSync(arquivo, c.buffer)
   console.log(`  ${path.basename(arquivo)}  ${c.largura}×${c.altura}  ${(c.buffer.length / 1024).toFixed(0)} KB`)
 }

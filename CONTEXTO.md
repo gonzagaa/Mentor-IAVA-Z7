@@ -104,6 +104,24 @@ a proposta é mais agressiva e futurista**.
   copy). A página começa direto na hero.
 - **H1 estático**: sem faixa de brilho animada; a luz vem só do gradiente dentro do texto.
 
+## Sistemas reutilizáveis (valem para todas as seções)
+
+- **Ritmo entre seções**: `--respiro-secao` (96px no celular → 160px no desktop). Toda
+  seção depois da hero usa a classe `.secao` (gutter + `--respiro-secao` embaixo); a
+  hero termina com o mesmo respiro. O espaço entre duas seções é sempre esse token.
+- **Revelação no scroll** (`js/revelar.js` + estilos em `componentes.css`), sem
+  biblioteca: `data-revelar` (opacidade + subida de 12px, 400ms, easing de saída),
+  `data-revelar="acender"` (não some: entra apagado e acende), `data-revelar-atraso="N"`
+  (N × 150ms, para sequência). **Progressive enhancement**: o estado escondido só existe
+  depois que o script põe `.revelar-ativo` no `<html>`; sem JS tudo aparece. Com
+  reduced-motion o script não liga (tudo no estado final). O que já está na tela ao
+  carregar aparece direto, sem piscar. **Não se aplica ao H1 da hero.**
+- **Lista com barra acesa** (`.lista-barra`, ref. 04): itens com barra vertical à
+  esquerda; com `data-revelar="acender"`, a barra acende em azul e o texto vai de
+  `--texto-3` a `--texto`, um item de cada vez.
+- **Degrau "destaque"** (`.degrau-destaque`, `--fs-destaque`): entre o H2 e o H1, para
+  o momento tipográfico de uma seção.
+
 ## Tipografia
 
 - Títulos (display): **NCS Radhiumz** — a mesma da home zero7.com.br, amarra com a marca.
@@ -145,9 +163,9 @@ a proposta é mais agressiva e futurista**.
 ```
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
-css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, pendente.css
+css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, pendente.css
               amostra.css (NÃO vai para produção)
-js/           amostra.js (NÃO vai para produção)
+js/           revelar.js; amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
@@ -180,27 +198,34 @@ Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
 desliga a emulação. `shots --dobra` captura só a primeira dobra, na altura de tela de
 cada largura (`DOBRA` em `scripts/comum.mjs`); o `medir` mede o H1 (linhas, palavra
 sozinha, palavra partida) e a posição do botão da hero nessas alturas. `shots --brilho=meio`
-congela a luz de cima da hero no pico (sem reduce). Antes de medir ou capturar, cada um confirma que as fontes carregaram
+congela a luz de cima da hero no pico (sem reduce). `shots --secao=dor` captura só a seção
+inteira; `--sem-js` carrega com JavaScript desligado. O `medir` também confere a regra de
+quebra em todos os títulos `.display` e a menor fonte de cada seção. Antes de medir ou capturar, cada um confirma que as fontes carregaram
 do arquivo esperado (`document.fonts.check()`) e que `--css-carregado` vale 1 no `:root`;
 se falhar, PARA com código 1 e não grava nada. Na amostra, `npm run copy` aceita repetição
 de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 2c concluída — hero pronta no index.html.** O resto da página (#dor em diante)
-ainda é o esqueleto sem estilo.
+**Fase 3 concluída — hero e #dor prontas no index.html.** De #analise em diante ainda é o
+esqueleto sem estilo.
 
-- **Hero**, de cima para baixo (sem cabeçalho): selo (`d1.apoio`, frase única em branco,
-  ponto "ao vivo" pulsando, uma linha de 320 a 1920) → H1 `.display` estático com a luz
-  radial azul → branco → prata → subtítulo → um botão (`d1.cta1`, 60px, `href="#"` +
-  `data-pendente-href="d1.cta.destino"`). Fundo, de baixo para cima: banner de teste
-  (`img/banner-hero.png`, 70% de opacidade, sumindo para baixo — o dono vai trocar por
-  AVIF se aprovar) → grade de quadrados → arco invertido + cone de luz que respira.
-- **Animações da hero (2)**: respiro da luz (opacity) e pulso do selo (transform +
-  opacity). Zero pintura em loop (`npm run pintura`). Param com reduced-motion.
-- **Botão na dobra**: aparece inteiro em 375×667, 390×844, 430×932, 768×1024,
-  1024×768, 1280×720, 1474×830 e 1920×1080; em 320×568 fica 35px abaixo.
-- **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link) — ver
-  `copy/ALTERACOES.md`.
+- **Hero** (sem cabeçalho): selo (`d1.apoio`, frase única em branco, ponto "ao vivo"
+  pulsando) → H1 `.display` estático, luz radial azul → branco → prata → subtítulo →
+  um botão (`d1.cta1`, 60px, `data-pendente-href="d1.cta.destino"`). Fundo: banner de
+  teste (`img/banner-hero.png`, 70%, sumindo para baixo — o dono troca por AVIF se
+  aprovar) → grade → arco invertido + cone de luz que respira. Botão inteiro na dobra
+  de 375 a 1920 (em 320×568 fica 35px abaixo).
+- **#dor**, coluna estreita (640px) centrada, fundo preto puro, sem título: d2.p1
+  (lead, `--texto-2`) → d2.p2 (“Onde foi que eu errei?” em `.display` degrau destaque +
+  resposta em Inter abaixo, via `<span>`) → os três "Talvez" em `.lista-barra`
+  acendendo em sequência → d2.p6 (frase de virada, `--fs-virada`, respiro grande antes)
+  → d2.p7 em `.display` H2 → feixe-ponte vertical (núcleo 2px + halo) que desce pelo
+  respiro e entra na próxima seção. Tudo revela no scroll; menor fonte da seção ≥ 18px.
+- **Animações contínuas (2)**, só na hero: respiro da luz e pulso do selo, zero pintura
+  em loop. Mais as transições de revelação da #dor, uma vez cada.
+- **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).
+- O feixe-ponte da #dor entra ~80px na #analise, que ainda não tem estilo: hoje ele
+  passa por cima do título dela. Resolve quando a #analise ganhar `.secao`.
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

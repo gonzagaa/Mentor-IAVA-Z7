@@ -1,0 +1,72 @@
+/* #dor — sequência narrativa (d2.p1 a d2.p7). Cada frase ganha seu tempo.
+   Coluna central estreita, fundo preto puro, sem título nem eyebrow.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.dor {
+  background: var(--preto);
+  text-align: center;
+}
+
+.dor__coluna {
+  display: flex;
+  flex-direction: column;
+  max-inline-size: var(--coluna-estreita);
+  margin-inline: auto;
+}
+
+/* a) introduz a pergunta */
+.dor__abertura {
+  color: var(--texto-2);
+}
+
+/* b) o momento tipográfico da seção: a pergunta grande em .display e, abaixo,
+   a resposta mais baixa. Continua um <p> só (d2.p2); os <span> só separam as partes
+   em blocos — o textContent é idêntico ao da copy. */
+.dor__pergunta {
+  margin-block-start: var(--esp-6);
+}
+
+.dor__pergunta-grande {
+  display: block;
+}
+
+.dor__resposta {
+  display: block;
+  margin-block-start: var(--esp-4);
+  color: var(--texto-2);
+}
+
+/* c) os três "Talvez" — .lista-barra, acendendo em sequência */
+.dor__talvez {
+  margin-block-start: var(--esp-16);
+}
+
+/* d) a virada: respiro grande antes */
+.dor__virada {
+  margin-block-start: var(--esp-24);
+  font-size: var(--fs-virada);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+  color: var(--texto);
+}
+
+/* e) a entrada do IAVA */
+.dor__entrada {
+  margin-block-start: var(--esp-16);
+}
+
+/* feixe-ponte: nasce logo abaixo de "É AÍ QUE O IAVA ENTRA.", desce pelo respiro da
+   seção e entra na próxima. Decorativo (aria-hidden), fora do fluxo: não ocupa
+   altura. Largura estreita e centrada: sem scroll-x. */
+.dor__ponte {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: calc(100% - var(--respiro-secao) + var(--esp-6));
+  inline-size: var(--esp-10);
+  block-size: calc(var(--respiro-secao) * 1.5 - var(--esp-6));
+  translate: -50% 0;
+  background: var(--gradiente-ponte);
+  -webkit-mask-image: var(--mascara-ponte);
+  mask-image: var(--mascara-ponte);
+  pointer-events: none;
+}

@@ -37,7 +37,7 @@
 }
 
 .amostra-secao {
-  padding: var(--secao-y) var(--gutter);
+  padding: var(--respiro-secao) var(--gutter);
   border-block-end: var(--borda);
 }
 
@@ -157,7 +157,7 @@
   justify-content: center;
   gap: var(--esp-8);
   min-block-size: 100svh;
-  padding: var(--secao-y) var(--gutter);
+  padding: var(--respiro-secao) var(--gutter);
   border-block-end: var(--borda);
   text-align: center;
 }

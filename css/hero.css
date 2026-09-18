@@ -6,8 +6,9 @@
 .hero {
   position: relative;
   isolation: isolate;
-  /* o respiro de cima abriga a coroa do arco, acima do selo */
-  padding: clamp(var(--esp-12), 7vw, var(--esp-20)) var(--gutter) var(--esp-16);
+  /* o respiro de cima abriga a coroa do arco, acima do selo; embaixo, o ritmo
+     entre seções (--respiro-secao), como toda seção */
+  padding: clamp(var(--esp-12), 7vw, var(--esp-20)) var(--gutter) var(--respiro-secao);
   text-align: center;
 }
 

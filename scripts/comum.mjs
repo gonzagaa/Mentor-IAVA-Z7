@@ -61,6 +61,9 @@ export function lerPagina(argv = process.argv.slice(2)) {
 // --movimento desliga a emulação de prefers-reduced-motion (padrão: reduce)
 export const lerMovimento = (argv = process.argv.slice(2)) => argv.includes('--movimento')
 
+// --sem-js carrega a página com JavaScript desligado (progressive enhancement)
+export const lerSemJs = (argv = process.argv.slice(2)) => argv.includes('--sem-js')
+
 export function lerRotulo(argv = process.argv.slice(2)) {
   const rotulo = argv.find(a => !a.startsWith('--'))
   if (!rotulo) {
@@ -117,7 +120,7 @@ async function conferirCarregamento(page, fontes) {
  * Antes de cada tarefa confere fontes e sentinela do CSS; se falhar, PARA tudo
  * com código de saída 1 dizendo qual largura e o quê.
  */
-export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false } = {}) {
+export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false, semJs = false } = {}) {
   const servidor = await subirServidor()
   const navegador = await chromium.launch()
   const fontes = fontesDaPagina(pagina)
@@ -131,6 +134,7 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = '
         deviceScaleFactor: 1,
         reducedMotion: movimento ? 'no-preference' : 'reduce',
         colorScheme: 'dark',
+        javaScriptEnabled: !semJs,
       })
       const page = await contexto.newPage()
       const quebrados = []
