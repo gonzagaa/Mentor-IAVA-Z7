@@ -308,6 +308,13 @@
   /* halo azul muito suave atrás de uma grade de cards */
   --halo-grade: radial-gradient(ellipse 55% 50% at 50% 50%, rgb(0 128 201 / 11%) 0%, rgb(0 59 102 / 8%) 45%, transparent 75%);
 
+  /* marcador aceso dos perfis (#para-quem): quadradinho azul com brilho */
+  --marcador: 0.5rem;
+  --marcador-cor: var(--azul-eletrico);
+  /* feixes verticais em baixa intensidade (fundo de coluna de título) */
+  --feixes-suave: 0.45;
+  --topo-fixo: var(--esp-16); /* distância do topo da tela de um título sticky */
+
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);
   --barra-acesa: var(--azul-eletrico);

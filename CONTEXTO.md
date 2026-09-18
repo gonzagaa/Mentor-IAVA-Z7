@@ -175,7 +175,7 @@ a proposta é mais agressiva e futurista**.
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
-              pendente.css
+              para-quem.css, pendente.css
               amostra.css (NÃO vai para produção)
 js/           revelar.js; amostra.js (NÃO vai para produção)
 fonts/
@@ -222,8 +222,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 4 — hero, #dor e #analise prontas no index.html.** De #para-quem em diante ainda é o
-esqueleto sem estilo.
+**Fase 5 — hero, #dor, #analise e #para-quem prontas no index.html.** De #o-que-e em
+diante ainda é o esqueleto sem estilo.
 
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
@@ -244,10 +244,17 @@ esqueleto sem estilo.
   partir de 1024 → d3.intro → grade de 7 cards (ícone de 64px reservado, H3 em Inter
   semibold, descrição) + card destaque do chat. Grade: 1 coluna até 640px; 2 colunas
   até 1080px (item 7 e chat ocupam a linha inteira); 3 acima (item 7 + chat em 2
-  colunas fecham a última linha). Halo azul suave atrás da grade. Cards revelam em
+  colunas fecham a última linha). Cards no fundo original do card base; só o chat em
+  destaque (gradiente azul suave). Halo azul suave atrás da grade. Cards revelam em
   sequência; não reagem ao mouse (não são clicáveis). Nada focável na seção.
-- **Animações contínuas (3)**: respiro da luz e pulso do selo (hero, zero pintura) e a
-  borda neon girando no card do chat. Mais as revelações, uma vez cada.
+- **#para-quem**: ≥ 1080px em duas colunas (5fr/7fr) — d4.titulo em `.display` H2
+  fixo (sticky, solta no fim da lista sem sobrepor) sobre feixes verticais suaves; à
+  direita o d4.p1, UM `<p>` com as 6 frases em `<span>` display:block (abertura em
+  `--fs-virada` + 5 perfis com fio de 1px e marcador quadrado aceso em CSS),
+  revelando em sequência. Abaixo de 1080px, uma coluna. Depois, card destaque de
+  virada com d4.p2 e d4.p3, cada um com o trecho final no gradiente de acento.
+- **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
+  borda neon girando nos cards destaque (chat e virada). Mais as revelações, uma vez cada.
 - **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

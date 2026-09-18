@@ -1,0 +1,137 @@
+/* #para-quem — d4.titulo, d4.p1 (perfis), d4.p2 + d4.p3 (card de virada).
+   d4.p1 é UM <p> só; cada frase é um <span> display:block, com os espaços entre as
+   frases mantidos no texto (textContent idêntico ao json).
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.para-quem {
+  background: var(--preto);
+}
+
+.para-quem__largura {
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+/* ───────────── grade: título + perfis ─────────────
+   < 1080px: uma coluna, título em cima, sem sticky.
+   ≥ 1080px: duas colunas; o título fica fixo enquanto a lista rola. O sticky vive
+   dentro da coluna do título, que tem a altura da lista: solta sozinho no fim. */
+
+.para-quem__grade {
+  display: grid;
+  gap: var(--esp-12);
+}
+
+.para-quem__coluna-titulo {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--esp-10);
+  text-align: center;
+}
+
+.para-quem__titulo {
+  position: relative;
+}
+
+/* "PARA QUEM É O" / "MENTOR IAVA?": as curtas (É, O, IAVA?) nunca ficam sozinhas */
+.para-quem__titulo .grupo {
+  white-space: nowrap;
+}
+
+/* feixes verticais (fundos.css, 5d) em baixa intensidade, atrás da coluna do título —
+   nunca atrás da lista */
+.para-quem__feixes {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.para-quem__feixes::before {
+  opacity: var(--feixes-suave);
+}
+
+@media (min-width: 67.5rem) {
+  .para-quem__grade {
+    grid-template-columns: 5fr 7fr;
+    gap: var(--esp-16);
+  }
+
+  .para-quem__coluna-titulo {
+    padding-block: 0;
+    text-align: start;
+  }
+
+  .para-quem__titulo {
+    position: sticky;
+    inset-block-start: var(--topo-fixo);
+  }
+}
+
+/* ───────────── perfis (d4.p1) ───────────── */
+
+.perfis {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+}
+
+.perfis > span {
+  display: block;
+}
+
+/* frase 1: abertura */
+.perfis__abertura {
+  padding-block-end: var(--esp-8);
+  font-size: var(--fs-virada);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+  color: var(--texto);
+}
+
+/* frases 2–6: os perfis, separados por um fio, com marcador aceso em CSS */
+.perfis__item {
+  position: relative;
+  padding: var(--esp-5) 0 var(--esp-5) var(--esp-8);
+  border-block-start: var(--borda);
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  color: var(--texto-2);
+}
+
+.perfis__item:last-child {
+  border-block-end: var(--borda);
+}
+
+.perfis__item::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: var(--esp-1);
+  inset-block-start: calc(var(--esp-5) + (1lh - var(--marcador)) / 2);
+  inline-size: var(--marcador);
+  block-size: var(--marcador);
+  background: var(--marcador-cor);
+  box-shadow: var(--glow-sutil);
+}
+
+/* ───────────── card de virada (d4.p2 + d4.p3) ───────────── */
+
+.para-quem__virada {
+  margin-block-start: var(--esp-24);
+  gap: var(--esp-6);
+}
+
+.para-quem__virada-1 {
+  font-size: var(--fs-virada);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+}
+
+.para-quem__virada > .para-quem__virada-1 {
+  color: var(--texto);
+}
+
+.para-quem__virada-2 {
+  font-size: var(--fs-1);
+  line-height: var(--lh-1);
+}
