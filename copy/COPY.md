@@ -142,6 +142,8 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
   Av. Dep. Jamel Cecílio, nº 2929 - Jardim Goiás, Goiânia - GO, 74810-240
 - **`rodape.horario`** · _horário de atendimento_  
   Segunda a sexta-feira, 8h às 18h
+- **`rodape.cnpj`** · _razão social e CNPJ_  
+  Zero7 Tesouraria LTDA | CNPJ: 49.452.697/0001-20
 - **`rodape.nav.titulo`** · _título de coluna_  
   Navegação
 - **`rodape.nav.home`** · _link_  
@@ -160,6 +162,16 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
   suporte@zero7.com.br
 - **`rodape.social.titulo`** · _título de coluna_  
   Social
+- **`rodape.simbolo`** · _símbolo de copyright (o ano ao lado é gerado por JS: js/ano.js)_  
+  ©
+- **`rodape.direitos`** · _texto depois do ano_  
+  | Todos os direitos reservados.
+- **`rodape.privacidade`** · _link_  
+  Política de Privacidade
+- **`rodape.cookie`** — ⚠ PENDENTE: Link "Cookie" do rodapé — no site da Zero7 o link está vazio (href=""); não há página de cookies
+- **`rodape.uso`** — ⚠ PENDENTE: Link "Políticas de Uso" do rodapé — no site da Zero7 o link está vazio (href=""); zero7.com.br/termos responde 403
+- **`rodape.aviso`** · _aviso legal_  
+  Todas as informações aqui apresentadas são destinadas exclusivamente a fins educacionais sobre trading nos mercados financeiros. Elas não constituem recomendação de investimento, análise de oportunidade ou orientação para negócios relacionados à negociação de instrumentos financeiros. A Zero7 oferece apenas serviços de trading simulado e ferramentas educacionais para traders. As informações contidas neste site não se destinam a residentes de países ou jurisdições onde tal distribuição ou uso contrarie as leis ou regulamentos locais. A Zero7 não atua como corretora e não aceita depósitos. A solução técnica para plataformas e a fonte de dados são fornecidas por terceiros.
 
 ## oferta
 

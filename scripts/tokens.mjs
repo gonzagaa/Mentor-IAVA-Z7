@@ -7,7 +7,10 @@
 //    declarar text-transform: uppercase. NCS Radhiumz: sempre caixa alta.
 // 3. Falha se houver :hover/:active ou cursor: pointer em elemento não clicável
 //    (só <a href>, <button> e .botao). Lista arquivo, linha e seletor.
-// 4. Mede o contraste WCAG de --texto-2 e --texto-3 sobre --superficie-2 (os valores
+// 4. Falha se algum link tiver href vazio (href="", sem valor, ou "#" sem
+//    data-pendente-href) em qualquer .html da raiz. Destino que não existe é
+//    PENDENTE, nunca link que não leva a lugar nenhum.
+// 5. Mede o contraste WCAG de --texto-2 e --texto-3 sobre --superficie-2 (os valores
 //    lidos do próprio tokens.css) e falha se algum ficar abaixo de 4.5:1.
 
 import fs from 'node:fs'
@@ -232,6 +235,26 @@ if (interacoesProibidas.length) {
   for (const x of interacoesProibidas) console.error(`  ${x.arquivo}:${x.linha}   ${x.seletor}   → ${x.motivo}`)
 } else {
   console.log(':hover, :active e cursor: pointer só em elementos clicáveis (a, button, .botao)')
+}
+
+// ── links vazios ──
+const linksVazios = []
+for (const nome of fs.readdirSync(RAIZ).filter(f => f.endsWith('.html')).sort()) {
+  const html = fs.readFileSync(path.join(RAIZ, nome), 'utf8')
+  for (const m of html.matchAll(/<a\b[^>]*>/gi)) {
+    const tag = m[0]
+    const href = tag.match(/\shref\s*=\s*(["'])(.*?)\1/i)
+    const valor = href ? href[2].trim() : null
+    const vazio = valor === null || valor === '' || (valor === '#' && !/data-pendente-href=/.test(tag))
+    if (vazio) linksVazios.push({ arquivo: nome, linha: linhaDe(html, m.index), tag: tag.slice(0, 90) })
+  }
+}
+if (linksVazios.length) {
+  falhou = true
+  console.error('\nFALHOU · link com href vazio (destino inexistente deve ser PENDENTE):')
+  for (const l of linksVazios) console.error(`  ${l.arquivo}:${l.linha}   ${l.tag}`)
+} else {
+  console.log('nenhum link com href vazio (e "#" só com data-pendente-href)')
 }
 
 console.log(`\ncontraste sobre ${FUNDO} (${valorToken(FUNDO)}):`)

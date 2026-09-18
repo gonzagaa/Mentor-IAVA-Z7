@@ -189,7 +189,7 @@ amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
               para-quem.css, o-que-e.css, provas.css, origem.css, rodape.css, pendente.css
               amostra.css (NÃO vai para produção)
-js/           revelar.js; amostra.js (NÃO vai para produção)
+js/           revelar.js, ano.js; amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
 img/icones/   ícones 3D processados (transparentes) usados nos cards
@@ -293,8 +293,16 @@ Gustavo — não mexer).**
 - **Rodapé**: o mesmo do site zero7.com.br (pedido do Gustavo): logo (`img/marca/zero7.svg`,
   copiada do projeto Zero7), endereço, horário, Navegação (links absolutos para
   zero7.com.br), Suporte (e-mail) e Social (ícones SVG inline, sem CDN). Textos em
-  `rodape.*` no copy.json. 4 colunas ≥ 1080px, empilhado abaixo. Fio azul no topo. O
-  selo do Reclame Aqui do site original (script externo) NÃO foi trazido.
-- **Copy**: 62 blocos + 5 pendentes (4 em caixa, `d1.cta.destino` só no link).
+  `rodape.*` no copy.json. 4 colunas ≥ 1080px, empilhado abaixo. Fio azul no topo.
+  CNPJ no bloco da logo. Faixa final: "©" + ano (`<span data-ano>` com o ano atual já no
+  HTML; `js/ano.js` atualiza; o verificador isenta só esse número) + "| Todos os
+  direitos reservados.", Política de Privacidade (link real), pendentes `rodape.cookie`
+  e `rodape.uso` (no site da Zero7 esses links têm href vazio; /termos responde 403) e
+  o aviso legal literal da home, legível (≥ 13px, `--texto-3`, à esquerda, na medida).
+  Fora, por decisão: formas de pagamento (#pagamento, dependem do checkout), selo do
+  Reclame Aqui (script externo). Todos os links do rodapé têm alvo ≥ 44×44px.
+- **Links**: nenhum `href` vazio na página; `#` só com `data-pendente-href`
+  (`npm run tokens` falha se achar).
+- **Copy**: 67 blocos + 7 pendentes (6 em caixa, `d1.cta.destino` só no link).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

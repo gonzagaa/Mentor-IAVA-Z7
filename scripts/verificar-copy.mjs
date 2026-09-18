@@ -58,6 +58,8 @@ async function colher(page) {
       if (!pai) continue
       if (pai.closest('[data-copy]') || pai.closest('.pendente')) continue
       if (vitrine && pai.closest('.rotulo-tecnico')) continue
+      // dado gerado, não copy: o ano do © (js/ano.js, com o ano atual de fallback)
+      if (pai.closest('[data-ano]') && /^\d{4}$/.test(n.nodeValue.trim())) continue
       if (!visivel(pai)) continue
       const caminho = []
       for (let e = pai; e && e !== document.body; e = e.parentElement) {

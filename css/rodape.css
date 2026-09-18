@@ -58,6 +58,7 @@
   display: inline-flex;
   align-items: center;
   min-block-size: var(--alvo-toque);
+  min-inline-size: var(--alvo-toque); /* "Home" e "Blog" são curtos: alvo de 44px nos dois sentidos */
   text-decoration: none;
   transition: color var(--dur-media) var(--saida);
 }
@@ -111,5 +112,58 @@
   .rodape__social {
     align-items: end;
     text-align: end;
+  }
+}
+
+/* ───────────── faixa final: ©, políticas e aviso legal ───────────── */
+
+.rodape__base {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+  max-inline-size: var(--largura-max);
+  margin: var(--esp-16) auto 0;
+  padding-block-start: var(--esp-8);
+  border-block-start: var(--borda);
+}
+
+.rodape__legal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+
+.rodape .rodape__politicas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.rodape__politicas > li {
+  display: flex;
+}
+
+/* aviso legal: LEGÍVEL (na home estava em 8px) — Inter, ≥ 13px, --texto-3,
+   alinhado à esquerda, na medida de leitura */
+.rodape .rodape__aviso {
+  max-inline-size: var(--medida-leitura);
+  font-size: var(--fs-0);
+  line-height: var(--lh-1);
+  color: var(--texto-3);
+  text-align: start;
+}
+
+.rodape .rodape__politicas {
+  align-items: flex-start;
+}
+
+/* ≥ 1080px: políticas lado a lado, sempre alinhadas à esquerda */
+@media (min-width: 67.5rem) {
+  .rodape .rodape__politicas {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--esp-2) var(--esp-6);
   }
 }

@@ -451,6 +451,14 @@
     "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
+    "id": "rodape.cnpj",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "razão social e CNPJ",
+    "texto": "Zero7 Tesouraria LTDA | CNPJ: 49.452.697/0001-20",
+    "obs": "rodapé do site zero7.com.br (#author), trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
     "id": "rodape.nav.titulo",
     "secao": "rodapé",
     "tipo": "copy",
@@ -521,6 +529,50 @@
     "papel": "título de coluna",
     "texto": "Social",
     "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.simbolo",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "símbolo de copyright (o ano ao lado é gerado por JS: js/ano.js)",
+    "texto": "©",
+    "obs": "rodapé do site zero7.com.br (#author), trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.direitos",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "texto depois do ano",
+    "texto": "| Todos os direitos reservados.",
+    "obs": "rodapé do site zero7.com.br (#author), trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.privacidade",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "link",
+    "texto": "Política de Privacidade",
+    "obs": "rodapé do site zero7.com.br (#author), trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md · href: https://zero7.com.br/politica-de-privacidade/"
+  },
+  {
+    "id": "rodape.cookie",
+    "secao": "rodapé",
+    "tipo": "pendente",
+    "descricao": "Link \"Cookie\" do rodapé — no site da Zero7 o link está vazio (href=\"\"); não há página de cookies"
+  },
+  {
+    "id": "rodape.uso",
+    "secao": "rodapé",
+    "tipo": "pendente",
+    "descricao": "Link \"Políticas de Uso\" do rodapé — no site da Zero7 o link está vazio (href=\"\"); zero7.com.br/termos responde 403"
+  },
+  {
+    "id": "rodape.aviso",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "aviso legal",
+    "texto": "Todas as informações aqui apresentadas são destinadas exclusivamente a fins educacionais sobre trading nos mercados financeiros. Elas não constituem recomendação de investimento, análise de oportunidade ou orientação para negócios relacionados à negociação de instrumentos financeiros. A Zero7 oferece apenas serviços de trading simulado e ferramentas educacionais para traders. As informações contidas neste site não se destinam a residentes de países ou jurisdições onde tal distribuição ou uso contrarie as leis ou regulamentos locais. A Zero7 não atua como corretora e não aceita depósitos. A solução técnica para plataformas e a fonte de dados são fornecidas por terceiros.",
+    "obs": "rodapé do site zero7.com.br (#author), trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
     "id": "preco",
