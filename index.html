@@ -49,6 +49,15 @@
           <a class="botao botao--primario" data-copy="d1.cta1" href="#" data-pendente-href="d1.cta.destino">Experimentar agora o IAVA</a>
         </div>
       </div>
+
+      <!-- print real da plataforma saindo de baixo da hero -->
+      <div class="tela hero__tela" data-inclinar>
+        <div class="tela__barra" aria-hidden="true"></div>
+        <picture>
+                <source type="image/avif" srcset="img/plataforma/topo-800.avif 800w, img/plataforma/topo-1544.avif 1544w" sizes="(min-width: 1200px) 1100px, 92vw">
+                <img src="img/plataforma/topo-1544.webp" srcset="img/plataforma/topo-800.webp 800w, img/plataforma/topo-1544.webp 1544w" sizes="(min-width: 1200px) 1100px, 92vw" width="1544" height="552" alt="Painel do Mentor IAVA com o briefing operacional e um alerta de revenge trading: risco de tilt alto e limite sugerido de 2 trades" data-copy-alt="alt.plataforma.topo" decoding="async">
+              </picture>
+      </div>
     </section>
 
     <!-- d2 · segunda dobra (dor) -->
@@ -96,6 +105,7 @@
             <div class="analise__icone"><img src="img/icones/icone-tilt.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
             <h3 class="analise__rotulo" data-copy="d3.item4.rotulo">Tilt e impulsividade</h3>
             <p data-copy="d3.item4.texto">ele calcula o prejuízo exato que o descontrole causando por uma operação impulsiva causa na sua conta, para você que você veja na prática o quão prejudicial está sendo;</p>
+            <div class="analise__alerta" data-revelar="deslizar" data-revelar-atraso="4"><div class="slot-imagem" data-pendente="img.plataforma.alerta" data-arquivo="img/plataforma/alerta (print da notificação — aguardando)"></div></div>
           </li>
           <li class="card analise__card" data-revelar data-revelar-atraso="4">
             <div class="analise__icone"><img src="img/icones/icone-dias.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
@@ -113,6 +123,12 @@
             <p data-copy="d3.item7.texto">o IAVA encontra coisas no seu histórico que você dificilmente veria sozinho, por mais que ficasse um bom tempo analisando seus dados.</p>
           </li>
           <li class="card card--destaque analise__card analise__card--chat" data-revelar data-revelar-atraso="7">
+            <div class="analise__chat-tela">
+              <picture>
+                <source type="image/avif" srcset="img/plataforma/chat-480.avif 480w, img/plataforma/chat-920.avif 920w" sizes="(min-width: 1081px) 560px, (min-width: 641px) 45vw, 88vw">
+                <img src="img/plataforma/chat-920.webp" srcset="img/plataforma/chat-480.webp 480w, img/plataforma/chat-920.webp 920w" sizes="(min-width: 1081px) 560px, (min-width: 641px) 45vw, 88vw" width="920" height="716" alt="Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações" data-copy-alt="alt.plataforma.chat" loading="lazy" decoding="async">
+              </picture>
+            </div>
             <div class="analise__icone"><img src="img/icones/icone-chat.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
             <p data-copy="d3.chat">Além de todos os relatórios estruturados, você tem à disposição um chat conversacional direto: se você quiser aprofundar uma dúvida ou entender uma operação específica, basta perguntar diretamente para a IA</p>
           </li>
@@ -154,7 +170,13 @@
             <p data-copy="d5.p3">Uma planilha mostra seus números.</p>
           </div>
           <div class="card card--destaque comparativo__iava" data-revelar data-revelar-atraso="3">
-            <div class="comparativo__ilustracao"><img src="img/icones/ilustracao-iava.webp" srcset="img/icones/ilustracao-iava-640.webp 640w, img/icones/ilustracao-iava.webp 1208w" sizes="(min-width: 768px) min(44vw, 604px), calc(100vw - 80px)" width="1208" height="906" alt="" loading="lazy" decoding="async"></div>
+            <div class="tela comparativo__tela">
+              <div class="tela__barra" aria-hidden="true"></div>
+              <picture>
+                <source type="image/avif" srcset="img/plataforma/evidencias-400.avif 400w, img/plataforma/evidencias-797.avif 797w" sizes="(min-width: 768px) 620px, 88vw">
+                <img src="img/plataforma/evidencias-797.webp" srcset="img/plataforma/evidencias-400.webp 400w, img/plataforma/evidencias-797.webp 797w" sizes="(min-width: 768px) 620px, 88vw" width="797" height="414" alt="Evidências estatísticas no painel do Mentor IAVA: saldo do período, taxa de acerto de 54,3%, drawdown máximo e melhor trade" data-copy-alt="alt.plataforma.evidencias" loading="lazy" decoding="async">
+              </picture>
+            </div>
             <p data-copy="d5.p4">O IAVA ajuda você a entender porque eles estão ali. Ele cruza suas operações para encontrar padrões de comportamento, desempenho, horários, estratégias e disciplina.</p>
           </div>
         </div>
@@ -165,6 +187,7 @@
         </div>
 
         <div class="circuito">
+          <img class="circuito__chip" src="img/icones/ilustracao-iava-640.webp" srcset="img/icones/ilustracao-iava-640.webp 640w, img/icones/ilustracao-iava.webp 1208w" sizes="(min-width: 768px) 560px, 80vw" width="1208" height="906" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <div class="card circuito__item circuito__item--a" data-revelar>
             <h4 class="circuito__rotulo" data-copy="d5.item1.rotulo">Banco de dados de padrões comportamentais</h4>
             <p data-copy="d5.item1.texto">o sistema reconhece os micro padrões que antecedem, e aponta previamente, as vulnerabilidades do seu estilo de negociação;</p>

@@ -127,20 +127,10 @@
   opacity: 0;
 }
 
-.comparativo__ilustracao {
-  aspect-ratio: var(--ilustracao-proporcao);
-}
-
-.comparativo__ilustracao > img,
-.comparativo__ilustracao > .slot-imagem {
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-.comparativo__ilustracao > img {
-  object-fit: contain;
-  -webkit-mask-image: var(--mascara-ilustracao);
-  mask-image: var(--mascara-ilustracao);
+/* print real "evidencias" numa moldura .tela (sem glow próprio: o painel já é
+   destaque — um só nível médio) */
+.comparativo__tela {
+  box-shadow: var(--brilho-interno);
 }
 
 /* ───────────── B · por que supera: itens ligados por circuito ───────────── */
@@ -151,6 +141,8 @@
 
 /* celular: tudo empilhado, trilhas descendo na vertical */
 .circuito {
+  position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas: 'a' 'v1' 'b' 'v2' 'c';
@@ -232,4 +224,20 @@
     inline-size: var(--trilha-h);
     block-size: 1rem;
   }
+}
+
+/* o chip ao fundo, atrás dos itens 1 e 2, com as trilhas parecendo sair dele. Nível
+   sutil; os cards são opacos, então ele nunca fica atrás de texto. */
+.circuito__chip {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: var(--chip-topo);
+  z-index: -1;
+  inline-size: var(--chip-largura);
+  block-size: auto;
+  translate: -50% -50%;
+  opacity: var(--chip-fundo-opacidade);
+  -webkit-mask-image: var(--mascara-ilustracao);
+  mask-image: var(--mascara-ilustracao);
+  pointer-events: none;
 }

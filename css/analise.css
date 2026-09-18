@@ -198,3 +198,58 @@
 }
 
 /* cards não são clicáveis: nenhum hover (regra do CONTEXTO.md) */
+
+/* ───────────── notificação do alerta (card "Tilt e impulsividade") ─────────────
+   Enquanto o print não chega, um slot com a altura reservada. Entra com um deslize
+   curto quando o card aparece. */
+.analise__alerta {
+  block-size: var(--notificacao-altura);
+  margin-block-start: auto;
+}
+
+.analise__alerta > .slot-imagem {
+  block-size: 100%;
+}
+
+/* ───────────── chat: o print é o visual principal do card ───────────── */
+.analise__chat-tela {
+  overflow: hidden;
+  border: var(--borda);
+  border-radius: var(--raio-z7-p);
+  background: var(--tela-fundo);
+}
+
+.analise__chat-tela img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+/* o ícone de chat fica menor, ao lado do texto */
+.analise__card--chat .analise__icone,
+.analise__card--chat .analise__icone > img {
+  inline-size: var(--tamanho-icone);
+  block-size: var(--tamanho-icone);
+}
+
+/* ≥ 1081px (chat ocupa 2 colunas): print à esquerda, ícone + texto à direita */
+@media (min-width: 67.5625rem) {
+  .analise__card--chat {
+    grid-template-columns: var(--colunas-chat);
+    grid-template-rows: auto 1fr;
+    align-items: start;
+    column-gap: var(--esp-6);
+    row-gap: var(--esp-4);
+  }
+
+  .analise__card--chat .analise__chat-tela {
+    grid-row: 1 / -1;
+  }
+
+  .analise__card--chat .analise__icone,
+  .analise__card--chat .analise__icone > img {
+    inline-size: var(--tamanho-icone);
+    block-size: var(--tamanho-icone);
+  }
+
+}

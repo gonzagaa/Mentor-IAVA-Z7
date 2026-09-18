@@ -71,6 +71,7 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
   o IAVA encontra coisas no seu histórico que você dificilmente veria sozinho, por mais que ficasse um bom tempo analisando seus dados.
 - **`d3.chat`** · _parágrafo de fechamento (chat com a IA)_  
   Além de todos os relatórios estruturados, você tem à disposição um chat conversacional direto: se você quiser aprofundar uma dúvida ou entender uma operação específica, basta perguntar diretamente para a IA
+- **`img.plataforma.alerta`** — ⚠ PENDENTE: Print da notificação "Padrão de Revenge Trading Detectado" — não existe no dashboard-graficos.png recebido
 
 ## d4 · Quarta dobra (para quem é)
 
@@ -197,3 +198,12 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
 ## oferta
 
 - **`preco`** — ⚠ PENDENTE: Preço / oferta / planos do Mentor IAVA — não existe na copy
+
+## textos alternativos de imagem
+
+- **`alt.plataforma.topo`** · _alt de imagem (atributo, não visível)_  
+  Painel do Mentor IAVA com o briefing operacional e um alerta de revenge trading: risco de tilt alto e limite sugerido de 2 trades
+- **`alt.plataforma.evidencias`** · _alt de imagem (atributo, não visível)_  
+  Evidências estatísticas no painel do Mentor IAVA: saldo do período, taxa de acerto de 54,3%, drawdown máximo e melhor trade
+- **`alt.plataforma.chat`** · _alt de imagem (atributo, não visível)_  
+  Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações

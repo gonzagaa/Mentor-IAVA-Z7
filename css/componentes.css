@@ -82,6 +82,11 @@
   transform: translateY(var(--revelar-deslocamento));
 }
 
+/* data-revelar="deslizar": entra com um deslize curto de lado (notificações) */
+.revelar-ativo [data-revelar='deslizar']:not(.revelado) {
+  transform: translateX(var(--notificacao-deslize));
+}
+
 /* ═══════════════════════ LISTA COM BARRA ACESA ═══════════════════════
    Itens com uma barra vertical à esquerda (ref. 04). Com data-revelar="acender",
    cada item entra apagado (barra em --barra-apagada, texto em --texto-3) e acende
@@ -470,4 +475,61 @@
     color: CanvasText;
     -webkit-text-fill-color: CanvasText;
   }
+}
+
+/* ═══════════════════════════ MOLDURA .tela ═══════════════════════════
+   Prints REAIS da plataforma (recortes em img/plataforma/). Vidro escuro, --raio-z7,
+   borda de 1px que acende no topo, barra mínima com três pontos (CSS, sem texto),
+   glow nível MÉDIO, reflexo suave embaixo. Não é clicável: sem hover.
+   Com data-inclinar (js/inclinar.js) entra inclinada e endireita; reta sem JS ou com
+   reduced-motion. A imagem leva width/height: espaço reservado (CLS 0). */
+
+.tela {
+  position: relative;
+  border: var(--borda);
+  border-radius: var(--raio-z7);
+  background: var(--tela-fundo);
+  box-shadow: var(--brilho-interno), var(--glow-medio);
+  --inclinar-max: var(--tela-inclinar-max);
+  transform-origin: 50% 100%;
+  transform: perspective(var(--perspectiva-tela)) rotateX(var(--inclinar, 0deg));
+}
+
+/* borda que acende no topo */
+.tela::before {
+  content: '';
+  position: absolute;
+  inset-inline: var(--esp-8);
+  inset-block-start: -1px;
+  block-size: 1px;
+  background: var(--tela-borda-topo);
+  pointer-events: none;
+}
+
+/* reflexo suave embaixo (fora da caixa, absoluto: não ocupa espaço) */
+.tela::after {
+  content: '';
+  position: absolute;
+  inset-inline: 10%;
+  inset-block-start: 100%;
+  block-size: var(--esp-16);
+  background: var(--tela-reflexo);
+  pointer-events: none;
+}
+
+/* barra superior mínima: três pontos */
+.tela__barra {
+  block-size: var(--tela-barra);
+  border-block-end: var(--borda);
+  background:
+    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) var(--esp-4) 50% / var(--esp-3) var(--esp-3) no-repeat,
+    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) calc(var(--esp-4) + var(--esp-5)) 50% / var(--esp-3) var(--esp-3) no-repeat,
+    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) calc(var(--esp-4) + var(--esp-10)) 50% / var(--esp-3) var(--esp-3) no-repeat;
+}
+
+.tela img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-end-end-radius: calc(var(--raio-g) - 1px);
 }

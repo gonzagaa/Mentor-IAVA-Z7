@@ -654,5 +654,35 @@
     "tipo": "pendente",
     "descricao": "Preço / oferta / planos do Mentor IAVA — não existe na copy",
     "oculto": "fora da página a pedido do Gustavo em 2026-09-18 (não atrapalhar o design); ele resolve depois"
+  },
+  {
+    "id": "alt.plataforma.topo",
+    "secao": "textos alternativos de imagem",
+    "tipo": "alt",
+    "papel": "alt de imagem (atributo, não visível)",
+    "texto": "Painel do Mentor IAVA com o briefing operacional e um alerta de revenge trading: risco de tilt alto e limite sugerido de 2 trades",
+    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
+  },
+  {
+    "id": "alt.plataforma.evidencias",
+    "secao": "textos alternativos de imagem",
+    "tipo": "alt",
+    "papel": "alt de imagem (atributo, não visível)",
+    "texto": "Evidências estatísticas no painel do Mentor IAVA: saldo do período, taxa de acerto de 54,3%, drawdown máximo e melhor trade",
+    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
+  },
+  {
+    "id": "alt.plataforma.chat",
+    "secao": "textos alternativos de imagem",
+    "tipo": "alt",
+    "papel": "alt de imagem (atributo, não visível)",
+    "texto": "Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações",
+    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
+  },
+  {
+    "id": "img.plataforma.alerta",
+    "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
+    "tipo": "pendente",
+    "descricao": "Print da notificação \"Padrão de Revenge Trading Detectado\" — não existe no dashboard-graficos.png recebido"
   }
 ]

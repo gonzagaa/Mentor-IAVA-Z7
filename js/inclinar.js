@@ -7,7 +7,8 @@
   const telas = [...document.querySelectorAll('[data-inclinar]')]
   if (!telas.length) return
 
-  const max = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--inclinar-max')) || 14
+  // inclinação máxima por elemento (--inclinar-max; a .tela usa uma menor)
+  const maximos = new Map(telas.map(el => [el, parseFloat(getComputedStyle(el).getPropertyValue('--inclinar-max')) || 14]))
   let pendente = false
 
   const atualizar = () => {
@@ -16,7 +17,7 @@
       const r = el.getBoundingClientRect()
       // 0 quando o topo da tela está na base da janela; 1 quando está a 30% do topo
       const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.7)))
-      el.style.setProperty('--inclinar', `${(max * (1 - p)).toFixed(2)}deg`)
+      el.style.setProperty('--inclinar', `${(maximos.get(el) * (1 - p)).toFixed(2)}deg`)
     }
   }
   const pedir = () => {

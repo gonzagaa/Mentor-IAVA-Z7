@@ -19,3 +19,7 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-18 | `d6.titulo` | *(pendente: título da seção)* | Veja o Mentor IAVA funcionando na prática | Gustavo |
 | 2026-09-18 | `d6.video` | *(pendente: vídeo de demonstração)* | *(removido — vídeo no YouTube, id RjCiGF0Ce7A, com capa local clicável)* | Gustavo |
 | 2026-09-18 | `preco` | *(pendente na página)* | *(continua pendente no copy.json, mas fora da página — "oculto" — para não atrapalhar o design; o Gustavo resolve depois)* | Gustavo |
+| 2026-09-18 | `alt.plataforma.topo` | *(não existia)* | Painel do Mentor IAVA com o briefing operacional e um alerta de revenge trading: risco de tilt alto e limite sugerido de 2 trades — **proposto pelo Claude Code, AGUARDANDO APROVAÇÃO do Gustavo** | Claude Code |
+| 2026-09-18 | `alt.plataforma.evidencias` | *(não existia)* | Evidências estatísticas no painel do Mentor IAVA: saldo do período, taxa de acerto de 54,3%, drawdown máximo e melhor trade — **proposto pelo Claude Code, AGUARDANDO APROVAÇÃO do Gustavo** | Claude Code |
+| 2026-09-18 | `alt.plataforma.chat` | *(não existia)* | Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações — **proposto pelo Claude Code, AGUARDANDO APROVAÇÃO do Gustavo** | Claude Code |
+| 2026-09-18 | `img.plataforma.alerta` | *(não existia)* | *(pendente: o print da notificação "Padrão de Revenge Trading Detectado" não veio no dashboard-graficos.png; slot no lugar)* | Gustavo |

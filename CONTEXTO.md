@@ -198,6 +198,7 @@ img/icones/   ícones 3D processados (transparentes) usados nos cards
 img/marca/    logo da Zero7 (SVG, do site zero7.com.br)
 img/pagamento/ bandeiras de pagamento do rodapé (do site zero7.com.br)
 img/demo/     capa do vídeo da #demonstracao (AVIF/WebP)
+img/plataforma/ recortes dos prints reais (originais/ não vai para produção)
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
 copy/         copy.json, COPY.md, ALTERACOES.md, docx original
 scripts/      verificação (Playwright) — não vai para produção
@@ -284,6 +285,19 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG
   (horizontal ≥ 768px; vertical no celular), e de cada um desce uma trilha até o item 3
   (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
+- **Prints reais da plataforma** (`scripts/processar-plataforma.mjs`: só recorte e
+  otimização, AVIF/WebP com croma cheio; originais em `img/plataforma/originais/` fora do
+  dist): **topo** na hero, abaixo do botão, em `.tela` inclinada que endireita; **chat**
+  no card do chat da #analise (≥ 1081px: print e texto lado a lado, 1.1fr/1fr — o dono
+  pediu o print menor); **evidencias** (2×2 cards) no painel do IAVA; o chip foi para o
+  fundo dos itens 1 e 2 da #o-que-e (nível sutil). **alerta**: slot pendente
+  (`img.plataforma.alerta`) no card "Tilt e impulsividade" até chegar o print da
+  notificação. Componente `.tela` (componentes.css): vidro, --raio-z7, borda acesa no
+  topo, três pontos, glow médio, reflexo. Alts em `alt.*` no copy.json (checados pelo
+  `npm run copy`), AGUARDANDO APROVAÇÃO do Gustavo.
+- **LCP**: o H1 NÃO é candidato — o Chrome ignora texto com preenchimento transparente
+  (o gradiente via background-clip). LCP hoje: subtítulo em 390, print do topo em 1474.
+  A decidir com o dono.
 - **#demonstracao**: d6.titulo (.display H2) + d6.texto → tela (card destaque, vidro,
   --raio-z7) com a capa local do vídeo (`img/demo/capa-640/1280`, AVIF/WebP, lazy) num
   `<a href="https://www.youtube.com/watch?v=RjCiGF0Ce7A">` com `aria-labelledby` no título e

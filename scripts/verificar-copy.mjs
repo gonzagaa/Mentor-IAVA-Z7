@@ -43,7 +43,7 @@ async function colher(page) {
     }
 
     // elementos .pendente
-    const pendentes = [...document.querySelectorAll('.pendente')].map(el => ({
+    const pendentes = [...document.querySelectorAll('.pendente, .slot-imagem[data-pendente]')].map(el => ({
       id: el.getAttribute('data-pendente'),
       texto: el.textContent,
       visivel: visivel(el),
@@ -75,7 +75,11 @@ async function colher(page) {
       href: el.getAttribute('href'),
     }))
 
-    return { porId, pendentes, orfaos, hrefsPendentes }
+    // textos alternativos: <img alt="…" data-copy-alt="alt.*">
+    const alts = [...document.querySelectorAll('[data-copy-alt]')].map(el => ({ id: el.getAttribute('data-copy-alt'), alt: el.getAttribute('alt') }))
+    const semAlt = [...document.querySelectorAll('img')].filter(i => !i.hasAttribute('alt')).map(i => i.getAttribute('src'))
+
+    return { porId, pendentes, orfaos, hrefsPendentes, alts, semAlt }
   }, vitrine)
 }
 
@@ -134,7 +138,19 @@ await porLargura(larguras, async ({ page, largura }) => {
     }
   }
 
-  // 5 · órfãos
+  // 5 · alt: todo bloco tipo "alt" do json está numa imagem com o texto idêntico, e
+  //     nenhuma imagem sem atributo alt (decorativa leva alt="")
+  for (const bloco of copy.filter(b => b.tipo === 'alt')) {
+    const achados = d.alts.filter(a => a.id === bloco.id)
+    if (!achados.length && !vitrine) reg(largura, `FALTA ALT ${bloco.id} — nenhuma imagem com data-copy-alt="${bloco.id}"`)
+    for (const a of achados) if (colapsar(a.alt || '') !== colapsar(bloco.texto)) reg(largura, `DIVERGE ALT ${bloco.id}
+            json : ${JSON.stringify(bloco.texto)}
+            página: ${JSON.stringify(a.alt)}`)
+  }
+  for (const a of d.alts) if (!copy.some(b => b.tipo === 'alt' && b.id === a.id)) reg(largura, `ALT INVENTADO data-copy-alt="${a.id}" não existe no copy.json`)
+  for (const src of d.semAlt) reg(largura, `IMAGEM SEM ALT ${src}`)
+
+  // 6 · órfãos
   for (const o of d.orfaos) {
     reg(largura, `ÓRFÃO    ${JSON.stringify(o.texto.slice(0, 80))} em ${o.onde}`)
   }

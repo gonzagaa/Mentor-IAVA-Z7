@@ -19,7 +19,7 @@ const [pagina] = await porLargura(larguras, async ({ page }) =>
       return '(solto)'
     }
     return {
-      pendentes: [...document.querySelectorAll('.pendente')].map(el => ({
+      pendentes: [...document.querySelectorAll('.pendente, .slot-imagem[data-pendente]')].map(el => ({
         id: el.getAttribute('data-pendente'),
         ondeNaPagina: secao(el),
       })),
