@@ -118,9 +118,18 @@ a proposta é mais agressiva e futurista**.
 - Reserva OFL (não carregada em página nenhuma): **Unbounded**,
   `fonts/Unbounded-latin-variavel.woff2`, `fonts/Unbounded-LICENSE.txt`. Trocar = apontar
   `--fonte-display` para `--fonte-display-alternativa` e declarar o `@font-face`.
-- **H1 (`--fs-5`)**: 23px em 320, 27px em 375, 64px de 1474 em diante. O teto no celular
-  vem de uma regra, não de gosto: nenhuma linha do H1 pode ter uma palavra só, e o menor
-  par possível para "ANALISANDO" é "ANALISANDO CADA" (12,41em).
+- **Regra de quebra de TODOS os títulos**: proibida linha contendo só uma palavra
+  CURTA (5 caracteres ou menos, contando a pontuação — "SUA.", "DE", "POR", "DIA",
+  "24"). Palavra longa sozinha é permitida ("ANALISANDO", "OPERAÇÃO"). Proibida palavra
+  partida no meio. Onde precisar, prender a curta à vizinha com `<span>` sem quebra.
+  O `medir` confere o H1 (curta sozinha, partida, palavra fora da caixa).
+- **H1 (`--fs-5`)**: em cada largura, o MAIOR tamanho que cumpre a regra de quebra, cabe
+  na caixa, deixa o botão inteiro na dobra (390×844, 430×932, 1280×720, 1474×830,
+  1920×1080) e fecha em até 3 linhas em 1474/1920. Máximos achados por busca no navegador;
+  a escala fica logo abaixo: 22,9 · 27,1 · 28,3 · 31,4 · 49,4 · 55,4 · 61,3 · 65,8 ·
+  86,4px (320 → 1920). Em 1280×720 fica 2,5px abaixo do máximo para o anel do botão caber. No celular quem trava é "CADA": precisa dividir linha com
+  "ANALISANDO" (12,41em), porque "CADA OPERAÇÃO" deixaria "SUA." sozinha.
+- **H2 (`--fs-4`) = 0,72 × H1** em qualquer largura (faixa aceita: 0,65–0,8).
 
 ## Estrutura de pastas
 
@@ -161,7 +170,8 @@ Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
 `--pagina=amostra.html` (padrão: index). Emulam `prefers-reduced-motion: reduce`; `--movimento`
 desliga a emulação. `shots --dobra` captura só a primeira dobra, na altura de tela de
 cada largura (`DOBRA` em `scripts/comum.mjs`); o `medir` mede o H1 (linhas, palavra
-sozinha, palavra partida) e a posição do botão da hero nessas alturas. Antes de medir ou capturar, cada um confirma que as fontes carregaram
+sozinha, palavra partida) e a posição do botão da hero nessas alturas. `shots --brilho=meio`
+congela a hero com a faixa do H1 no meio da passagem e a luz de cima no pico (sem reduce). Antes de medir ou capturar, cada um confirma que as fontes carregaram
 do arquivo esperado (`document.fonts.check()`) e que `--css-carregado` vale 1 no `:root`;
 se falhar, PARA com código 1 e não grava nada. Na amostra, `npm run copy` aceita repetição
 de blocos e isenta só o texto de `.rotulo-tecnico`.
@@ -183,7 +193,6 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 - **Copy**: 51 blocos (`d1.cta1` mudou, `d1.cta2` saiu — ver `copy/ALTERACOES.md`).
 - `amostra.html` segue como guia do sistema (seções 1–5); as comparações decididas e o
   hero de teste saíram.
-- A revisar quando a próxima seção for montada: `--fs-4` (h2) é maior que o H1 no
-  celular (29px × 27px em 375) e vai esbarrar na mesma regra de "nenhuma linha com
-  uma palavra só".
+- A revisar quando a próxima seção for montada: `--fs-3` (h3, 20px no mínimo) fica
+  MAIOR que o h2 no celular (h2 = 16,5px em 320, 19,5px em 375).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

@@ -53,8 +53,15 @@ const medicoes = await porLargura(
 
       // linhas do H1, palavra por palavra: cada palavra vira um Range; o topo de cada
       // retângulo diz em que linha ela está. Palavra com retângulos em 2 topos = partida.
-      let linhasH1 = null, umaPalavra = [], partidas = []
+      // Regra de quebra (CONTEXTO.md): proibida linha só com palavra CURTA (≤ 5
+      // caracteres, contando a pontuação); palavra longa sozinha é permitida.
+      const CURTA = 5
+      let linhasH1 = null, curtaSozinha = [], longaSozinha = [], partidas = [], foraDaCaixa = []
       if (h1 && visivel(h1)) {
+        const caixa = h1.getBoundingClientRect()
+        const est = getComputedStyle(h1)
+        const esq = caixa.left + parseFloat(est.paddingLeft)
+        const dir = caixa.right - parseFloat(est.paddingRight)
         const palavras = []
         const andar = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT)
         for (let n = andar.nextNode(); n; n = andar.nextNode()) {
@@ -62,11 +69,15 @@ const medicoes = await porLargura(
             const r = document.createRange()
             r.setStart(n, m.index)
             r.setEnd(n, m.index + m[0].length)
-            const topos = [...new Set([...r.getClientRects()].filter(q => q.width > 0).map(q => Math.round(q.top)))]
-            palavras.push({ p: m[0], topos })
+            const rets = [...r.getClientRects()].filter(q => q.width > 0)
+            const topos = [...new Set(rets.map(q => Math.round(q.top)))]
+            // texto centralizado que não cabe transborda pelos DOIS lados: confere os dois
+            const fora = rets.some(q => q.left < esq - 0.5 || q.right > dir + 0.5)
+            palavras.push({ p: m[0], topos, fora })
           }
         }
         partidas = palavras.filter(w => w.topos.length > 1).map(w => w.p)
+        foraDaCaixa = palavras.filter(w => w.fora).map(w => w.p)
         const linhas = []
         for (const w of palavras) {
           const topo = w.topos[0]
@@ -75,8 +86,21 @@ const medicoes = await porLargura(
           else linhas.push({ topo, palavras: [w.p] })
         }
         linhasH1 = linhas.length
-        umaPalavra = linhas.filter(l => l.palavras.length === 1).map(l => l.palavras[0])
+        const sozinhas = linhas.filter(l => l.palavras.length === 1).map(l => l.palavras[0])
+        curtaSozinha = sozinhas.filter(p => p.length <= CURTA)
+        longaSozinha = sozinhas.filter(p => p.length > CURTA)
       }
+
+      // H2 do sistema (.display.degrau-4), medido com uma sonda na largura atual —
+      // o index ainda não tem H2 com .display
+      const sonda = document.createElement('span')
+      sonda.className = 'display degrau-4'
+      sonda.style.position = 'absolute'
+      sonda.style.visibility = 'hidden'
+      sonda.textContent = 'H'
+      document.body.append(sonda)
+      const fsH2 = px(getComputedStyle(sonda).fontSize)
+      sonda.remove()
 
       const pLongo = [...document.querySelectorAll('p')].find(
         el => visivel(el) && el.textContent.trim().length >= 120
@@ -126,8 +150,11 @@ const medicoes = await porLargura(
         raiz,
         fsH1,
         linhasH1,
-        umaPalavra,
+        curtaSozinha,
+        longaSozinha,
         partidas,
+        foraDaCaixa,
+        fsH2,
         fsP,
         pLongoId: pLongo ? pLongo.getAttribute('data-copy') : null,
         menorFonte,
@@ -204,16 +231,26 @@ const tabelaMd = (cabecalho, corpo) => [
 
 const tabela = tabelaMd(cab, linhas)
 
-// H1: linhas, palavra sozinha na linha, palavra partida
+// H1: linhas e regra de quebra; H2 e a razão H2/H1 (alvo 0,65–0,8); base do botão
+const razao = m => (m.fsH1 && m.fsH2 ? m.fsH2 / m.fsH1 : null)
 const tabelaH1 = tabelaMd(
-  ['largura', 'h1', 'linhas', 'linha com 1 palavra', 'palavra partida'],
-  medicoes.map(m => [
-    `**${m.largura}**`,
-    `${n(m.fsH1)}px`,
-    n(m.linhasH1),
-    m.umaPalavra?.length ? `**${m.umaPalavra.join(', ')}**` : 'nenhuma',
-    m.partidas?.length ? `**${m.partidas.join(', ')}**` : 'nenhuma',
-  ])
+  ['largura', 'h1', 'linhas', 'curta sozinha', 'longa sozinha', 'partida / fora da caixa', 'h2', 'h2/h1', 'base do botão'],
+  medicoes.map(m => {
+    const r = razao(m)
+    const rotuloRazao = r === null ? '—' : r >= 0.65 && r <= 0.8 ? r.toFixed(3) : `**${r.toFixed(3)}**`
+    const defeitos = [...(m.partidas || []), ...(m.foraDaCaixa || [])]
+    return [
+      `**${m.largura}**`,
+      `${n(m.fsH1)}px`,
+      n(m.linhasH1),
+      m.curtaSozinha?.length ? `**${m.curtaSozinha.join(', ')}**` : 'nenhuma',
+      m.longaSozinha?.length ? m.longaSozinha.join(', ') : '—',
+      defeitos.length ? `**${defeitos.join(', ')}**` : 'nenhuma',
+      `${n(m.fsH2)}px`,
+      rotuloRazao,
+      m.dobra ? `${m.dobra.base}px / ${m.dobra.altura}` : '—',
+    ]
+  })
 )
 
 // botão principal na primeira dobra, medido na altura real de tela
