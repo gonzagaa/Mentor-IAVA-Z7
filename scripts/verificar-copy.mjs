@@ -111,8 +111,10 @@ await porLargura(larguras, async ({ page, largura }) => {
     if (!idsJson.has(id)) reg(largura, `INVENTADO data-copy="${id}" não existe no copy.json`)
   }
 
-  // 3 · todo pendente do json existe na página
-  const idsNaPagina = new Set(d.pendentes.map(p => p.id))
+  // 3 · todo pendente do json existe na página — como caixa .pendente visível, ou,
+  //     se for o destino de um link, no atributo data-pendente-href do link (decisão
+  //     do dono: o destino dos CTAs não aparece como caixa na página)
+  const idsNaPagina = new Set([...d.pendentes.map(p => p.id), ...d.hrefsPendentes.map(h => h.destino)])
   for (const bloco of vitrine ? [] : blocosPendentes) {
     if (!idsNaPagina.has(bloco.id)) reg(largura, `FALTA PENDENTE ${bloco.id} — nenhum .pendente com data-pendente="${bloco.id}"`)
   }
@@ -136,7 +138,10 @@ await porLargura(larguras, async ({ page, largura }) => {
 }, { pagina })
 
 const orfaos = ultimo ? ultimo.orfaos.length : 0
-const pendentes = ultimo ? ultimo.pendentes.length : 0
+// pendentes distintos: caixas visíveis + destinos de link só no atributo
+const pendentes = ultimo
+  ? new Set([...ultimo.pendentes.map(p => p.id), ...ultimo.hrefsPendentes.map(h => h.destino)]).size
+  : 0
 
 if (problemas.length) {
   const comDefeito = new Set(

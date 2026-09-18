@@ -40,7 +40,10 @@ verificação (Playwright) em `scripts/`. Nada de `node_modules` em produção.
 4. **PENDENTE é visível de propósito.** Componente `.pendente` com `data-pendente="<id>"`:
    caixa tracejada magenta (#FF2BD6), fundo listrado, texto `[PENDENTE: <descrição>]`.
    Ele deve saltar aos olhos numa página preta e azul — é para o dono bater o olho e
-   saber o que falta. `scripts/pendentes.mjs` lista todos.
+   saber o que falta. `scripts/pendentes.mjs` lista todos. **Exceção (decisão do
+   dono):** pendente de DESTINO DE LINK não vira caixa na página; fica só no atributo
+   `data-pendente-href="<id>"` do link (ex.: `d1.cta.destino` nos CTAs de compra). Os
+   scripts contam e listam esse pendente pelo atributo.
 5. **Decoração pode ter texto só se for imagem gerada sem texto legível** ou se o texto
    estiver no `copy.json`. Mockups de dashboard com números inventados são proibidos;
    quando precisar de tela da plataforma, use PENDENTE `print-plataforma`.
@@ -92,11 +95,14 @@ a proposta é mais agressiva e futurista**.
 
 - **Canto: assimétrico Zero7** (`--raio-z7` / `--raio-z7-p`) em toda superfície: cards,
   botões e campos (`--raio-card`, `--raio-botao`, `--raio-campo`). Os raios simétricos
-  ficam só para o que não é superfície: pílula da nav, selo, ladrilho de ícone, pontos.
+  ficam só para o que não é superfície: selo, ladrilho de ícone, pontos.
 - **Fonte display: NCS Radhiumz** (continua só local até a licença Webfonts).
   **Unbounded** fica documentada como reserva, sem carregar em página nenhuma.
 - **CTAs em caixa alta por CSS** (`text-transform` na `.botao`); o texto no HTML e no
-  json segue como o dono escreveu.
+  json segue como o dono escreveu. Botões com 60px de altura (`--altura-botao`).
+- **Sem cabeçalho**: não há menu de navegação nem logo na página (`nav.itens` saiu da
+  copy). A página começa direto na hero.
+- **H1 estático**: sem faixa de brilho animada; a luz vem só do gradiente dentro do texto.
 
 ## Tipografia
 
@@ -123,13 +129,16 @@ a proposta é mais agressiva e futurista**.
   "24"). Palavra longa sozinha é permitida ("ANALISANDO", "OPERAÇÃO"). Proibida palavra
   partida no meio. Onde precisar, prender a curta à vizinha com `<span>` sem quebra.
   O `medir` confere o H1 (curta sozinha, partida, palavra fora da caixa).
-- **H1 (`--fs-5`)**: em cada largura, o MAIOR tamanho que cumpre a regra de quebra, cabe
-  na caixa, deixa o botão inteiro na dobra (390×844, 430×932, 1280×720, 1474×830,
-  1920×1080) e fecha em até 3 linhas em 1474/1920. Máximos achados por busca no navegador;
-  a escala fica logo abaixo: 22,9 · 27,1 · 28,3 · 31,4 · 49,4 · 55,4 · 61,3 · 65,8 ·
-  86,4px (320 → 1920). Em 1280×720 fica 2,5px abaixo do máximo para o anel do botão caber. No celular quem trava é "CADA": precisa dividir linha com
-  "ANALISANDO" (12,41em), porque "CADA OPERAÇÃO" deixaria "SUA." sozinha.
-- **H2 (`--fs-4`) = 0,72 × H1** em qualquer largura (faixa aceita: 0,65–0,8).
+- **H1 (`--fs-5`) proporcional** à página, com respiro dos lados (ref. 01): bloco com
+  teto de ~900px, 3–4 linhas no desktop. 22,9 · 27,1 · 28,3 · 31,4 · 38,1 · 43,1 · 48,2 ·
+  52 · 56px (320 → 1920; 56 é o teto). No celular o limite é da regra de quebra: "CADA"
+  precisa dividir linha com "ANALISANDO" (12,41em), senão "SUA." fica sozinha.
+- **Escala de títulos**, válida nas 9 larguras: **H2 (`--fs-4`) = 0,72 × H1, nunca
+  abaixo de 19px** (faixa aceita: 0,65–0,85); **H3 (`--fs-3`) = 0,7 × H2, nunca abaixo
+  de 17px** (sempre menor que o H2 e maior que o corpo).
+- **Luz do H1**: gradiente radial que nasce no centro de cima, no mesmo ponto do arco e
+  do cone — azul (o elétrico do arco, clareado) → branco → prata (`#aeb6c2`) só nas
+  pontas laterais. Halo externo bem discreto; a letra fica nítida.
 
 ## Estrutura de pastas
 
@@ -163,7 +172,7 @@ servidor sozinhos.
 | `npm run shots -- <rótulo>` | página inteira em `shots/<rótulo>/<largura>.png` |
 | `npm run medir -- <rótulo>` | tabela de medidas em `medidas/<rótulo>.md` |
 | `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, contraste |
-| `npm run pintura` | trace do Chrome: custo de pintura das animações da hero (com e sem a varredura do H1) |
+| `npm run pintura` | trace do Chrome: custo de pintura das animações da hero (tudo × parado) |
 | `node scripts/gerar-copy-md.mjs` | regera `copy/COPY.md` a partir do `copy.json` |
 
 Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
@@ -171,28 +180,27 @@ Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
 desliga a emulação. `shots --dobra` captura só a primeira dobra, na altura de tela de
 cada largura (`DOBRA` em `scripts/comum.mjs`); o `medir` mede o H1 (linhas, palavra
 sozinha, palavra partida) e a posição do botão da hero nessas alturas. `shots --brilho=meio`
-congela a hero com a faixa do H1 no meio da passagem e a luz de cima no pico (sem reduce). Antes de medir ou capturar, cada um confirma que as fontes carregaram
+congela a luz de cima da hero no pico (sem reduce). Antes de medir ou capturar, cada um confirma que as fontes carregaram
 do arquivo esperado (`document.fonts.check()`) e que `--css-carregado` vale 1 no `:root`;
 se falhar, PARA com código 1 e não grava nada. Na amostra, `npm run copy` aceita repetição
 de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 2 concluída — cabeçalho e #hero construídos no index.html.** O resto da página
-(#dor em diante) ainda é o esqueleto sem estilo.
+**Fase 2c concluída — hero pronta no index.html.** O resto da página (#dor em diante)
+ainda é o esqueleto sem estilo.
 
-- **Hero**, de cima para baixo: nav (pílula com o pendente `nav.itens`) → selo
-  (`d1.apoio`, ponto "ao vivo" pulsando) → H1 `.display` branco iluminado de cima →
-  subtítulo → um botão (`d1.cta1`, `href="#"` + `data-pendente-href`) → pendente
-  `d1.cta.destino`. Fundo: grade de quadrados + arco de horizonte invertido + cone de luz
-  que respira.
-- **Animações da hero (3)**: respiro da luz (opacity), pulso do selo (transform +
-  opacity) — ambas só compositor, zero pintura —, e a varredura do H1
-  (`background-position`, pinta ~1,2s a cada 7s). Todas param com reduced-motion.
-  O H1 nasce visível: nenhuma entrada animada.
-- **Copy**: 51 blocos (`d1.cta1` mudou, `d1.cta2` saiu — ver `copy/ALTERACOES.md`).
-- `amostra.html` segue como guia do sistema (seções 1–5); as comparações decididas e o
-  hero de teste saíram.
-- A revisar quando a próxima seção for montada: `--fs-3` (h3, 20px no mínimo) fica
-  MAIOR que o h2 no celular (h2 = 16,5px em 320, 19,5px em 375).
+- **Hero**, de cima para baixo (sem cabeçalho): selo (`d1.apoio`, frase única em branco,
+  ponto "ao vivo" pulsando, uma linha de 320 a 1920) → H1 `.display` estático com a luz
+  radial azul → branco → prata → subtítulo → um botão (`d1.cta1`, 60px, `href="#"` +
+  `data-pendente-href="d1.cta.destino"`). Fundo, de baixo para cima: banner de teste
+  (`img/banner-hero.png`, 70% de opacidade, sumindo para baixo — o dono vai trocar por
+  AVIF se aprovar) → grade de quadrados → arco invertido + cone de luz que respira.
+- **Animações da hero (2)**: respiro da luz (opacity) e pulso do selo (transform +
+  opacity). Zero pintura em loop (`npm run pintura`). Param com reduced-motion.
+- **Botão na dobra**: aparece inteiro em 375×667, 390×844, 430×932, 768×1024,
+  1024×768, 1280×720, 1474×830 e 1920×1080; em 320×568 fica 35px abaixo.
+- **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link) — ver
+  `copy/ALTERACOES.md`.
+- `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

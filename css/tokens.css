@@ -50,7 +50,7 @@
   --linha-forte: rgb(255 255 255 / 14%);
   --linha-acesa: rgb(31 163 255 / 55%);
 
-  /* vidro (nav, botão secundário) */
+  /* vidro (selo, botão secundário) */
   --vidro: rgb(10 14 20 / 55%);
   --vidro-claro: rgb(255 255 255 / 4%);
   --vidro-claro-2: rgb(255 255 255 / 8%);
@@ -112,24 +112,25 @@
   --fs-0: clamp(0.8125rem, 0.795rem + 0.087vw, 0.875rem); /* 13 → 14   legenda, rótulo */
   --fs-1: clamp(1rem, 0.965rem + 0.173vw, 1.125rem); /* 16 → 18   corpo */
   --fs-2: clamp(1.125rem, 1.056rem + 0.347vw, 1.375rem); /* 18 → 22   lead, subtítulo */
-  --fs-3: clamp(1.25rem, 1.111rem + 0.693vw, 1.75rem); /* 20 → 28   h3 */
-  /* h2: sempre 0,72 do h1, em qualquer largura (alvo do dono: entre 0,65 e 0,8) */
-  --fs-4: calc(var(--fs-5) * 0.72);
-  /* h1: o MAIOR tamanho que cumpre, em cada largura, a regra de quebra, nenhuma
-     palavra fora da caixa, o botão inteiro na dobra (390×844, 430×932, 1280×720,
-     1474×830, 1920×1080) e no máximo 3 linhas em 1474/1920. Máximos achados por
-     busca no navegador (fase 2b), e a escala fica logo abaixo deles:
-       A · celular: limitado por "ANALISANDO CADA" = 12,41em ("CADA" e "SUA." não
-           podem ficar sozinhas) → cresce com a largura útil;
-       B · 768 a 1474: a dobra de 1280×720 segura (máx. 63,75px; fica em 61,3 para
-           o anel externo do botão também caber, com folga);
-       C · 1474 a 1920: volta a crescer; 3 linhas até ~87px em 1920.
-     min(A, B) e depois max(…, C). */
+  /* Títulos: h1 → h2 → h3 amarrados, para a hierarquia valer nas 9 larguras.
+     h3: 0,7 do h2, nunca abaixo de 17px (sempre > corpo e < h2, que nunca fica
+     abaixo de 19px) */
+  --fs-3: max(1.0625rem, calc(var(--fs-4) * 0.7));
+  /* h2: 0,72 do h1, nunca abaixo de 19px (faixa do dono: 0,65–0,85 do h1) */
+  --fs-4: max(1.1875rem, calc(var(--fs-5) * 0.72));
+  /* h1: PROPORCIONAL ao resto da página (o "maior possível" foi revogado).
+     Alvos do dono: 23 · 28 (390) · 38 (768) · 42 (1024) · 48 (1280) · 52 (1474) ·
+     56px (1920, teto). Três retas, min() — cada uma cresce mais devagar:
+       A · celular (até 430): a mesma da fase 2b; "ANALISANDO CADA" = 12,41em cabe
+           na largura útil, e "CADA"/"SUA." nunca ficam sozinhas;
+       B · 430 a 1474: 31,4 → 52px;
+       C · 1474 a 1920: 52 → 56px, o teto.
+     A largura do bloco do h1 também tem teto (hero.css): até ~900px. */
   --fs-5: clamp(
-    1.375rem,
-    max(min(-0.105rem + 7.682vw, 1.9756rem + 2.3196vw), -0.163rem + 4.641vw),
-    5.4rem
-  ); /* 22,9 · 27,1 · 28,3 · 31,4 · 49,4 · 55,4 · 61,3 · 65,8 · 86,4 */
+    1.40625rem,
+    min(-0.105rem + 7.682vw, 1.4325rem + 1.973vw, 2.4238rem + 0.8969vw),
+    3.5rem
+  ); /* 22,9 · 27,1 · 28,3 · 31,4 · 38,1 · 43,1 · 48,2 · 52 · 56 */
   --fs-6: clamp(2.5rem, 1.638rem + 4.333vw, 5.625rem); /* 40 → 90   manchete */
 
   /* corpo (Inter) — entrelinha e tracking por degrau */
@@ -210,6 +211,7 @@
 
   --borda: 1px solid var(--linha);
   --tamanho-ladrilho: clamp(5rem, 4.4rem + 2vw, 6.5rem); /* 80 → 104 */
+  --altura-botao: 3.75rem; /* 60px: botões mais encorpados (pedido do dono) */
 
   /* ────────────────────────────── LUZ ────────────────────────────── */
 
@@ -275,23 +277,32 @@
     rgb(0 59 102 / 10%) 56deg,
     transparent 64deg 360deg);
   --respiro-luz: 0.72; /* opacidade mínima do ciclo; o máximo é 1 */
+  --banner-opacidade: 0.7; /* banner de teste da hero, um pouco apagado */
 
   /* hero: H1 branco iluminado de cima */
-  --h1-topo: #c9f2ff; /* onde a luz bate: ciano bem claro, ainda lido como branco */
-  --gradiente-h1: linear-gradient(180deg, var(--h1-topo) 0%, var(--texto) 58%, var(--texto) 100%);
-  --faixa-h1: linear-gradient(105deg,
-    transparent 44%,
-    rgb(92 225 255 / 55%) 48.5%,
-    rgb(220 248 255 / 95%) 50%,
-    rgb(92 225 255 / 55%) 51.5%,
-    transparent 56%);
-  --brilho-h1: drop-shadow(0 0 0.6rem rgb(31 163 255 / 26%)) drop-shadow(0 0 1px rgb(92 225 255 / 20%));
+  /* a luz do H1 vem do MESMO lugar que a do arco: o centro de cima (curva + cone).
+     Gradiente radial em três tons: AZUL (o azul elétrico do arco, clareado) no
+     centro do topo → BRANCO no meio → PRATA (cinza quase branco, frio) só nas
+     pontas, longe da luz. Metálico, e ainda lido como título claro. */
+  --h1-luz: #8ccfff;
+  --h1-luz-meio: #cdeaff;
+  --h1-prata: #aeb6c2; /* prata levemente frio (escolha do dono) */
+  --gradiente-h1: radial-gradient(
+    ellipse 62% 200% at 50% -30%,
+    var(--h1-luz) 0%,
+    var(--h1-luz-meio) 20%,
+    var(--texto) 40%,
+    var(--texto) 80%,
+    var(--h1-prata) 100%
+  ); /* elipse alta: o prata só alcança as pontas laterais; o pé do título fica branco */
+  /* halo bem discreto: a letra fica nítida; a luz vem do gradiente dentro do texto */
+  --brilho-h1: drop-shadow(0 0 0.5rem rgb(31 163 255 / 14%));
 
   /* selo */
   --ls-selo: 0.14em;
   --selo-acento: var(--azul-eletrico);
   --selo-ponto: 0.5rem;
-  --selo-separador: rgb(255 255 255 / 28%);
+  --ls-selo-estreito: 0.1em; /* abaixo de 375: em 320 o selo mede 276 de 288px úteis */
 
   /* feixes verticais: três intensidades dão profundidade */
   --feixe: rgb(31 163 255 / 80%);
@@ -304,6 +315,7 @@
   --mascara-cheia: linear-gradient(#000 0 0);
   --mascara-arco: linear-gradient(180deg, transparent 0%, #000 40%, #000 72%, transparent 100%);
   --mascara-cone: linear-gradient(180deg, #000 0%, #000 25%, transparent 100%);
+  --mascara-baixo: linear-gradient(180deg, #000 0%, #000 45%, transparent 100%); /* some para baixo */
   --mascara-palco-piso: radial-gradient(ellipse 75% 110% at 50% 0%, #000 25%, transparent 100%);
   --mascara-radial: radial-gradient(ellipse 70% 65% at 50% 35%, #000 25%, transparent 75%);
   --mascara-vertical: linear-gradient(180deg, transparent 0%, #000 18%, #000 70%, transparent 100%);
@@ -319,7 +331,6 @@
   --dur-media: 200ms;
   --dur-lenta: 400ms;
   --dur-giro: 6s; /* borda neon */
-  --dur-varredura: 7s; /* ciclo da faixa de brilho do H1 (passa em ~1,2s) */
   --dur-respiro: 6s; /* luz de cima */
   --dur-pulso: 2.4s; /* ponto "ao vivo" do selo */
   --vai-e-volta: cubic-bezier(0.45, 0, 0.55, 1); /* só para ciclos contínuos e lentos */

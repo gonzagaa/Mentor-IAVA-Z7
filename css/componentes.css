@@ -53,10 +53,10 @@
   align-items: center;
   justify-content: center;
   gap: var(--esp-2);
-  min-block-size: calc(var(--alvo-toque) + var(--esp-2)); /* 52px: acima do alvo de 44 */
+  min-block-size: var(--altura-botao); /* 60px, bem acima do alvo de toque de 44 */
   min-inline-size: var(--alvo-toque);
   max-inline-size: 100%;
-  padding: var(--esp-3) var(--esp-6);
+  padding: var(--esp-4) var(--esp-8);
   border: 1px solid transparent;
   border-radius: var(--raio-botao); /* assinatura Zero7 */
   font-family: var(--fonte-corpo);
@@ -155,19 +155,17 @@
 }
 
 /* ═══════════════════════════════ SELO ═══════════════════════════════
-   Pílula pequena de vidro: ponto "ao vivo" pulsando + frases curtas em caixa alta.
-   Marcação: <p class="selo" data-copy="…"><span class="selo__frase">…</span>
-   <span class="selo__frase selo__frase--acento">…</span></p>
-   O separador entre frases é pseudo-elemento: nunca um caractere de texto. */
+   Pílula pequena de vidro: ponto "ao vivo" pulsando + uma frase curta em caixa alta,
+   numa cor só. Marcação: <p class="selo" data-copy="…">frase</p> — sem spans.
+   Cabe em uma linha a partir de 375; em telas mais estreitas o tracking aperta
+   antes de a frase quebrar. */
 
 .selo {
   position: relative;
-  display: inline-grid;
-  grid-template-columns: auto auto auto; /* ponto · frase · frase */
+  display: inline-flex;
   align-items: center;
-  gap: 0 var(--esp-3);
+  gap: var(--esp-3);
   max-inline-size: 100%;
-  text-align: start;
   padding: var(--esp-2) var(--esp-4) var(--esp-2) var(--esp-3);
   border: 1px solid var(--linha-forte);
   border-radius: var(--raio-pilula);
@@ -179,7 +177,8 @@
   line-height: var(--lh-0);
   letter-spacing: var(--ls-selo);
   text-transform: uppercase;
-  color: var(--texto-2);
+  text-align: start;
+  color: var(--texto);
 }
 
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
@@ -194,6 +193,7 @@
 .selo::before,
 .selo::after {
   content: '';
+  flex: none;
   inline-size: var(--selo-ponto);
   block-size: var(--selo-ponto);
   border-radius: 50%;
@@ -225,99 +225,13 @@
   }
 }
 
-.selo__frase {
-  white-space: nowrap;
-}
-
-/* separador: um traço fino antes da segunda frase */
-.selo__frase + .selo__frase::before {
-  content: '';
-  display: inline-block;
-  inline-size: var(--esp-4);
-  block-size: 1px;
-  margin-inline-end: var(--esp-3);
-  vertical-align: middle;
-  background: var(--selo-separador);
-}
-
-.selo__frase--acento {
-  color: var(--selo-acento);
-}
-
-/* estreito demais para uma linha (13px é o piso de fonte): as frases empilham ao
-   lado do ponto, e o separador sai de cena */
-@media (max-width: 26rem) {
+/* abaixo de 375: aperta o tracking antes de deixar a frase quebrar */
+@media (max-width: 23.4rem) {
   .selo {
-    grid-template-columns: auto auto;
-    border-radius: var(--raio-g);
+    gap: var(--esp-2);
+    padding-inline: var(--esp-3);
+    letter-spacing: var(--ls-selo-estreito);
   }
-
-  .selo::before {
-    grid-row: span 2;
-  }
-
-  .selo__frase + .selo__frase::before {
-    display: none;
-  }
-}
-
-/* ═══════════════════════════ NAV EM PÍLULA ═══════════════════════════ */
-
-.nav-pilula {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: var(--esp-1);
-  inline-size: fit-content;
-  max-inline-size: 100%;
-  margin-inline: auto;
-  padding: var(--esp-2);
-  border: var(--borda);
-  border-radius: var(--raio-g);
-  /* fallback sólido: sem backdrop-filter, a pílula continua legível */
-  background: var(--superficie);
-  box-shadow: var(--brilho-interno);
-}
-
-@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
-  .nav-pilula {
-    background: var(--vidro);
-    -webkit-backdrop-filter: var(--vidro-desfoque);
-    backdrop-filter: var(--vidro-desfoque);
-  }
-}
-
-.nav-pilula__item {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: var(--alvo-toque);
-  padding: var(--esp-2) var(--esp-4);
-  border-radius: var(--raio-pilula);
-  color: var(--texto-2);
-  font-size: var(--fs-0);
-  font-weight: var(--peso-forte);
-  text-decoration: none;
-  transition:
-    background var(--dur-media) var(--saida),
-    color var(--dur-media) var(--saida);
-}
-
-.nav-pilula__item:hover {
-  background: var(--vidro-claro-2);
-  color: var(--texto);
-}
-
-/* item ativo preenchido */
-.nav-pilula__item[aria-current] {
-  background: var(--gradiente-botao);
-  color: var(--texto-no-azul);
-  box-shadow: var(--brilho-interno-forte), var(--glow-sutil);
-}
-
-/* enquanto os itens não existem, a pílula abriga o pendente */
-.nav-pilula > .pendente {
-  border-radius: var(--raio-m);
 }
 
 /* ═══════════════════════════════ CARDS ═══════════════════════════════ */

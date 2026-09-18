@@ -26,17 +26,24 @@ const [pagina] = await porLargura(larguras, async ({ page }) =>
       hrefs: [...document.querySelectorAll('[data-pendente-href]')].map(el => ({
         destino: el.getAttribute('data-pendente-href'),
         quem: el.getAttribute('data-copy') || el.tagName.toLowerCase(),
+        ondeNaPagina: secao(el),
       })),
     }
   }),
   { pagina: arquivoPagina }
 )
 
-console.log(`\n${pagina.pendentes.length} pendente(s) na página\n`)
-for (const p of pagina.pendentes) {
+// destinos de link pendentes que não têm caixa visível (só o data-pendente-href)
+const soNoLink = [...new Set(pagina.hrefs.map(h => h.destino))]
+  .filter(id => !pagina.pendentes.some(p => p.id === id))
+  .map(id => ({ id, ondeNaPagina: pagina.hrefs.find(h => h.destino === id).ondeNaPagina, soNoLink: true }))
+const todos = [...pagina.pendentes, ...soNoLink]
+
+console.log(`\n${todos.length} pendente(s) na página (${pagina.pendentes.length} em caixa visível, ${soNoLink.length} só no link)\n`)
+for (const p of todos) {
   const bloco = porIdJson.get(p.id)
   console.log(`  ${p.id}`)
-  console.log(`    onde na página : ${p.ondeNaPagina}`)
+  console.log(`    onde na página : ${p.ondeNaPagina}${p.soNoLink ? ' — sem caixa: só no data-pendente-href do link' : ''}`)
   console.log(`    seção no copy  : ${bloco ? bloco.secao : '⚠ id não existe no copy.json'}`)
   console.log(`    descrição      : ${bloco ? bloco.descricao : '—'}`)
   const refs = pagina.hrefs.filter(h => h.destino === p.id)
@@ -44,7 +51,7 @@ for (const p of pagina.pendentes) {
   console.log('')
 }
 
-const naPagina = new Set(pagina.pendentes.map(p => p.id))
+const naPagina = new Set(todos.map(p => p.id))
 const faltando = copy.filter(b => b.tipo === 'pendente' && !naPagina.has(b.id))
 if (faltando.length) {
   console.log(`⚠ pendentes do copy.json que NÃO estão na página: ${faltando.map(b => b.id).join(', ')}`)

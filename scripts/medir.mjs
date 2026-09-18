@@ -91,16 +91,22 @@ const medicoes = await porLargura(
         longaSozinha = sozinhas.filter(p => p.length > CURTA)
       }
 
-      // H2 do sistema (.display.degrau-4), medido com uma sonda na largura atual —
-      // o index ainda não tem H2 com .display
-      const sonda = document.createElement('span')
-      sonda.className = 'display degrau-4'
-      sonda.style.position = 'absolute'
-      sonda.style.visibility = 'hidden'
-      sonda.textContent = 'H'
-      document.body.append(sonda)
-      const fsH2 = px(getComputedStyle(sonda).fontSize)
-      sonda.remove()
+      // H2 e H3 do sistema (.display.degrau-4/3) e o corpo (.degrau-1), medidos com
+      // sondas na largura atual — o index ainda não tem H2/H3 com .display
+      const medirClasse = classe => {
+        const sonda = document.createElement('span')
+        sonda.className = classe
+        sonda.style.position = 'absolute'
+        sonda.style.visibility = 'hidden'
+        sonda.textContent = 'H'
+        document.body.append(sonda)
+        const v = px(getComputedStyle(sonda).fontSize)
+        sonda.remove()
+        return v
+      }
+      const fsH2 = medirClasse('display degrau-4')
+      const fsH3 = medirClasse('display degrau-3')
+      const fsCorpo = medirClasse('degrau-1')
 
       const pLongo = [...document.querySelectorAll('p')].find(
         el => visivel(el) && el.textContent.trim().length >= 120
@@ -155,6 +161,8 @@ const medicoes = await porLargura(
         partidas,
         foraDaCaixa,
         fsH2,
+        fsH3,
+        fsCorpo,
         fsP,
         pLongoId: pLongo ? pLongo.getAttribute('data-copy') : null,
         menorFonte,
@@ -231,13 +239,15 @@ const tabelaMd = (cabecalho, corpo) => [
 
 const tabela = tabelaMd(cab, linhas)
 
-// H1: linhas e regra de quebra; H2 e a razão H2/H1 (alvo 0,65–0,8); base do botão
+// H1: linhas e regra de quebra; escala h1 → h2 → h3 → corpo; base do botão.
+// Alvos (CONTEXTO.md): h2 entre 0,65 e 0,85 do h1 e ≥ 19px; corpo < h3 < h2.
 const razao = m => (m.fsH1 && m.fsH2 ? m.fsH2 / m.fsH1 : null)
 const tabelaH1 = tabelaMd(
-  ['largura', 'h1', 'linhas', 'curta sozinha', 'longa sozinha', 'partida / fora da caixa', 'h2', 'h2/h1', 'base do botão'],
+  ['largura', 'h1', 'linhas', 'curta sozinha', 'longa sozinha', 'partida / fora da caixa', 'h2', 'h2/h1', 'h3', 'corpo', 'base do botão'],
   medicoes.map(m => {
     const r = razao(m)
-    const rotuloRazao = r === null ? '—' : r >= 0.65 && r <= 0.8 ? r.toFixed(3) : `**${r.toFixed(3)}**`
+    const okH2 = r !== null && r >= 0.65 && r <= 0.85 && m.fsH2 >= 19
+    const okH3 = m.fsH3 < m.fsH2 && m.fsH3 > m.fsCorpo
     const defeitos = [...(m.partidas || []), ...(m.foraDaCaixa || [])]
     return [
       `**${m.largura}**`,
@@ -246,8 +256,10 @@ const tabelaH1 = tabelaMd(
       m.curtaSozinha?.length ? `**${m.curtaSozinha.join(', ')}**` : 'nenhuma',
       m.longaSozinha?.length ? m.longaSozinha.join(', ') : '—',
       defeitos.length ? `**${defeitos.join(', ')}**` : 'nenhuma',
-      `${n(m.fsH2)}px`,
-      rotuloRazao,
+      okH2 ? `${n(m.fsH2)}px` : `**${n(m.fsH2)}px**`,
+      r === null ? '—' : okH2 ? r.toFixed(3) : `**${r.toFixed(3)}**`,
+      okH3 ? `${n(m.fsH3)}px` : `**${n(m.fsH3)}px**`,
+      `${n(m.fsCorpo)}px`,
       m.dobra ? `${m.dobra.base}px / ${m.dobra.altura}` : '—',
     ]
   })

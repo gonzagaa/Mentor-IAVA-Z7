@@ -1,11 +1,5 @@
 [
   {
-    "id": "nav.itens",
-    "secao": "nav",
-    "tipo": "pendente",
-    "descricao": "Itens do menu de navegação — não existem na copy"
-  },
-  {
     "id": "d1.titulo",
     "secao": "d1 · Primeira dobra (hero)",
     "tipo": "copy",
@@ -18,8 +12,9 @@
     "secao": "d1 · Primeira dobra (hero)",
     "tipo": "copy",
     "papel": "linha de apoio do título",
-    "texto": "Você opera. O IAVA analisa.",
-    "paragrafo_docx": 12
+    "texto": "Você opera, o IAVA analisa.",
+    "paragrafo_docx": 12,
+    "obs": "alterado em 2026-09-18 a pedido do Gustavo — ver ALTERACOES.md (original: docx §12)"
   },
   {
     "id": "d1.sub",

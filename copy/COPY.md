@@ -6,16 +6,12 @@ Blocos `PENDENTE` são lacunas que precisam aparecer na página como caixa pende
 Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Este arquivo é gerado por `node scripts/gerar-copy-md.mjs`.
 
 
-## nav
-
-- **`nav.itens`** — ⚠ PENDENTE: Itens do menu de navegação — não existem na copy
-
 ## d1 · Primeira dobra (hero)
 
 - **`d1.titulo`** · _H1_  
   Seu novo mentor de trading 24 horas por dia analisando cada operação sua.
 - **`d1.apoio`** · _linha de apoio do título_  
-  Você opera. O IAVA analisa.
+  Você opera, o IAVA analisa.
 - **`d1.sub`** · _subtítulo_  
   O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance, identificando padrões de erro, impulsividade, horários, estratégias e comportamentos que podem estar prejudicando seus resultados.
 - **`d1.cta1`** · _botão primário_  

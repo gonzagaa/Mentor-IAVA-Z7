@@ -1,11 +1,10 @@
 // npm run pintura [-- --larguras=1474 --segundos=7.5]
 // Custo de renderização das animações da hero, medido com o trace do Chrome (o mesmo
 // que o painel Performance do DevTools grava). Para cada largura, grava um ciclo
-// inteiro em 3 cenários, sem prefers-reduced-motion:
+// inteiro em 2 cenários, sem prefers-reduced-motion:
 //   tudo        — a página como é
-//   sem-h1      — igual, mas com a varredura do H1 desligada
 //   parado      — todas as animações desligadas (referência)
-// A diferença "tudo − sem-h1" é o custo da animação do H1.
+// Animação que só mexe em opacity/transform deve dar 0 pinturas em "tudo".
 // Também lista quantos elementos animados existem dentro da hero.
 
 import { chromium } from 'playwright'
@@ -18,7 +17,6 @@ const larguras = process.argv.some(a => a.startsWith('--larguras=')) ? lerLargur
 
 const CENARIOS = {
   tudo: '',
-  'sem-h1': '.hero__titulo { animation: none !important; }',
   parado: '*, *::before, *::after { animation: none !important; }',
 }
 
@@ -90,9 +88,7 @@ try {
     for (const [nome, x] of Object.entries(r)) {
       console.log(`${nome.padEnd(9)} | ${f(x.paint)} | ${f(x.raster)} | ${f(x.estilo)} | ${f(x.layout)}`)
     }
-    const d = k => (r.tudo[k].ms - r['sem-h1'][k].ms).toFixed(1)
-    console.log(`\ncusto da varredura do H1 por ciclo de ${SEGUNDOS}s: Paint +${d('paint')} ms · Raster +${d('raster')} ms · estilo +${d('estilo')} ms`)
-    console.log(`segundos do trace com Paint — tudo: [${r.tudo.segundosComPaint.join(', ')}] · sem-h1: [${r['sem-h1'].segundosComPaint.join(', ')}]`)
+    console.log(`\nsegundos do trace com Paint — tudo: [${r.tudo.segundosComPaint.join(', ')}]`)
   }
 } finally {
   await navegador.close()

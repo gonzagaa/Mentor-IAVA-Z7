@@ -1,23 +1,30 @@
-/* Cabeçalho (nav) e #hero — primeira dobra.
-   Composição, de cima para baixo: nav → selo → H1 → subtítulo → um botão.
+/* #hero — primeira dobra, no topo da página.
+   Composição, de cima para baixo: selo → H1 → subtítulo → um botão.
+   Sem cabeçalho: não há menu de navegação nem logo (decisões do dono).
    Só tokens; os números que ficam aqui são posicionamento desta peça única. */
-
-/* ═══════════════════════════════ CABEÇALHO ═══════════════════════════════
-   No fluxo (a altura é a do conteúdo, sem chute), acima da luz da hero. */
-
-.topo {
-  position: relative;
-  z-index: 2;
-  padding: var(--esp-4) var(--gutter) 0;
-}
-
-/* ═════════════════════════════════ HERO ═════════════════════════════════ */
 
 .hero {
   position: relative;
   isolation: isolate;
-  padding: clamp(var(--esp-8), 6vw, var(--esp-16)) var(--gutter) var(--esp-16);
+  /* o respiro de cima abriga a coroa do arco, acima do selo */
+  padding: clamp(var(--esp-12), 7vw, var(--esp-20)) var(--gutter) var(--esp-16);
   text-align: center;
+}
+
+/* TESTE do dono: banner de fundo cobrindo a hero inteira (cover: 100% de largura e
+   altura sem distorcer), um pouco apagado e sumindo para baixo. Fica numa camada
+   própria para a máscara não pegar o conteúdo; grade, arco e cone vêm por cima.
+   Se aprovado, o dono troca por AVIF otimizado. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: url('../img/banner-hero.png') center / cover no-repeat;
+  opacity: var(--banner-opacidade);
+  -webkit-mask-image: var(--mascara-baixo);
+  mask-image: var(--mascara-baixo);
+  pointer-events: none;
 }
 
 .hero__conteudo {
@@ -25,20 +32,20 @@
   flex-direction: column;
   align-items: center;
   gap: var(--esp-6);
-  /* sem o teto de --largura-max: o H1 precisa de 21,5em (1376px em 1474) para
-     fechar em 3 linhas; subtítulo e botão têm limites próprios */
+  max-inline-size: var(--largura-max);
   margin-inline: auto;
 }
 
 /* ─────────────────────────── luz de cima ───────────────────────────
-   Camada decorativa (aria-hidden no HTML). Sobe por trás do cabeçalho até o topo
-   da página, não ocupa altura, e corta o que passar das bordas: sem scroll-x. */
+   Camada decorativa (aria-hidden no HTML). Começa acima do topo da página (o corpo
+   do planeta fica fora da tela), não ocupa altura, e corta o que passar das bordas:
+   sem scroll-x. */
 
 .hero__luz {
-  --luz-sobe: 8rem; /* cobre o cabeçalho, qualquer que seja a altura dele */
-  /* onde passa a curva do arco, medido a partir do topo da hero: no celular fica
-     atrás da nav (sem disputar com o selo); no desktop desce para logo abaixo dela */
-  --curva: calc(var(--luz-sobe) + clamp(-2.5rem, -6rem + 8vw, 1.5rem));
+  --luz-sobe: 8rem; /* quanto a camada começa acima do topo da hero */
+  /* onde passa a curva do arco, medido a partir do topo da hero: sempre visível,
+     no respiro acima do selo — 8px no celular, 24px no desktop */
+  --curva: calc(var(--luz-sobe) + clamp(0.5rem, -0.2rem + 2.2vw, 1.5rem));
   position: absolute;
   inset: calc(-1 * var(--luz-sobe)) 0 0;
   z-index: -1;
@@ -92,43 +99,27 @@
 }
 
 /* ─────────────────────────────── H1 ───────────────────────────────
-   Branco iluminado de cima: gradiente VERTICAL no bloco inteiro (topo ciano bem
-   claro → branco puro), brilho azul sutil com drop-shadow, e a cada 7s uma faixa
-   estreita atravessa na diagonal. Nasce visível: nenhuma entrada animada (LCP). */
+   Branco iluminado de cima: gradiente VERTICAL no bloco inteiro (topo azul-gelo →
+   branco puro) — é dele que vem a luz; o halo é só um toque, com a letra nítida.
+   Estático: sem faixa de brilho (pedido do dono). Nasce visível (é o provável LCP). */
 
 .hero__titulo {
-  max-inline-size: 21.5em; /* 3 linhas em 1474/1920: a mais longa mede 21,11em */
+  /* bloco proporcional, com respiro dos lados (ref. 01): no desktop não passa de
+     ~900px; no celular fica na largura útil, dentro do gutter */
+  max-inline-size: min(56.25rem, 100%);
   padding-block: var(--respiro-acento) var(--respiro-descendente);
   margin-block: calc(-1 * var(--respiro-acento)) calc(-1 * var(--respiro-descendente));
-  background: var(--faixa-h1), var(--gradiente-h1);
-  background-size: 300% 100%, 100% 100%;
-  background-position: 100% 0, 0 0; /* faixa estacionada fora do texto */
-  background-repeat: no-repeat;
+  background: var(--gradiente-h1);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
   filter: var(--brilho-h1);
-  animation: varrer-titulo var(--dur-varredura) linear infinite;
-  /* camada própria: o compositor aplica o drop-shadow, e a varredura só rasteriza
-     o texto de novo, não o filtro (medido com npm run pintura) */
-  will-change: transform;
 }
 
-/* a faixa só anda nos últimos 1,2s do ciclo de 7s (82,857% = 100% − 1,2/7) */
-@keyframes varrer-titulo {
-  0%,
-  82.857% {
-    background-position: 100% 0, 0 0;
-    animation-timing-function: var(--vai-e-volta);
-  }
-  100% {
-    background-position: 0% 0, 0 0;
-  }
-}
-
-/* grupos que não se separam no celular: "ANALISANDO" nunca fica sozinha na linha,
-   e nenhuma linha fica com uma palavra só. Os <span> não mudam o texto. */
+/* grupos que não se separam no celular: prendem cada palavra curta (≤ 5
+   caracteres) à vizinha, para nenhuma ficar sozinha na linha. Os <span> não mudam
+   o texto. */
 @media (max-width: 47.99rem) {
   .hero__titulo .grupo {
     white-space: nowrap;

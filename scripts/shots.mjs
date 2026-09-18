@@ -3,7 +3,7 @@
 // --dobra: só a primeira dobra, na altura de tela de cada largura (DOBRA em comum.mjs),
 //          em shots/<rótulo>/<largura>x<altura>.png.
 // --brilho=meio: SEM reduced-motion; antes de capturar congela as animações da hero
-//          com a faixa de brilho no meio da passagem pelo H1 e a luz de cima no pico.
+//          com a luz de cima no pico (o H1 não tem mais faixa de brilho: é estático).
 // Só grava depois que fontes e CSS estão confirmados.
 
 import fs from 'node:fs'
@@ -23,10 +23,9 @@ if (brilho && brilho !== 'meio') {
 const movimento = lerMovimento() || brilho === 'meio' // congelar exige as animações vivas
 
 // Momentos congelados (ms), a partir do CSS da hero:
-//  varrer-titulo — ciclo de 7000ms; a faixa anda de 5800ms (82,857%) a 7000ms → meio em 6400
 //  respirar-luz  — opacidade 1 em 0% e 100%: o pico é o início do ciclo
 //  pulso-ao-vivo — início do pulso (anel sobre o ponto)
-const CONGELAR = { 'varrer-titulo': 6400, 'respirar-luz': 0, 'pulso-ao-vivo': 0 }
+const CONGELAR = { 'respirar-luz': 0, 'pulso-ao-vivo': 0 }
 const destino = path.join(RAIZ, 'shots', rotulo)
 
 const capturas = await porLargura(
