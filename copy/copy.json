@@ -381,10 +381,76 @@
     "obs": "docx §119, colchetes removidos"
   },
   {
-    "id": "d7.provas",
+    "id": "d7.prova1.numero",
     "secao": "d7 · Sétima dobra (provas + fechamento)",
-    "tipo": "pendente",
-    "descricao": "Provas sociais (Iago). A tabela do docx (+1.000 operações, +300 usuários, dezenas de vieses) está marcada como EXEMPLO — não usar os números"
+    "tipo": "copy",
+    "papel": "número do card",
+    "texto": "+26 mil",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova1.rotulo",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "rótulo do card",
+    "texto": "operações analisadas",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova1.descricao",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "descrição do card",
+    "texto": "Base de dados ativa e crescente",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova2.numero",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "número do card",
+    "texto": "+1.300",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova2.rotulo",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "rótulo do card",
+    "texto": "traders na plataforma",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova2.descricao",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "descrição do card",
+    "texto": "Comunidade validada",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova3.numero",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "número do card",
+    "texto": "50",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova3.rotulo",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "rótulo do card",
+    "texto": "padrões operacionais catalogados",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "d7.prova3.descricao",
+    "secao": "d7 · Sétima dobra (provas + fechamento)",
+    "tipo": "copy",
+    "papel": "descrição do card",
+    "texto": "Algoritmo calibrado com dados reais",
+    "obs": "dados do Iago, aprovados pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
     "id": "d7.titulo",

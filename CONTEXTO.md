@@ -189,7 +189,7 @@ amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
               para-quem.css, o-que-e.css, provas.css, origem.css, rodape.css, pendente.css
               amostra.css (NÃO vai para produção)
-js/           revelar.js, ano.js; amostra.js (NÃO vai para produção)
+js/           revelar.js, ano.js, contar.js; amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
 img/icones/   ícones 3D processados (transparentes) usados nos cards
@@ -279,9 +279,13 @@ Gustavo — não mexer).**
   semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG
   (horizontal ≥ 768px; vertical no celular), e de cada um desce uma trilha até o item 3
   (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
-- **#provas**: no topo, UM `.pendente` `d7.provas` já no formato final (faixa de 3 blocos
-  tracejados com altura de card de número, empilhados < 768px) — trocar por 3 cards
-  sem mexer no resto. Fechamento: d7.titulo (.display H2, bloco ~900px), d7.p1 na
+- **#provas**: 3 cards de números com os dados do Iago (`d7.prova1–3.numero/rotulo/
+  descricao`): 1 coluna até 767px, 3 colunas a partir de 768px (nunca 2). Número em
+  `.display` com gradiente de acento; rótulo Inter semibold `--texto`; descrição
+  `--texto-3`; luz sutil, sem hover. Contagem (`js/contar.js`): o HTML traz o número
+  final; a caixa é travada no tamanho final antes de contar (CLS 0); só a parte
+  numérica anima, com "+", " mil" e o ponto de milhar em todos os quadros; ~1,2s,
+  uma vez, ao entrar na tela; sem JS ou com reduced-motion, nada anima. Fechamento: d7.titulo (.display H2, bloco ~900px), d7.p1 na
   medida, d7.fecho (H3 da copy, Inter semibold, `--fs-fecho`, gradiente de acento),
   sobre um halo de seção de nível médio (`--halo-secao`).
 - **#origem**: arco de horizonte (bloco 5b da amostra) sangrando até as bordas, d8.titulo
@@ -304,6 +308,7 @@ Gustavo — não mexer).**
   `img/marca/`, bandeiras em `img/pagamento/` (copiadas do projeto Zero7).
 - **Links**: nenhum `href` vazio fora os dois do rodapé copiado; `#` só com
   `data-pendente-href` (`npm run tokens` falha se achar outro).
-- **Copy**: 70 blocos + 5 pendentes (4 em caixa, `d1.cta.destino` só no link).
+- **Copy**: 79 blocos + 4 pendentes (3 em caixa: d6.titulo, d6.video, preco; `d1.cta.destino`
+  só no link).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

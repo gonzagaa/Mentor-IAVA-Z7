@@ -1,4 +1,4 @@
-/* #provas — reserva das provas (pendente d7.provas) + fechamento (d7.titulo, d7.p1,
+/* #provas — cards de números (d7.prova1–3) + fechamento (d7.titulo, d7.p1,
    d7.fecho) sobre um halo de seção (nível médio). A #demonstracao (d6) ainda não foi desenhada.
    Só tokens; os números que ficam aqui são posicionamento desta peça única. */
 
@@ -12,33 +12,45 @@
   margin-inline: auto;
 }
 
-/* ───────────── reserva das provas ─────────────
-   UM pendente só, já no formato final: faixa de 3 blocos (empilhados < 768px), cada
-   um com a altura de um card de número. Quando os dados chegarem, troca-se o pendente
-   por 3 cards na mesma grade, sem mexer no resto da seção. */
+/* ───────────── cards de números (d7.prova1–3) ─────────────
+   1 coluna até 767px; 3 colunas a partir de 768px (lá os três já cabem com todo texto
+   ≥ 16px e nenhum número quebrando). Nunca 2 colunas: sobraria um card sozinho.
+   Card base, sem hover, luz de nível SUTIL (a seção já tem o halo médio). */
 
-.provas__reserva {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-4);
-}
-
-.provas__blocos {
+.provas__cards {
   display: grid;
   gap: var(--esp-4);
 }
 
-.provas__blocos > span {
-  block-size: var(--altura-card-numero);
-  border: var(--reserva-borda);
-  border-radius: var(--raio-card);
-}
-
 @media (min-width: 48rem) {
-  .provas__blocos {
+  .provas__cards {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--esp-6);
   }
+}
+
+.provas__card {
+  gap: var(--esp-2);
+}
+
+/* o número: o maior texto do card, .display com o gradiente de acento, nunca quebra */
+.provas__numero {
+  align-self: flex-start;
+  font-size: var(--fs-destaque);
+  line-height: var(--lh-display-destaque);
+  letter-spacing: var(--ls-display-destaque);
+  white-space: nowrap;
+}
+
+.provas__card > .provas__rotulo {
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  font-weight: var(--peso-forte);
+  color: var(--texto);
+}
+
+.provas__card > .provas__descricao {
+  color: var(--texto-3);
 }
 
 /* ───────────── fechamento ───────────── */

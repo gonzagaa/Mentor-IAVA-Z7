@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/pendente.css">
   <script src="js/revelar.js" defer></script>
   <script src="js/ano.js" defer></script>
+  <script src="js/contar.js" defer></script>
 </head>
 <body>
 
@@ -191,10 +192,23 @@
     <!-- d7 · sétima dobra (provas + fechamento) -->
     <section id="provas" class="secao provas">
       <div class="provas__largura">
-        <div class="pendente provas__reserva" data-pendente="d7.provas">
-          <div class="provas__blocos" aria-hidden="true"><span></span><span></span><span></span></div>
-          <p>[PENDENTE: Provas sociais (Iago). A tabela do docx (+1.000 operações, +300 usuários, dezenas de vieses) está marcada como EXEMPLO — não usar os números]</p>
-        </div>
+        <ul class="provas__cards">
+          <li class="card provas__card" data-revelar>
+            <p class="display provas__numero texto-acento" data-copy="d7.prova1.numero" data-contar>+26 mil</p>
+            <p class="provas__rotulo" data-copy="d7.prova1.rotulo">operações analisadas</p>
+            <p class="provas__descricao" data-copy="d7.prova1.descricao">Base de dados ativa e crescente</p>
+          </li>
+          <li class="card provas__card" data-revelar data-revelar-atraso="1">
+            <p class="display provas__numero texto-acento" data-copy="d7.prova2.numero" data-contar>+1.300</p>
+            <p class="provas__rotulo" data-copy="d7.prova2.rotulo">traders na plataforma</p>
+            <p class="provas__descricao" data-copy="d7.prova2.descricao">Comunidade validada</p>
+          </li>
+          <li class="card provas__card" data-revelar data-revelar-atraso="2">
+            <p class="display provas__numero texto-acento" data-copy="d7.prova3.numero" data-contar>50</p>
+            <p class="provas__rotulo" data-copy="d7.prova3.rotulo">padrões operacionais catalogados</p>
+            <p class="provas__descricao" data-copy="d7.prova3.descricao">Algoritmo calibrado com dados reais</p>
+          </li>
+        </ul>
         <div class="provas__fechamento">
           <div class="provas__halo" aria-hidden="true"></div>
           <h2 class="display degrau-4 provas__titulo" data-copy="d7.titulo" data-revelar>Seus próprios dados podem revelar coisas que você não percebe enquanto está operando.</h2>

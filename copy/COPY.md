@@ -119,7 +119,24 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
 
 ## d7 · Sétima dobra (provas + fechamento)
 
-- **`d7.provas`** — ⚠ PENDENTE: Provas sociais (Iago). A tabela do docx (+1.000 operações, +300 usuários, dezenas de vieses) está marcada como EXEMPLO — não usar os números
+- **`d7.prova1.numero`** · _número do card_  
+  +26 mil
+- **`d7.prova1.rotulo`** · _rótulo do card_  
+  operações analisadas
+- **`d7.prova1.descricao`** · _descrição do card_  
+  Base de dados ativa e crescente
+- **`d7.prova2.numero`** · _número do card_  
+  +1.300
+- **`d7.prova2.rotulo`** · _rótulo do card_  
+  traders na plataforma
+- **`d7.prova2.descricao`** · _descrição do card_  
+  Comunidade validada
+- **`d7.prova3.numero`** · _número do card_  
+  50
+- **`d7.prova3.rotulo`** · _rótulo do card_  
+  padrões operacionais catalogados
+- **`d7.prova3.descricao`** · _descrição do card_  
+  Algoritmo calibrado com dados reais
 - **`d7.titulo`** · _H2_  
   Seus próprios dados podem revelar coisas que você não percebe enquanto está operando.
 - **`d7.p1`** · _parágrafo_  
