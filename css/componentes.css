@@ -340,7 +340,19 @@
     box-shadow var(--dur-lenta) var(--saida);
 }
 
-.card:hover,
+/* hover só em dispositivo com hover e com movimento permitido */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover {
+    border-color: var(--linha-acesa);
+    box-shadow: var(--glow-sutil);
+  }
+
+  .card--destaque:hover {
+    border-color: transparent;
+    box-shadow: var(--glow-forte);
+  }
+}
+
 .card:focus-within,
 .card.is-hover {
   border-color: var(--linha-acesa);
@@ -358,7 +370,6 @@
   box-shadow: var(--glow-medio);
 }
 
-.card--destaque:hover,
 .card--destaque:focus-within,
 .card--destaque.is-hover {
   border-color: transparent;

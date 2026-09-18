@@ -55,15 +55,16 @@
   margin-block-start: var(--esp-16);
 }
 
-/* feixe-ponte: nasce logo abaixo de "É AÍ QUE O IAVA ENTRA.", desce pelo respiro da
-   seção e entra na próxima. Decorativo (aria-hidden), fora do fluxo: não ocupa
-   altura. Largura estreita e centrada: sem scroll-x. */
+/* feixe-ponte: nasce logo abaixo de "É AÍ QUE O IAVA ENTRA." e desce pelo respiro
+   até a borda da seção; a próxima seção (#analise) recebe o pouso — o feixe nunca
+   entra nela nem passa sobre texto. Decorativo (aria-hidden), fora do fluxo: não
+   ocupa altura. Largura estreita e centrada: sem scroll-x. */
 .dor__ponte {
   position: absolute;
   inset-inline-start: 50%;
   inset-block-start: calc(100% - var(--respiro-secao) + var(--esp-6));
   inline-size: var(--esp-10);
-  block-size: calc(var(--respiro-secao) * 1.5 - var(--esp-6));
+  block-size: calc(var(--respiro-secao) - var(--esp-6));
   translate: -50% 0;
   background: var(--gradiente-ponte);
   -webkit-mask-image: var(--mascara-ponte);

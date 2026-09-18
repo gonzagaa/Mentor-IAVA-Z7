@@ -56,6 +56,12 @@ verificação (Playwright) em `scripts/`. Nada de `node_modules` em produção.
    1920. Critério de aceite que diz "no celular" ou "no desktop" sem números é inválido.
 9. **Um commit por fase.** Mensagens em português, no padrão `tipo(escopo): descrição`.
 10. Se algo parecer intencional e não erro, **pergunte antes**.
+11. **Segurança de processos.** Nunca encerrar processos por filtro amplo (`taskkill /FI`,
+    `killall`, `pkill` por nome genérico). Só encerrar processos iniciados pelos próprios
+    scripts, pelo PID. Os scripts que abrem navegador ou servidor guardam o PID (em
+    `.pids/`) e têm timeout próprio: `vigiar()` / `abrirNavegador()` em
+    `scripts/comum.mjs` (padrão 10 min, `--tempo-max=MIN`); `npm run servir` encerra
+    sozinho em 120 min (`--minutos=N`). Sobras: `npm run parar` (só pelos PIDs de `.pids/`).
 
 ## Direção visual
 
@@ -163,11 +169,13 @@ a proposta é mais agressiva e futurista**.
 ```
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
-css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, pendente.css
+css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
+              pendente.css
               amostra.css (NÃO vai para produção)
 js/           revelar.js; amostra.js (NÃO vai para produção)
 fonts/
-img/          imagens finais usadas pela página
+img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
+img/icones/   ícones 3D processados (transparentes) usados nos cards
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
 copy/         copy.json, COPY.md, ALTERACOES.md, docx original
 scripts/      verificação (Playwright) — não vai para produção
@@ -191,6 +199,8 @@ servidor sozinhos.
 | `npm run medir -- <rótulo>` | tabela de medidas em `medidas/<rótulo>.md` |
 | `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, contraste |
 | `npm run pintura` | trace do Chrome: custo de pintura das animações da hero (tudo × parado) |
+| `npm run lcp` | LCP em 390 e 1474, local e em 4G lento simulado, com o elemento de LCP |
+| `npm run parar` | encerra só os processos que os scripts do projeto abriram (PIDs em `.pids/`) |
 | `node scripts/gerar-copy-md.mjs` | regera `copy/COPY.md` a partir do `copy.json` |
 
 Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
@@ -207,25 +217,33 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 3 concluída — hero e #dor prontas no index.html.** De #analise em diante ainda é o
+**Fase 4 — hero, #dor e #analise prontas no index.html.** De #para-quem em diante ainda é o
 esqueleto sem estilo.
 
-- **Hero** (sem cabeçalho): selo (`d1.apoio`, frase única em branco, ponto "ao vivo"
-  pulsando) → H1 `.display` estático, luz radial azul → branco → prata → subtítulo →
-  um botão (`d1.cta1`, 60px, `data-pendente-href="d1.cta.destino"`). Fundo: banner de
-  teste (`img/banner-hero.png`, 70%, sumindo para baixo — o dono troca por AVIF se
-  aprovar) → grade → arco invertido + cone de luz que respira. Botão inteiro na dobra
-  de 375 a 1920 (em 320×568 fica 35px abaixo).
-- **#dor**, coluna estreita (640px) centrada, fundo preto puro, sem título: d2.p1
-  (lead, `--texto-2`) → d2.p2 (“Onde foi que eu errei?” em `.display` degrau destaque +
-  resposta em Inter abaixo, via `<span>`) → os três "Talvez" em `.lista-barra`
-  acendendo em sequência → d2.p6 (frase de virada, `--fs-virada`, respiro grande antes)
-  → d2.p7 em `.display` H2 → feixe-ponte vertical (núcleo 2px + halo) que desce pelo
-  respiro e entra na próxima seção. Tudo revela no scroll; menor fonte da seção ≥ 18px.
-- **Animações contínuas (2)**, só na hero: respiro da luz e pulso do selo, zero pintura
-  em loop. Mais as transições de revelação da #dor, uma vez cada.
+- **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
+  ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
+  subtítulo → um botão (`d1.cta1`, **60px**, `href="#"` +
+  `data-pendente-href="d1.cta.destino"` — **sem caixa de pendente na tela**). Fundo, de
+  baixo para cima: **banner** `img/banner-hero.png` (troca do Gustavo: anel escuro
+  simétrico, 1920×1080, PNG de 1,08 MB, a 70% e sumindo para baixo) → grade de quadrados
+  → arco invertido + cone de luz que respira. Botão inteiro na dobra de 375 a 1920
+  (em 320×568 fica 35px abaixo).
+- **LCP**: é o banner (o Chrome atribui à `section#hero`, fundo do `::before`).
+  Local: 96 ms (390) e 132 ms (1474). Em 4G lento simulado: ~7,8 s nas duas — o PNG de
+  1,08 MB é o gargalo. Ainda NÃO otimizado (o dono vai trocar por AVIF).
+- **#dor**: sequência narrativa em coluna estreita; termina com o feixe-ponte, que agora
+  para exatamente na borda da seção.
+- **#analise**: o feixe pousa no topo (ponto de luz + linha fina, no respiro, nunca sobre
+  texto) → d3.titulo em `.display` H2 com "e destrincha isso para você." no gradiente
+  de acento (via `<span>`), bloco de até 20em, centrado no celular e à esquerda a
+  partir de 1024 → d3.intro → grade de 7 cards (ícone de 64px reservado, H3 em Inter
+  semibold, descrição) + card destaque do chat. Grade: 1 coluna até 640px; 2 colunas
+  até 1080px (item 7 e chat ocupam a linha inteira); 3 acima (item 7 + chat em 2
+  colunas fecham a última linha). Halo azul suave atrás da grade. Cards revelam em
+  sequência; hover (só com hover e sem reduced-motion): borda acende, ícone brilha e
+  sobe 2px. Nada focável na seção.
+- **Animações contínuas (3)**: respiro da luz e pulso do selo (hero, zero pintura) e a
+  borda neon girando no card do chat. Mais as revelações, uma vez cada.
 - **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).
-- O feixe-ponte da #dor entra ~80px na #analise, que ainda não tem estilo: hoje ele
-  passa por cima do título dela. Resolve quando a #analise ganhar `.secao`.
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

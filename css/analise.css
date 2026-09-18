@@ -1,0 +1,190 @@
+/* #analise — o que o IAVA analisa (d3.titulo, d3.intro, d3.item1–7, d3.chat).
+   Cabeçalho da seção + grade de cards com ícone + card destaque do chat.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.analise {
+  overflow-x: clip; /* o halo e o pouso nunca geram scroll lateral */
+  background: var(--preto);
+}
+
+.analise__largura {
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+/* ───────────────────── pouso do feixe da #dor ─────────────────────
+   O feixe termina na borda de cima desta seção; aqui ele pousa num ponto de luz
+   suave e se espalha numa linha fina, como se acendesse a seção. Fica no respiro
+   acima do título: nunca sobre texto. Decorativo (aria-hidden). */
+
+.analise__pouso {
+  position: relative;
+  block-size: var(--esp-12);
+  pointer-events: none;
+}
+
+.analise__pouso::before,
+.analise__pouso::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+}
+
+.analise__pouso::before {
+  inline-size: var(--esp-12);
+  aspect-ratio: 1;
+  background: var(--pouso-ponto);
+}
+
+.analise__pouso::after {
+  inline-size: min(100%, var(--coluna-estreita));
+  block-size: 1px;
+  background: var(--pouso-linha);
+}
+
+/* ───────────────────────── cabeçalho da seção ───────────────────────── */
+
+.analise__cabeca {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+  text-align: center;
+}
+
+.analise__titulo {
+  max-inline-size: var(--titulo-secao-max);
+  margin-inline: auto;
+}
+
+.analise__intro {
+  color: var(--texto-2);
+}
+
+/* desktop: cabeçalho alinhado à esquerda */
+@media (min-width: 64rem) {
+  .analise__cabeca {
+    text-align: start;
+  }
+
+  .analise__titulo {
+    margin-inline: 0;
+  }
+}
+
+/* ─────────────────────────────── grade ───────────────────────────────
+   1 coluna até 640px · 2 colunas até 1080px · 3 acima. Nenhuma célula vazia:
+     1 coluna  → 7 itens + chat, um por linha
+     2 colunas → 3 linhas de pares; item 7 e chat ocupam a linha inteira cada
+     3 colunas → 2 linhas de 3; item 7 + chat (2 colunas) fecham a última linha
+   Cards da mesma linha com a mesma altura (stretch da grade). */
+
+.analise__area {
+  position: relative;
+  isolation: isolate;
+  margin-block-start: var(--esp-16);
+}
+
+/* halo azul muito suave atrás da grade (não atrás do título) */
+.analise__area::before {
+  content: '';
+  position: absolute;
+  inset: -12% 0;
+  z-index: -1;
+  background: var(--halo-grade);
+  pointer-events: none;
+}
+
+.analise__grade {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--esp-4);
+}
+
+@media (min-width: 40.0625rem) {
+  .analise__grade {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--esp-5);
+  }
+
+  .analise__card--ultimo,
+  .analise__card--chat {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 67.5625rem) {
+  .analise__grade {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--esp-6);
+  }
+
+  .analise__card--ultimo {
+    grid-column: auto;
+  }
+
+  .analise__card--chat {
+    grid-column: span 2;
+  }
+}
+
+/* ─────────────────────────────── cards ─────────────────────────────── */
+
+.analise__card {
+  text-align: start;
+}
+
+/* o ícone: caixa de tamanho fixo, reservada antes da imagem chegar (CLS 0) */
+.analise__icone {
+  display: flex;
+  align-items: center;
+  block-size: var(--tamanho-icone);
+  transition:
+    transform var(--dur-media) var(--saida),
+    filter var(--dur-media) var(--saida);
+}
+
+.analise__icone > img {
+  inline-size: var(--tamanho-icone);
+  block-size: var(--tamanho-icone);
+  object-fit: contain;
+}
+
+/* enquanto o ícone não existe: slot com o nome do arquivo, na altura do ícone */
+.analise__icone > .slot-imagem {
+  inline-size: auto;
+  min-inline-size: var(--tamanho-icone);
+  block-size: 100%;
+  padding-inline: var(--esp-3);
+  font-size: var(--fs-1);
+}
+
+/* rótulo em H3, Inter semibold — não .display: há palavras longas e o card é estreito */
+.analise__rotulo {
+  font-size: var(--fs-3);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+  font-weight: var(--peso-forte);
+  color: var(--texto);
+  text-wrap: balance;
+}
+
+.analise__card p {
+  color: var(--texto-2);
+}
+
+/* chat: card destaque, mais largo, texto um degrau acima */
+.analise__card--chat p {
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  color: var(--texto);
+}
+
+/* hover — só em dispositivo com hover, e nada disso com reduced-motion */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .analise__card:hover .analise__icone {
+    transform: translateY(calc(var(--deslocamento-hover) * 2)); /* sobe 2px */
+    filter: var(--brilho-icone);
+  }
+}

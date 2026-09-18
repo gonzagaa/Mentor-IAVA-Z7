@@ -7,9 +7,8 @@
 // Animação que só mexe em opacity/transform deve dar 0 pinturas em "tudo".
 // Também lista quantos elementos animados existem dentro da hero.
 
-import { chromium } from 'playwright'
 import { subirServidor } from './servidor.mjs'
-import { DOBRA, lerLarguras } from './comum.mjs'
+import { DOBRA, lerLarguras, vigiar, abrirNavegador } from './comum.mjs'
 
 const argSeg = process.argv.find(a => a.startsWith('--segundos='))
 const SEGUNDOS = argSeg ? Number(argSeg.split('=')[1]) : 7.5
@@ -73,7 +72,8 @@ async function gravar(navegador, url, largura, css) {
 }
 
 const servidor = await subirServidor()
-const navegador = await chromium.launch()
+const vigia = vigiar('pintura', 10)
+const { navegador, fechar: fecharNavegador } = await abrirNavegador(vigia)
 try {
   for (const largura of larguras) {
     console.log(`\n══ ${largura}×${DOBRA[largura] || 900} · ${SEGUNDOS}s de trace por cenário ══`)
@@ -91,6 +91,6 @@ try {
     console.log(`\nsegundos do trace com Paint — tudo: [${r.tudo.segundosComPaint.join(', ')}]`)
   }
 } finally {
-  await navegador.close()
+  await fecharNavegador()
   await servidor.fechar()
 }

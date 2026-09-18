@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="css/fundos.css">
   <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/dor.css">
+  <link rel="stylesheet" href="css/analise.css">
   <link rel="stylesheet" href="css/pendente.css">
   <script src="js/revelar.js" defer></script>
 </head>
@@ -57,40 +58,57 @@
     </section>
 
     <!-- d3 · terceira dobra (o que o IAVA analisa) -->
-    <section id="analise">
-      <h2 data-copy="d3.titulo">O IAVA mostra exatamente o que está acontecendo na sua operação e destrincha isso para você.</h2>
-      <p data-copy="d3.intro">A partir dos seus próprios dados operacionais, ele analisa:</p>
-      <ul>
-        <li>
-          <h3 data-copy="d3.item1.rotulo">Quais estratégias te dão lucro</h3>
-          <p data-copy="d3.item1.texto">o IAVA mostra claramente quais setups funcionam de verdade pra você e quais não dão muito certo;</p>
-        </li>
-        <li>
-          <h3 data-copy="d3.item2.rotulo">Melhores e piores horários</h3>
-          <p data-copy="d3.item2.texto">ele aponta exatamente os horários em que você opera bem e os momentos em que você mais perde pra você saber quando entrar e quando parar;</p>
-        </li>
-        <li>
-          <h3 data-copy="d3.item3.rotulo">Onde sua disciplina tem baixa</h3>
-          <p data-copy="d3.item3.texto">o IAVA identifica o momento do dia em que seu foco acaba e os erros começam a aparecer;</p>
-        </li>
-        <li>
-          <h3 data-copy="d3.item4.rotulo">Tilt e impulsividade</h3>
-          <p data-copy="d3.item4.texto">ele calcula o prejuízo exato que o descontrole causando por uma operação impulsiva causa na sua conta, para você que você veja na prática o quão prejudicial está sendo;</p>
-        </li>
-        <li>
-          <h3 data-copy="d3.item5.rotulo">Melhores e piores dias</h3>
-          <p data-copy="d3.item5.texto">quais dias da semana você tem o maior saldo positivo, e o pior, com maior saldo negativo;</p>
-        </li>
-        <li>
-          <h3 data-copy="d3.item6.rotulo">Números da sua performance</h3>
-          <p data-copy="d3.item6.texto">taxa de acerto, média de trades por dia, melhor e pior operação, tudo organizado e fácil de ler e identificar;.</p>
-        </li>
-        <li>
-          <h3 data-copy="d3.item7.rotulo">Padrões que se repetem</h3>
-          <p data-copy="d3.item7.texto">o IAVA encontra coisas no seu histórico que você dificilmente veria sozinho, por mais que ficasse um bom tempo analisando seus dados.</p>
-        </li>
-      </ul>
-      <p data-copy="d3.chat">Além de todos os relatórios estruturados, você tem à disposição um chat conversacional direto: se você quiser aprofundar uma dúvida ou entender uma operação específica, basta perguntar diretamente para a IA</p>
+    <section id="analise" class="secao analise">
+      <div class="analise__pouso" aria-hidden="true"></div>
+      <div class="analise__largura">
+        <div class="analise__cabeca">
+          <h2 class="display degrau-4 analise__titulo" data-copy="d3.titulo">O IAVA mostra exatamente o que está acontecendo na sua operação <span class="texto-acento">e destrincha isso para você.</span></h2>
+          <p class="degrau-2 analise__intro" data-copy="d3.intro">A partir dos seus próprios dados operacionais, ele analisa:</p>
+        </div>
+        <div class="analise__area">
+          <ul class="analise__grade">
+          <li class="card analise__card" data-revelar>
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-estrategias.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item1.rotulo">Quais estratégias te dão lucro</h3>
+            <p data-copy="d3.item1.texto">o IAVA mostra claramente quais setups funcionam de verdade pra você e quais não dão muito certo;</p>
+          </li>
+          <li class="card analise__card" data-revelar data-revelar-atraso="1">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-horarios.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item2.rotulo">Melhores e piores horários</h3>
+            <p data-copy="d3.item2.texto">ele aponta exatamente os horários em que você opera bem e os momentos em que você mais perde pra você saber quando entrar e quando parar;</p>
+          </li>
+          <li class="card analise__card" data-revelar data-revelar-atraso="2">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-disciplina.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item3.rotulo">Onde sua disciplina tem baixa</h3>
+            <p data-copy="d3.item3.texto">o IAVA identifica o momento do dia em que seu foco acaba e os erros começam a aparecer;</p>
+          </li>
+          <li class="card analise__card" data-revelar data-revelar-atraso="3">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-tilt.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item4.rotulo">Tilt e impulsividade</h3>
+            <p data-copy="d3.item4.texto">ele calcula o prejuízo exato que o descontrole causando por uma operação impulsiva causa na sua conta, para você que você veja na prática o quão prejudicial está sendo;</p>
+          </li>
+          <li class="card analise__card" data-revelar data-revelar-atraso="4">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-dias.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item5.rotulo">Melhores e piores dias</h3>
+            <p data-copy="d3.item5.texto">quais dias da semana você tem o maior saldo positivo, e o pior, com maior saldo negativo;</p>
+          </li>
+          <li class="card analise__card" data-revelar data-revelar-atraso="5">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-numeros.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item6.rotulo">Números da sua performance</h3>
+            <p data-copy="d3.item6.texto">taxa de acerto, média de trades por dia, melhor e pior operação, tudo organizado e fácil de ler e identificar;.</p>
+          </li>
+          <li class="card analise__card analise__card--ultimo" data-revelar data-revelar-atraso="6">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-padroes.webp"></div></div>
+            <h3 class="analise__rotulo" data-copy="d3.item7.rotulo">Padrões que se repetem</h3>
+            <p data-copy="d3.item7.texto">o IAVA encontra coisas no seu histórico que você dificilmente veria sozinho, por mais que ficasse um bom tempo analisando seus dados.</p>
+          </li>
+          <li class="card card--destaque analise__card analise__card--chat" data-revelar data-revelar-atraso="7">
+            <div class="analise__icone"><div class="slot-imagem" data-arquivo="img/icones/icone-chat.webp"></div></div>
+            <p data-copy="d3.chat">Além de todos os relatórios estruturados, você tem à disposição um chat conversacional direto: se você quiser aprofundar uma dúvida ou entender uma operação específica, basta perguntar diretamente para a IA</p>
+          </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <!-- d4 · quarta dobra (para quem é) -->

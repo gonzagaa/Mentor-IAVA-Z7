@@ -220,6 +220,8 @@
   --borda: 1px solid var(--linha);
   --tamanho-ladrilho: clamp(5rem, 4.4rem + 2vw, 6.5rem); /* 80 → 104 */
   --altura-botao: 3.75rem; /* 60px: botões mais encorpados (pedido do dono) */
+  --tamanho-icone: 4rem; /* 64px: ícone 3D dos cards — espaço sempre reservado (CLS 0) */
+  --titulo-secao-max: 20em; /* título longo de seção: bloco, não ponta a ponta */
 
   /* ────────────────────────────── LUZ ────────────────────────────── */
 
@@ -296,6 +298,17 @@
     rgb(0 128 201 / 12%) calc(50% + 1.25rem),
     transparent 100%);
 
+  /* pouso do feixe no topo de uma seção: um ponto de luz suave e uma linha que se
+     espalha para os lados, "acendendo" a seção */
+  --pouso-ponto: radial-gradient(closest-side, rgb(220 248 255 / 90%) 0%, rgb(92 225 255 / 55%) 25%, rgb(31 163 255 / 18%) 60%, transparent 100%);
+  --pouso-linha: linear-gradient(90deg, transparent 0%, rgb(0 128 201 / 25%) 25%, rgb(92 225 255 / 70%) 50%, rgb(0 128 201 / 25%) 75%, transparent 100%);
+
+  /* halo azul muito suave atrás de uma grade de cards */
+  --halo-grade: radial-gradient(ellipse 55% 50% at 50% 50%, rgb(0 128 201 / 11%) 0%, rgb(0 59 102 / 8%) 45%, transparent 75%);
+
+  /* ícone 3D dos cards: brilho que ele ganha no hover */
+  --brilho-icone: drop-shadow(0 0 0.75rem rgb(31 163 255 / 55%));
+
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);
   --barra-acesa: var(--azul-eletrico);
@@ -338,7 +351,7 @@
   --mascara-arco: linear-gradient(180deg, transparent 0%, #000 40%, #000 72%, transparent 100%);
   --mascara-cone: linear-gradient(180deg, #000 0%, #000 25%, transparent 100%);
   --mascara-baixo: linear-gradient(180deg, #000 0%, #000 45%, transparent 100%); /* some para baixo */
-  --mascara-ponte: linear-gradient(180deg, transparent 0%, #000 14%, #000 62%, transparent 100%);
+  --mascara-ponte: linear-gradient(180deg, transparent 0%, #000 22%, #000 100%); /* chega inteiro no pouso */
   --mascara-palco-piso: radial-gradient(ellipse 75% 110% at 50% 0%, #000 25%, transparent 100%);
   --mascara-radial: radial-gradient(ellipse 70% 65% at 50% 35%, #000 25%, transparent 75%);
   --mascara-vertical: linear-gradient(180deg, transparent 0%, #000 18%, #000 70%, transparent 100%);

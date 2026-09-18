@@ -77,6 +77,63 @@ export function lerRotulo(argv = process.argv.slice(2)) {
   return rotulo
 }
 
+// ─────────────────────────── VIGIA (segurança) ───────────────────────────
+// Regra do CONTEXTO.md: nunca encerrar processos por filtro amplo. Todo script que
+// sobe servidor ou navegador grava o próprio PID e os PIDs que abriu em .pids/, e
+// se encerra sozinho no tempo-limite (--tempo-max=MIN), matando SÓ esses PIDs.
+// `npm run parar` usa os mesmos arquivos para encerrar sobras, também só por PID.
+
+export const PASTA_PIDS = path.join(RAIZ, '.pids')
+
+export const lerTempoMax = (argv = process.argv.slice(2), padrao = 10) => {
+  const arg = argv.find(a => a.startsWith('--tempo-max='))
+  const min = arg ? Number(arg.slice('--tempo-max='.length)) : padrao
+  return Number.isFinite(min) && min > 0 ? min : padrao
+}
+
+let vigiaAtual = null
+export function vigiar(nome = path.basename(process.argv[1] || 'script', '.mjs'), minutos = lerTempoMax()) {
+  if (vigiaAtual) return vigiaAtual
+  fs.mkdirSync(PASTA_PIDS, { recursive: true })
+  const arquivo = path.join(PASTA_PIDS, `${nome}-${process.pid}.json`)
+  const filhos = new Set()
+  const gravar = () =>
+    fs.writeFileSync(arquivo, JSON.stringify({ script: nome, pid: process.pid, filhos: [...filhos], inicio: new Date().toISOString(), limiteMin: minutos }))
+  gravar()
+  process.on('exit', () => fs.rmSync(arquivo, { force: true }))
+  const relogio = setTimeout(() => {
+    console.error(`\nTEMPO ESGOTADO: ${nome} passou de ${minutos} min. Encerrando só o que ele abriu (PIDs: ${[...filhos].join(', ') || 'nenhum'}).`)
+    for (const pid of filhos) {
+      try { process.kill(pid) } catch { /* já tinha saído */ }
+    }
+    process.exit(1)
+  }, minutos * 60_000)
+  relogio.unref() // não segura o processo vivo; só dispara se ele ainda estiver de pé
+  vigiaAtual = {
+    registrarFilho(pid) {
+      if (!pid) return
+      filhos.add(pid)
+      gravar()
+    },
+  }
+  return vigiaAtual
+}
+
+// Abre o Chromium como processo próprio (launchServer) para o PID ser conhecido e
+// registrado no vigia. Devolve { navegador, fechar }.
+export async function abrirNavegador(vigia = vigiar()) {
+  const servidorNav = await chromium.launchServer()
+  vigia.registrarFilho(servidorNav.process()?.pid)
+  const navegador = await chromium.connect(servidorNav.wsEndpoint())
+  return {
+    navegador,
+    fechar: async () => {
+      await navegador.close().catch(() => {})
+      await servidorNav.close().catch(() => {})
+    },
+  }
+}
+
 // Checagem de sanidade da página. Devolve { ok, motivos }.
 async function conferirCarregamento(page, fontes) {
   // Pede a carga de cada família antes de conferir: uma página pode não usar alguma
@@ -121,8 +178,9 @@ async function conferirCarregamento(page, fontes) {
  * com código de saída 1 dizendo qual largura e o quê.
  */
 export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false, semJs = false } = {}) {
+  const vigia = vigiar()
   const servidor = await subirServidor()
-  const navegador = await chromium.launch()
+  const { navegador, fechar: fecharNavegador } = await abrirNavegador(vigia)
   const fontes = fontesDaPagina(pagina)
   const resultados = []
   let falha = null
@@ -137,6 +195,7 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = '
         javaScriptEnabled: !semJs,
       })
       const page = await contexto.newPage()
+      page.setDefaultTimeout(30000) // nenhuma espera do Playwright passa de 30s
       const quebrados = []
       page.on('response', r => {
         if (r.status() >= 400) quebrados.push(`${r.status()} ${r.url()}`)
@@ -162,7 +221,7 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = '
   } catch (erro) {
     falha = erro
   } finally {
-    await navegador.close()
+    await fecharNavegador()
     await servidor.fechar()
   }
 

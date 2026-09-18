@@ -11,7 +11,9 @@
     "shots": "node scripts/shots.mjs",
     "medir": "node scripts/medir.mjs",
     "tokens": "node scripts/tokens.mjs",
-    "pintura": "node scripts/pintura.mjs"
+    "pintura": "node scripts/pintura.mjs",
+    "parar": "node scripts/parar.mjs",
+    "lcp": "node scripts/lcp.mjs"
   },
   "devDependencies": {
     "playwright": "^1.47.0"

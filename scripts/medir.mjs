@@ -291,16 +291,19 @@ const tabelaH1 = tabelaMd(
 )
 
 // demais títulos .display (regra de quebra) e menor fonte das seções já montadas
+const SECOES_PRONTAS = ['hero', 'dor', 'analise']
 const tabelaSecoes = tabelaMd(
-  ['largura', 'outros títulos .display', 'quebra', 'menor fonte #hero', 'menor fonte #dor'],
+  ['largura', 'outros títulos .display', 'quebra', ...SECOES_PRONTAS.map(id => `menor fonte #${id}`)],
   medicoes.map(m => [
     `**${m.largura}**`,
     n(m.outrosTitulos),
     m.violacoesTitulos?.length ? `**${m.violacoesTitulos.join(' · ')}**` : 'ok',
-    m.menorPorSecao?.hero !== undefined ? `${m.menorPorSecao.hero}px` : '—',
-    m.menorPorSecao?.dor !== undefined
-      ? m.menorPorSecao.dor >= 16 ? `${m.menorPorSecao.dor}px` : `**${m.menorPorSecao.dor}px**`
-      : '—',
+    // a hero tem o selo (13–14px, rótulo); nas demais seções o piso é 16px
+    ...SECOES_PRONTAS.map(id => {
+      const v = m.menorPorSecao?.[id]
+      if (v === undefined) return '—'
+      return id === 'hero' || v >= 16 ? `${v}px` : `**${v}px**`
+    }),
   ])
 )
 

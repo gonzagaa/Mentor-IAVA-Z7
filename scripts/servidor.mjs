@@ -96,11 +96,26 @@ export async function subirServidor(porta = PORTA_PADRAO) {
   }
 }
 
-// `npm run servir` — sobe e fica de pé.
+// `npm run servir` — sobe e fica de pé, mas NÃO para sempre: encerra sozinho depois
+// de --minutos=N (padrão 120) e grava o PID em .pids/ para `npm run parar`.
 // Só quando este arquivo é o ponto de entrada; quando é importado, não.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  const arg = process.argv.find(a => a.startsWith('--minutos='))
+  const minutos = arg ? Number(arg.slice('--minutos='.length)) || 120 : 120
+  const pasta = path.join(RAIZ, '.pids')
+  fs.mkdirSync(pasta, { recursive: true })
+  const arquivoPid = path.join(pasta, `servir-${process.pid}.json`)
+  fs.writeFileSync(arquivoPid, JSON.stringify({ script: 'servir', pid: process.pid, filhos: [], inicio: new Date().toISOString(), limiteMin: minutos }))
+  const sair = () => { fs.rmSync(arquivoPid, { force: true }); process.exit(0) }
+  process.on('SIGINT', sair)
+  process.on('SIGTERM', sair)
+  setTimeout(() => {
+    console.log(`\nlimite de ${minutos} min: servidor encerrado sozinho`)
+    sair()
+  }, minutos * 60_000)
+
   const { url } = await subirServidor(PORTA_PADRAO)
   console.log(`servindo ${RAIZ}`)
   console.log(`→ ${url}`)
-  console.log('ctrl+c para parar')
+  console.log(`PID ${process.pid} · encerra sozinho em ${minutos} min · ctrl+c ou npm run parar para parar antes`)
 }
