@@ -130,6 +130,10 @@ a proposta é mais agressiva e futurista**.
 - **Lista com barra acesa** (`.lista-barra`, ref. 04): itens com barra vertical à
   esquerda; com `data-revelar="acender"`, a barra acende em azul e o texto vai de
   `--texto-3` a `--texto`, um item de cada vez.
+- **Hierarquia de luz** (toda seção nova respeita): o arco é a assinatura da página.
+  **Forte**: só o arco da hero (com o cone) e o arco da #origem. **Médio**: halos de
+  seção (`--halo-secao`, elipse larga e baixa) e cards destaque. **Sutil**: marcadores,
+  trilhas, barras, feixes, pontos. Nenhum outro brilho tem a força do arco.
 - **Largura**: `--largura-max: min(92vw, 1360px)` é o wrapper de conteúdo de toda seção
   (≈ 71% da tela em 1920; gutter da `.secao`, ≥ 40px, em 1280/1474). Cresce com ele:
   grades, colunas e cards. NÃO cresce (medida de leitura): bloco do H1 (~900px),
@@ -277,12 +281,12 @@ Gustavo — não mexer) e o rodapé (só o pendente `rodape`, não desenhar aind
   tracejados com altura de card de número, empilhados < 768px) — trocar por 3 cards
   sem mexer no resto. Fechamento: d7.titulo (.display H2, bloco ~900px), d7.p1 na
   medida, d7.fecho (H3 da copy, Inter semibold, `--fs-fecho`, gradiente de acento),
-  sobre um halo azul forte (`--halo-forte`).
+  sobre um halo de seção de nível médio (`--halo-secao`).
 - **#origem**: arco de horizonte (bloco 5b da amostra) sangrando até as bordas, d8.titulo
   logo abaixo da curva; d8.p1/d8.p2 em 2 colunas ≥ 1080px (empilhados na medida abaixo);
   o argumento central do d8.p2 em `--texto`. Overflow recortado: nada vaza no rodapé.
-- **Luz**: o halo das provas e o arco da origem ficam a ~570–740px um do outro, menos que
-  uma tela: na rolagem aparecem juntos. A decidir com o dono.
+- **Luz**: o halo da #provas (médio) e o arco da #origem (forte) aparecem juntos na
+  rolagem; o arco é claramente o mais luminoso (`shots/fase7b-halo-e-arco/`).
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
   borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
 - **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).

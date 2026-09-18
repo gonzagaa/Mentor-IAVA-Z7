@@ -1,5 +1,5 @@
 /* #provas — reserva das provas (pendente d7.provas) + fechamento (d7.titulo, d7.p1,
-   d7.fecho) sobre um halo azul forte. A #demonstracao (d6) ainda não foi desenhada.
+   d7.fecho) sobre um halo de seção (nível médio). A #demonstracao (d6) ainda não foi desenhada.
    Só tokens; os números que ficam aqui são posicionamento desta peça única. */
 
 .provas {
@@ -55,16 +55,17 @@
   text-align: center;
 }
 
-/* halo azul grande e forte centrado no título, sumindo nas bordas (sem blur) */
+/* halo de seção (nível médio): elipse larga e baixa atrás do bloco, sumindo nas
+   bordas (sem blur). O arco da #origem continua sendo o ponto mais luminoso. */
 .provas__halo {
   position: absolute;
   inset-inline-start: 50%;
-  inset-block-start: 30%;
+  inset-block-start: 50%;
   z-index: -1;
-  inline-size: min(140%, 80rem);
-  aspect-ratio: 16 / 10;
+  inline-size: min(170%, 110rem);
+  aspect-ratio: 3 / 1;
   translate: -50% -50%;
-  background: var(--halo-forte);
+  background: var(--halo-secao);
   pointer-events: none;
 }
 

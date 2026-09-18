@@ -346,11 +346,16 @@
   --altura-card-numero: 9rem;
   --reserva-borda: 1px dashed rgb(255 43 214 / 55%);
 
-  /* halo forte do fechamento (#provas): o ponto mais luminoso depois da hero */
-  --halo-forte: radial-gradient(closest-side,
-    rgb(31 163 255 / 44%) 0%,
-    rgb(0 128 201 / 26%) 35%,
-    rgb(0 59 102 / 12%) 65%,
+  /* HIERARQUIA DE LUZ (CONTEXTO.md): forte = só os arcos (hero + cone, #origem);
+     médio = halos de seção e cards destaque; sutil = marcadores, trilhas, barras,
+     feixes. Nada além dos arcos chega ao nível forte. */
+
+  /* halo de seção (nível MÉDIO): elipse larga e baixa, quase plana no centro —
+     lê como "a seção está iluminada", não como um ponto de luz */
+  --halo-secao: radial-gradient(closest-side,
+    rgb(0 128 201 / 16%) 0%,
+    rgb(0 128 201 / 13%) 35%,
+    rgb(0 59 102 / 8%) 65%,
     transparent 100%);
 
   /* bloco de título limitado (H1 da hero, fechamento): ~900px */
