@@ -139,7 +139,8 @@ a proposta é mais agressiva e futurista**.
   grades, colunas e cards. NÃO cresce (medida de leitura): bloco do H1 (~900px),
   subtítulo da hero (60ch), coluna da #dor (`--coluna-estreita`, 720px, teto) e textos
   com `--medida-leitura` (52ch ≈ 65–68 caracteres). **Nenhum texto corrido passa de 75
-  caracteres por linha.** Card largo não estreita nem deixa vazio: divide o conteúdo em
+  caracteres por linha** — exceção do dono: o d5.intro tem a largura do bloco do H1
+  (~900px, quebra equilibrada) e chega a ~100 caracteres em 1080–1280. Card largo não estreita nem deixa vazio: divide o conteúdo em
   colunas dentro dele (virada da #para-quem, chat da #analise) ou centra a frase na
   medida (item 3 da #o-que-e). `npm run larguras` mede tudo.
 - **Degrau "destaque"** (`.degrau-destaque`, `--fs-destaque`): entre o H2 e o H1, para
@@ -268,12 +269,15 @@ Gustavo — não mexer).**
   direita o d4.p1, UM `<p>` com as 6 frases em `<span>` display:block (abertura em
   `--fs-virada` + 5 perfis com fio de 1px e marcador quadrado aceso em CSS),
   revelando em sequência. Abaixo de 1080px, uma coluna. Depois, card destaque de
-  virada com d4.p2 e d4.p3 (em 2 colunas dentro do card a partir de 1080px; abaixo,
+  virada com d4.p2 e d4.p3 (em 2 colunas dentro do card a partir de 1080px, 60/40, o d4.p3 centrado na
+  vertical; abaixo,
   empilhados na medida de leitura), cada um com o trecho final no gradiente de acento.
 - **#o-que-e**, parte A: d5.titulo (.display H2, centrado) + d5.p1 na medida → comparativo
   lado a lado (1 coluna < 768px, planilha em cima), mesma altura: painel da planilha
   (d5.p2, d5.p3; neutro, sem azul, grade de células em CSS sem números) e card destaque
-  do IAVA (slot `img/icones/ilustracao-iava.webp` com altura reservada 16:9 + d5.p4).
+  do IAVA (`img/icones/ilustracao-iava.webp`, 1208 e 640px, preto → transparência sem
+  recorte, bordas esfumadas por máscara radial, altura reservada na proporção real 4:3
+  + d5.p4).
   A planilha revela primeiro; o IAVA depois, e o glow dele sobe de 0 (só opacity, no
   `::after`). Parte B: d5.subtitulo (.display H3) + d5.intro → item 1 (H4 Inter
   semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG

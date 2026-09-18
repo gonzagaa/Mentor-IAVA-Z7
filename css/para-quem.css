@@ -156,10 +156,11 @@
 }
 
 @media (min-width: 67.5rem) {
+  /* ~60% para o d4.p2 (5 linhas), ~40% para o d4.p3, centrado na vertical */
   .para-quem__virada {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
+    grid-template-columns: 3fr 2fr;
+    align-items: center;
     column-gap: var(--esp-12);
   }
 

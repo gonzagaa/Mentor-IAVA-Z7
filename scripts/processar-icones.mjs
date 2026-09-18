@@ -99,3 +99,37 @@ for (const nome of NOMES) {
     `| ${nome} | ${L}×${A} · ${kb(antes)} | ${final}×${final} · ${kb(buffer.length)} | ${(100 - (buffer.length / antes) * 100).toFixed(1)}% | ${w}×${h} em (${x0},${y0}) | ${((parciais / total) * 100).toFixed(0)}% |`
   )
 }
+
+// ───────────── ilustração do painel do IAVA (#o-que-e) ─────────────
+// Mesmo "color to alpha" dos ícones, mas SEM recorte de margem (as trilhas vão até as
+// bordas; quem esfuma as pontas é a máscara radial no CSS). WebP com transparência,
+// em 2× o maior tamanho de exibição (~604px → 1208px) e numa versão de 640px para o
+// celular. Nunca amplia.
+{
+  const entrada = path.join(ORIGEM, 'ilustracao-iava.png')
+  if (fs.existsSync(entrada)) {
+    const { data, info } = await sharp(entrada).removeAlpha().raw().toBuffer({ resolveWithObject: true })
+    const rgba = Buffer.alloc(info.width * info.height * 4)
+    for (let i = 0, p = 0; i < info.width * info.height; i++, p += 3) {
+      const r = data[p], g = data[p + 1], b = data[p + 2], a = Math.max(r, g, b), o = i * 4
+      if (a > 0) {
+        rgba[o] = Math.round((r * 255) / a)
+        rgba[o + 1] = Math.round((g * 255) / a)
+        rgba[o + 2] = Math.round((b * 255) / a)
+        rgba[o + 3] = a
+      }
+    }
+    const antes = fs.statSync(entrada).size
+    console.log(`\nilustracao-iava: original ${info.width}×${info.height} · ${kb(antes)}`)
+    for (const largura of [1208, 640]) {
+      const w = Math.min(largura, info.width)
+      const nome = largura === 1208 ? 'ilustracao-iava.webp' : `ilustracao-iava-${w}.webp`
+      const buf = await sharp(rgba, { raw: { width: info.width, height: info.height, channels: 4 } })
+        .resize(w, null, { kernel: 'lanczos3' })
+        .webp({ quality: 70, alphaQuality: 60, effort: 6 }) // alfa ruidoso: q82 dava 768 KB
+        .toBuffer()
+      fs.writeFileSync(path.join(DESTINO, nome), buf)
+      console.log(`  → ${nome}: ${w}×${Math.round((w * info.height) / info.width)} · ${kb(buf.length)}`)
+    }
+  }
+}

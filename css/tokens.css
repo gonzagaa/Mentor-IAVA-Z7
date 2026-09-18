@@ -335,7 +335,9 @@
   --planilha-mascara: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 55%) 60%, transparent 100%);
 
   /* ilustração do painel do IAVA: altura reservada (CLS 0) */
-  --ilustracao-proporcao: 16 / 9;
+  --ilustracao-proporcao: 1448 / 1086; /* proporção real da imagem (4:3) */
+  /* esfuma as bordas: as trilhas somem no escuro do card, sem ponta cortada */
+  --mascara-ilustracao: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
 
   /* trilhas de circuito (ref. 03): linha fina + nós luminosos */
   --trilha-linha: rgb(31 163 255 / 60%);

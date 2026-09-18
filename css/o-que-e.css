@@ -36,6 +36,12 @@
   color: var(--texto-2);
 }
 
+/* d5.intro: a mesma largura do bloco do H1 (pedido do dono), quebrando equilibrado */
+.o-que-e__intro {
+  max-inline-size: var(--titulo-bloco-max);
+  text-wrap: balance;
+}
+
 .o-que-e__lead {
   font-size: var(--fs-virada);
   line-height: var(--lh-3);
@@ -133,6 +139,8 @@
 
 .comparativo__ilustracao > img {
   object-fit: contain;
+  -webkit-mask-image: var(--mascara-ilustracao);
+  mask-image: var(--mascara-ilustracao);
 }
 
 /* ───────────── B · por que supera: itens ligados por circuito ───────────── */
