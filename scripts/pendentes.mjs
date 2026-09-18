@@ -2,11 +2,12 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { RAIZ, lerLarguras, porLargura } from './comum.mjs'
+import { RAIZ, lerLarguras, lerPagina, porLargura } from './comum.mjs'
 
 const copy = JSON.parse(fs.readFileSync(path.join(RAIZ, 'copy/copy.json'), 'utf8'))
 const porIdJson = new Map(copy.map(b => [b.id, b]))
 const larguras = lerLarguras()
+const arquivoPagina = lerPagina()
 
 const [pagina] = await porLargura(larguras, async ({ page }) =>
   page.evaluate(() => {
@@ -27,7 +28,8 @@ const [pagina] = await porLargura(larguras, async ({ page }) =>
         quem: el.getAttribute('data-copy') || el.tagName.toLowerCase(),
       })),
     }
-  })
+  }),
+  { pagina: arquivoPagina }
 )
 
 console.log(`\n${pagina.pendentes.length} pendente(s) na página\n`)

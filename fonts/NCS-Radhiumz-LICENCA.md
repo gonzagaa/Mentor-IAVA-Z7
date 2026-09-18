@@ -8,7 +8,11 @@ Levantado em 2026-09-18 a partir do arquivo baixado e dos metadados internos da 
 - Único arquivo servido: `https://fonts.cdnfonts.com/s/51836/NcsRadhiumz-Rp3x6.woff` (WOFF, 16.628 bytes)
 - O cdnfonts **não oferece pacote .zip** para esta família (`/download/ncs-radhiumz` → HTTP 404).
   Não veio nenhum arquivo de licença junto — só o binário da fonte.
-- Convertido aqui para `NCSRadhiumz-Regular.woff2` (13.024 bytes).
+- Usado **como veio, sem conversão nem modificação**: `fonts/NcsRadhiumz-Rp3x6.woff`,
+  SHA-256 `288cc7084738c5440407ef773546c2e93bbdba8c83d4bbcb5cced719eb3ba799`
+  (idêntico a um segundo download feito em 2026-09-18). A versão WOFF2 convertida na
+  fase 0 foi apagada, por causa da cláusula "Convert" abaixo.
+- **Só em ambiente local até a licença Webfonts ser confirmada. Não publicar.**
 
 ## Pesos disponíveis
 
@@ -55,8 +59,8 @@ A Namara Creative Studio vende licenças por tipo de uso. Os trechos que importa
 ## Conclusão
 
 Usar a NCS Radhiumz em `zero7.com.br/mentor-iava/` via `@font-face` é exatamente o caso
-coberto pela licença **Webfonts**, que é paga e não acompanha o arquivo do cdnfonts. A
-conversão WOFF → WOFF2 feita aqui também cai na cláusula "Convert".
+coberto pela licença **Webfonts**, que é paga e não acompanha o arquivo do cdnfonts. Por
+causa da cláusula "Convert", o projeto usa o WOFF original, intocado.
 
 **Pendência do dono:** comprar a licença Webfonts em onedsgn.com (ou pelo contato da
 Namara Creative Studio) para o domínio zero7.com.br, ou trocar a fonte de display.

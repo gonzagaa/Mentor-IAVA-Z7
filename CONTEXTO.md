@@ -85,29 +85,40 @@ a proposta é mais agressiva e futurista**.
 ## Tipografia
 
 - Títulos (display): **NCS Radhiumz** — a mesma da home zero7.com.br, amarra com a marca.
+- **NCS Radhiumz: sempre em caixa alta, só pela classe `.display`. Nunca minúscula.**
+  A caixa alta é só CSS (`text-transform: uppercase` dentro da `.display`); o texto no
+  HTML continua literal como no copy.json. Nenhum outro seletor usa
+  `var(--fonte-display)` — `npm run tokens` falha se usar. Uso:
+  `class="display degrau-N"`. Tracking da display é neutro a levemente positivo.
 - Corpo e interface: **Inter** (licença OFL).
-- Ambas auto-hospedadas em `fonts/` como WOFF2, `font-display: swap`, preload só do que
-  aparece acima da dobra. Nenhuma fonte de CDN.
+- Auto-hospedadas em `fonts/`, `font-display: swap`, preload só do que aparece acima da
+  dobra. Nenhuma fonte de CDN.
 - Inter: `fonts/InterVariable.woff2` (variável 100–900), OFL, `fonts/Inter-LICENSE.txt`.
-- NCS Radhiumz: `fonts/NCSRadhiumz-Regular.woff2`, **um peso só (400)**.
-- ⚠ **Licença da NCS Radhiumz NÃO cobre uso como webfont.** O arquivo é "All Right
-  Reserved" da Namara Creative Studio e aponta para onedsgn.com/licenses, onde
-  `@font-face` exige a licença paga **Webfonts**, que não foi comprada. Detalhes e
-  citações em `fonts/NCS-Radhiumz-LICENCA.md`. Resolver antes de publicar.
+- NCS Radhiumz: `fonts/NcsRadhiumz-Rp3x6.woff`, o WOFF original do cdnfonts, **sem
+  conversão** (a licença proíbe converter formato). **Um peso só (400).**
+- ⚠ **NCS Radhiumz só em ambiente local até a licença Webfonts ser confirmada. Não
+  publicar.** O arquivo é "All Right Reserved" da Namara Creative Studio; `@font-face`
+  exige a licença paga Webfonts (onedsgn.com/licenses). Ver `fonts/NCS-Radhiumz-LICENCA.md`.
+- Alternativa OFL em avaliação (só na amostra): **Unbounded**,
+  `fonts/Unbounded-latin-variavel.woff2`, `fonts/Unbounded-LICENSE.txt`. Trocar é mudar
+  um token (`--fonte-display`).
 
 ## Estrutura de pastas
 
 ```
 index.html
-css/        tokens.css, base.css, componentes e seções
-js/
+amostra.html  página de amostra do sistema visual (NÃO vai para produção)
+css/          tokens.css, base.css, componentes.css, fundos.css, pendente.css
+              amostra.css (NÃO vai para produção)
+js/           amostra.js (NÃO vai para produção)
 fonts/
-img/        imagens finais usadas pela página
-img/nano/   imagens geradas no Nano Banana (nomes definidos nos prompts)
-copy/       copy.json, COPY.md, docx original
-scripts/    shots.mjs, medir.mjs, verificar-copy.mjs, pendentes.mjs
-shots/      capturas (NÃO vai para produção)
-medidas/    saídas do medir (NÃO vai para produção)
+img/          imagens finais usadas pela página
+img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
+copy/         copy.json, COPY.md, docx original
+scripts/      verificação (Playwright) — não vai para produção
+referencias/  prints de referência visual (NÃO vai para produção, fora do git)
+shots/        capturas (NÃO vai para produção)
+medidas/      saídas do medir (NÃO vai para produção)
 ```
 
 ## Como rodar
@@ -119,25 +130,31 @@ servidor sozinhos.
 | comando | o que faz |
 | --- | --- |
 | `npm run servir` | sobe o servidor e fica de pé |
-| `npm run copy` | compara a página com o `copy.json`; falha com código 1 se divergir |
+| `npm run copy` | compara a página com o `copy.json` (`textContent`); falha com código 1 se divergir |
 | `npm run pendentes` | lista os pendentes da página, com seção e descrição |
 | `npm run shots -- <rótulo>` | página inteira em `shots/<rótulo>/<largura>.png` |
 | `npm run medir -- <rótulo>` | tabela de medidas em `medidas/<rótulo>.md` |
+| `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, contraste |
 
-Todos aceitam `--larguras=375,1474` para recortar as 9 larguras. Todos emulam
-`prefers-reduced-motion: reduce`. Antes de medir ou capturar, cada um confirma que as
-duas fontes carregaram (`document.fonts.check()`) e que `--css-carregado` vale 1 no
-`:root`; se falhar, PARA com código 1 e não grava nada.
+Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
+`--pagina=amostra.html` (padrão: index). Emulam `prefers-reduced-motion: reduce`; `--movimento`
+desliga a emulação. Antes de medir ou capturar, cada um confirma que as fontes carregaram
+do arquivo esperado (`document.fonts.check()`) e que `--css-carregado` vale 1 no `:root`;
+se falhar, PARA com código 1 e não grava nada. Na amostra, `npm run copy` aceita repetição
+de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 0 concluída.** Nenhum estilo visual aplicado ainda — só esqueleto semântico, copy
-literal, fontes locais e os scripts de verificação.
+**Fase 1 concluída — sistema visual aguardando aprovação na `amostra.html`.**
 
-- `index.html` com as 52 copies e os 7 pendentes; `npm run copy` dá
-  `52/52 idênticos · 0 órfãos · 7 pendentes` nas 9 larguras.
-- CSS: `tokens.css` (mínimo + sentinela `--css-carregado`), `base.css` (reset, raiz 100%,
-  preto/branco, fontes), `pendente.css`. Nada de layout ou estética.
-- Decisões da fase 0 a confirmar com o dono: `<title>` da página está como
-  "Mentor IAVA"; o pendente `preco` (seção "oferta" no copy) foi posto em
-  `#demonstracao`, junto do CTA de compra.
+- `css/tokens.css`: paleta, escala fluida de 7 degraus (display e corpo), espaço, raios
+  (3 simétricos + pílula + assinatura Zero7 `--raio-z7`), 3 glows, borda neon, grão,
+  movimento.
+- `css/componentes.css`: `.display` + `.degrau-N`, botões primário/secundário, nav em
+  pílula, card base/destaque, borda neon, ladrilho + `.slot-imagem`, título em duas linhas.
+- `css/fundos.css`: `.fundo-grade`, `.arco`, `.palco`, `.feixes`.
+- `index.html` inalterado além dos `<link>` novos: nenhuma classe aplicada. Por isso os
+  títulos do index estão em Inter até a próxima fase.
+- A decidir pelo dono (na amostra): canto simétrico × assimétrico Zero7; NCS Radhiumz ×
+  Unbounded; uso de d1.titulo + d1.apoio como título em duas linhas.
+- Pendentes da fase 0 ainda abertos: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

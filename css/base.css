@@ -1,4 +1,4 @@
-/* Reset e base. NADA de layout ou estética nesta fase. */
+/* Reset e padrões de elemento. Sem layout: só o que todo elemento herda. */
 
 *,
 *::before,
@@ -15,19 +15,55 @@
 html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--cor-fundo);
-  color: var(--cor-texto);
+  background: var(--preto);
+  color: var(--texto-2);
   font-family: var(--fonte-corpo);
+  font-weight: var(--peso-corpo);
+  font-size: var(--fs-1);
+  line-height: var(--lh-1);
+  letter-spacing: var(--ls-1);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
+/* títulos: por padrão em Inter. A fonte display (NCS Radhiumz, sempre caixa alta)
+   entra SÓ pela classe .display, em componentes.css — nunca por seletor de elemento. */
 h1,
 h2,
 h3 {
-  font-family: var(--fonte-titulo);
-  font-weight: 400;
+  font-weight: var(--peso-forte);
+  color: var(--texto);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+h1 {
+  font-size: var(--fs-5);
+  line-height: var(--lh-5);
+  letter-spacing: var(--ls-5);
+}
+
+h2 {
+  font-size: var(--fs-4);
+  line-height: var(--lh-4);
+  letter-spacing: var(--ls-4);
+}
+
+h3 {
+  font-size: var(--fs-3);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+}
+
+p {
+  text-wrap: pretty;
+  overflow-wrap: break-word;
 }
 
 ul,
@@ -36,7 +72,8 @@ ol {
 }
 
 img,
-video {
+video,
+svg {
   display: block;
   max-width: 100%;
 }
@@ -51,4 +88,21 @@ textarea,
 select {
   font: inherit;
   color: inherit;
+}
+
+/* anel de foco único, em toda a página */
+:focus-visible {
+  outline: var(--foco);
+  outline-offset: var(--foco-afastamento);
+}
+
+/* movimento reduzido: nada gira, nada pulsa, estado troca sem transição */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

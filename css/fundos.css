@@ -1,0 +1,182 @@
+/* Fundos e marcos. Cores, máscaras e grão vêm de tokens.css; os números que ficam
+   aqui são posicionamento de peça única (exceção da regra 6).
+
+   Todos: decoração pura em pseudo-elementos, `overflow: clip` para nunca gerar
+   scroll horizontal, e altura definida só por CSS (nada que carregue depois e
+   empurre o layout → CLS zero). */
+
+.fundo-grade,
+.arco,
+.palco,
+.feixes {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+}
+
+.fundo-grade::before,
+.arco::before,
+.arco::after,
+.palco::before,
+.palco::after,
+.feixes::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ═══════════════════ a) GRADE DE QUADRADOS (ref 01) ═══════════════════
+   Linhas e quadrados acesos na mesma malha, ancorada no centro; máscara radial
+   some com tudo nas bordas. */
+
+.fundo-grade::before {
+  --p: var(--grade-passo);
+  --cheio: linear-gradient(var(--grade-cheio), var(--grade-cheio));
+  --cheio-azul: linear-gradient(var(--grade-cheio-azul), var(--grade-cheio-azul));
+  inset: 0;
+  background-image:
+    var(--cheio), var(--cheio-azul), var(--cheio), var(--cheio),
+    var(--cheio-azul), var(--cheio), var(--cheio), var(--cheio-azul),
+    var(--cheio), var(--cheio),
+    linear-gradient(var(--grade-linha) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grade-linha) 1px, transparent 1px);
+  background-size: var(--p) var(--p);
+  background-repeat:
+    no-repeat, no-repeat, no-repeat, no-repeat, no-repeat,
+    no-repeat, no-repeat, no-repeat, no-repeat, no-repeat,
+    repeat, repeat;
+  /* colunas contadas a partir do centro (k) e linhas a partir do topo (m) */
+  background-position:
+    calc(50% - 6 * var(--p)) calc(1 * var(--p)),
+    calc(50% - 3 * var(--p)) calc(0 * var(--p)),
+    calc(50% - 4 * var(--p)) calc(4 * var(--p)),
+    calc(50% + 2 * var(--p)) calc(1 * var(--p)),
+    calc(50% + 5 * var(--p)) calc(0 * var(--p)),
+    calc(50% + 7 * var(--p)) calc(3 * var(--p)),
+    calc(50% - 9 * var(--p)) calc(5 * var(--p)),
+    calc(50% + 9 * var(--p)) calc(6 * var(--p)),
+    calc(50% + 4 * var(--p)) calc(7 * var(--p)),
+    calc(50% - 1 * var(--p)) calc(9 * var(--p)),
+    50% 0,
+    50% 0;
+  -webkit-mask-image: var(--mascara-radial);
+  mask-image: var(--mascara-radial);
+}
+
+/* ═══════════════ b) ARCO DE HORIZONTE (ref 02/05) — a assinatura ═══════════════
+   Borda de planeta com bloom forte. O círculo é mais largo que a tela no celular e
+   ~75% dela no desktop; máscara nas laterais e no topo, então nunca "corta" seco. */
+
+.arco {
+  --arco-altura: clamp(12rem, 7rem + 22vw, 28rem); /* 192 → 448 */
+  --arco-diametro: clamp(32rem, 75%, 92rem); /* 512 → 1380 */
+  --arco-topo: calc(var(--arco-altura) * 0.46);
+  block-size: var(--arco-altura);
+  background: var(--halo-noite) 50% calc(var(--arco-topo) - 8rem) / 90% 16rem no-repeat;
+  -webkit-mask-image: var(--mascara-lados), var(--mascara-arco);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--mascara-lados), var(--mascara-arco);
+  mask-composite: intersect;
+}
+
+/* o planeta: corpo preto, atmosfera azul por dentro, luz em camadas por fora */
+.arco::before {
+  left: 50%;
+  top: var(--arco-topo);
+  inline-size: var(--arco-diametro);
+  aspect-ratio: 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: var(--arco-atmosfera);
+  box-shadow: var(--arco-luz);
+}
+
+/* o ponto quente no topo do arco + grão por cima de tudo (anti-faixa) */
+.arco::after {
+  inset: 0;
+  background:
+    var(--grao),
+    var(--arco-foco) 50% calc(var(--arco-topo) - 3rem) / calc(var(--arco-diametro) * 0.55) 6rem no-repeat;
+}
+
+/* ═════════════ c) PALCO DE LUZ com piso em grade em perspectiva (ref 09) ═════════════ */
+
+.palco {
+  --palco-piso: 30%; /* altura do piso = linha do horizonte */
+}
+
+/* coluna de luz pousada no horizonte, arestas acesas, some no alto */
+.palco::before {
+  left: 50%;
+  bottom: var(--palco-piso);
+  inline-size: clamp(15rem, 42%, 36rem);
+  block-size: 58%;
+  translate: -50% 0;
+  background: var(--grao), var(--palco-arestas), var(--palco-coluna);
+  -webkit-mask-image: var(--mascara-horizonte);
+  mask-image: var(--mascara-horizonte);
+}
+
+/* o piso: perspectiva desenhada em 2D (sem transform 3D) — raios que fogem para um
+   ponto acima do horizonte + linhas transversais cada vez mais juntas no fundo.
+   Aceso no horizonte, embaixo da coluna; apaga para a frente e para os lados. */
+.palco::after {
+  --linha: linear-gradient(var(--palco-piso-linha), var(--palco-piso-linha));
+  left: 0;
+  right: 0;
+  bottom: 0;
+  block-size: var(--palco-piso);
+  background:
+    var(--grao),
+    var(--palco-piso-brilho),
+    var(--linha) 0 0 / 100% 1px no-repeat,
+    var(--linha) 0 4% / 100% 1px no-repeat,
+    var(--linha) 0 10% / 100% 1px no-repeat,
+    var(--linha) 0 19% / 100% 1px no-repeat,
+    var(--linha) 0 32% / 100% 1px no-repeat,
+    var(--linha) 0 50% / 100% 1px no-repeat,
+    var(--linha) 0 75% / 100% 1px no-repeat,
+    repeating-conic-gradient(from 0deg at 50% -70%,
+      var(--palco-piso-linha) 0deg 0.2deg,
+      transparent 0.2deg 4deg);
+  -webkit-mask-image: var(--mascara-palco-piso);
+  mask-image: var(--mascara-palco-piso);
+}
+
+/* ═════════════════ d) FEIXES VERTICAIS DE LUZ (ref 13, fundo) ═════════════════
+   Três malhas de feixes com períodos primos entre si → parece irregular. */
+
+.feixes::before {
+  inset: 0;
+  --f1: 5.3rem;
+  --f2: 8.7rem;
+  --f3: 13.1rem;
+  background:
+    var(--grao),
+    repeating-linear-gradient(90deg,
+      transparent 0 calc(var(--f1) - 12px),
+      var(--feixe-halo) calc(var(--f1) - 7px),
+      var(--feixe-fraco) calc(var(--f1) - 6px) calc(var(--f1) - 5px),
+      var(--feixe-halo) calc(var(--f1) - 4px),
+      transparent var(--f1)),
+    repeating-linear-gradient(90deg,
+      transparent 0 calc(var(--f2) - 12px),
+      var(--feixe-halo) calc(var(--f2) - 7px),
+      var(--feixe-medio) calc(var(--f2) - 6px) calc(var(--f2) - 5px),
+      var(--feixe-halo) calc(var(--f2) - 4px),
+      transparent var(--f2)),
+    repeating-linear-gradient(90deg,
+      transparent 0 calc(var(--f3) - 12px),
+      var(--feixe-halo) calc(var(--f3) - 7px),
+      var(--feixe) calc(var(--f3) - 6px) calc(var(--f3) - 5px),
+      var(--feixe-halo) calc(var(--f3) - 4px),
+      transparent var(--f3)),
+    repeating-linear-gradient(90deg,
+      transparent 0,
+      var(--feixe-dobra) 1.5rem,
+      transparent 3.25rem);
+  background-position: 0 0, 1.9rem 0, 4.1rem 0, 7.3rem 0, 0 0;
+  -webkit-mask-image: var(--mascara-vertical);
+  mask-image: var(--mascara-vertical);
+}

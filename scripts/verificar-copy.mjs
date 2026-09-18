@@ -4,19 +4,28 @@
 // A comparação colapsa espaços e apara as pontas dos DOIS lados: o HTML colapsa
 // espaços na renderização, então é a única comparação que pode passar. O texto no
 // index.html continua literal, byte a byte igual ao do json.
+//
+// Compara `textContent`, NUNCA `innerText`: no Chrome o innerText aplica o
+// text-transform, e a .display (sempre caixa alta) faria todo título divergir.
+//
+// --pagina=amostra.html (ou outra vitrine): cada data-copy pode repetir e nem todos
+// precisam estar lá, mas todo texto tem que ser IDÊNTICO ao json, e o único texto
+// fora de data-copy/.pendente permitido é o de .rotulo-tecnico.
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { RAIZ, lerLarguras, porLargura, colapsar } from './comum.mjs'
+import { RAIZ, lerLarguras, lerPagina, porLargura, colapsar } from './comum.mjs'
 
 const copy = JSON.parse(fs.readFileSync(path.join(RAIZ, 'copy/copy.json'), 'utf8'))
 const blocosCopy = copy.filter(b => b.tipo === 'copy')
 const blocosPendentes = copy.filter(b => b.tipo === 'pendente')
 const larguras = lerLarguras()
+const pagina = lerPagina()
+const vitrine = pagina !== 'index.html'
 
 // Colhe tudo da página numa passada só.
 async function colher(page) {
-  return page.evaluate(() => {
+  return page.evaluate(vitrine => {
     const visivel = el => {
       if (!el || !el.isConnected) return false
       const e = el.nodeType === 3 ? el.parentElement : el
@@ -48,6 +57,7 @@ async function colher(page) {
       const pai = n.parentElement
       if (!pai) continue
       if (pai.closest('[data-copy]') || pai.closest('.pendente')) continue
+      if (vitrine && pai.closest('.rotulo-tecnico')) continue
       if (!visivel(pai)) continue
       const caminho = []
       for (let e = pai; e && e !== document.body; e = e.parentElement) {
@@ -64,7 +74,7 @@ async function colher(page) {
     }))
 
     return { porId, pendentes, orfaos, hrefsPendentes }
-  })
+  }, vitrine)
 }
 
 const problemas = []
@@ -75,19 +85,23 @@ await porLargura(larguras, async ({ page, largura }) => {
   const d = await colher(page)
   ultimo = d
 
-  // 1 · cada bloco copy: existe exatamente um elemento, e o texto é idêntico
+  // 1 · cada bloco copy: existe (exatamente um, no index) e o texto é idêntico
   for (const bloco of blocosCopy) {
     const achados = d.porId[bloco.id]
-    if (!achados) { reg(largura, `FALTA    ${bloco.id} — nenhum elemento com data-copy="${bloco.id}"`); continue }
-    if (achados.length > 1) { reg(largura, `DUPLICADO ${bloco.id} — ${achados.length} elementos`); continue }
-    const [el] = achados
-    if (!el.visivel) reg(largura, `INVISÍVEL ${bloco.id} — está no DOM mas não aparece`)
-    const naPagina = colapsar(el.texto)
-    const noJson = colapsar(bloco.texto)
-    if (naPagina !== noJson) {
-      reg(largura, `DIVERGE  ${bloco.id}\n` +
-        `            json : ${JSON.stringify(noJson)}\n` +
-        `            página: ${JSON.stringify(naPagina)}`)
+    if (!achados) {
+      if (!vitrine) reg(largura, `FALTA    ${bloco.id} — nenhum elemento com data-copy="${bloco.id}"`)
+      continue
+    }
+    if (!vitrine && achados.length > 1) { reg(largura, `DUPLICADO ${bloco.id} — ${achados.length} elementos`); continue }
+    for (const el of achados) {
+      if (!el.visivel) reg(largura, `INVISÍVEL ${bloco.id} — está no DOM mas não aparece`)
+      const naPagina = colapsar(el.texto)
+      const noJson = colapsar(bloco.texto)
+      if (naPagina !== noJson) {
+        reg(largura, `DIVERGE  ${bloco.id}\n` +
+          `            json : ${JSON.stringify(noJson)}\n` +
+          `            página: ${JSON.stringify(naPagina)}`)
+      }
     }
   }
 
@@ -99,7 +113,7 @@ await porLargura(larguras, async ({ page, largura }) => {
 
   // 3 · todo pendente do json existe na página
   const idsNaPagina = new Set(d.pendentes.map(p => p.id))
-  for (const bloco of blocosPendentes) {
+  for (const bloco of vitrine ? [] : blocosPendentes) {
     if (!idsNaPagina.has(bloco.id)) reg(largura, `FALTA PENDENTE ${bloco.id} — nenhum .pendente com data-pendente="${bloco.id}"`)
   }
   for (const p of d.pendentes) {
@@ -119,7 +133,7 @@ await porLargura(larguras, async ({ page, largura }) => {
   for (const o of d.orfaos) {
     reg(largura, `ÓRFÃO    ${JSON.stringify(o.texto.slice(0, 80))} em ${o.onde}`)
   }
-})
+}, { pagina })
 
 const orfaos = ultimo ? ultimo.orfaos.length : 0
 const pendentes = ultimo ? ultimo.pendentes.length : 0
@@ -128,12 +142,18 @@ if (problemas.length) {
   const comDefeito = new Set(
     blocosCopy.map(b => b.id).filter(id => problemas.some(p => p.includes(id)))
   )
-  console.error(`\nFALHOU · larguras: ${larguras.join(', ')}`)
+  console.error(`\nFALHOU · ${pagina} · larguras: ${larguras.join(', ')}`)
   console.error(problemas.join('\n'))
   console.error(`\n${blocosCopy.length - comDefeito.size}/${blocosCopy.length} idênticos · ` +
     `${orfaos} órfãos · ${pendentes} pendentes · ${problemas.length} problema(s)`)
   process.exit(1)
 }
 
-console.log(`${blocosCopy.length}/${blocosCopy.length} idênticos · ${orfaos} órfãos · ${pendentes} pendentes`)
+if (vitrine) {
+  const listas = Object.values(ultimo.porId)
+  const total = listas.reduce((n, l) => n + l.length, 0)
+  console.log(`${pagina}: ${total} textos (${listas.length} ids) idênticos ao copy.json · ${orfaos} órfãos · ${pendentes} pendentes`)
+} else {
+  console.log(`${blocosCopy.length}/${blocosCopy.length} idênticos · ${orfaos} órfãos · ${pendentes} pendentes`)
+}
 console.log(`(conferido em ${larguras.length} largura(s): ${larguras.join(', ')})`)

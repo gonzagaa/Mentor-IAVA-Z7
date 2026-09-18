@@ -1,6 +1,7 @@
 // Peças compartilhadas pelos scripts de verificação.
 // Regra de ouro: NUNCA gravar captura ou medida de uma página carregada pela metade.
 
+import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
@@ -12,8 +13,16 @@ export const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 export const LARGURAS = [320, 375, 390, 430, 768, 1024, 1280, 1474, 1920]
 export const ALTURA = 900
 
-// Famílias que precisam estar carregadas antes de medir ou capturar
-export const FAMILIAS = ['Inter', 'NCS Radhiumz']
+// Fontes que precisam estar carregadas, e de QUAL arquivo, antes de medir ou capturar.
+// A NCS Radhiumz é o WOFF original do cdnfonts, sem conversão (a licença proíbe).
+const FONTES_BASE = [
+  { familia: 'Inter', arquivo: 'fonts/InterVariable.woff2' },
+  { familia: 'NCS Radhiumz', arquivo: 'fonts/NcsRadhiumz-Rp3x6.woff' },
+]
+const FONTES_POR_PAGINA = {
+  'amostra.html': [{ familia: 'Unbounded', arquivo: 'fonts/Unbounded-latin-variavel.woff2' }],
+}
+export const fontesDaPagina = pagina => [...FONTES_BASE, ...(FONTES_POR_PAGINA[pagina] || [])]
 
 export function lerLarguras(argv = process.argv.slice(2)) {
   const arg = argv.find(a => a.startsWith('--larguras='))
@@ -33,6 +42,20 @@ export function lerLarguras(argv = process.argv.slice(2)) {
   return pedidas
 }
 
+// --pagina=amostra.html  (padrão: index.html)
+export function lerPagina(argv = process.argv.slice(2)) {
+  const arg = argv.find(a => a.startsWith('--pagina='))
+  const pagina = arg ? arg.slice('--pagina='.length) : 'index.html'
+  if (!/^[\w.-]+\.html$/.test(pagina) || !fs.existsSync(path.join(RAIZ, pagina))) {
+    console.error(`erro: --pagina=${pagina} não existe na raiz do projeto`)
+    process.exit(1)
+  }
+  return pagina
+}
+
+// --movimento desliga a emulação de prefers-reduced-motion (padrão: reduce)
+export const lerMovimento = (argv = process.argv.slice(2)) => argv.includes('--movimento')
+
 export function lerRotulo(argv = process.argv.slice(2)) {
   const rotulo = argv.find(a => !a.startsWith('--'))
   if (!rotulo) {
@@ -47,22 +70,31 @@ export function lerRotulo(argv = process.argv.slice(2)) {
 }
 
 // Checagem de sanidade da página. Devolve { ok, motivos }.
-async function conferirCarregamento(page, familias) {
-  await page.evaluate(() => document.fonts.ready)
-  return page.evaluate(familias => {
+async function conferirCarregamento(page, fontes) {
+  // Pede a carga de cada família antes de conferir: uma página pode ainda não usar
+  // a display (o index da fase 1 não tem .display). Se o arquivo faltar, a face vai
+  // para "error" e a checagem abaixo falha do mesmo jeito.
+  await page.evaluate(async fontes => {
+    await Promise.allSettled(fontes.map(f => document.fonts.load(`16px "${f.familia}"`)))
+    await document.fonts.ready
+  }, fontes)
+  return page.evaluate(fontes => {
     const motivos = []
+    const recursos = performance.getEntriesByType('resource').map(r => decodeURIComponent(r.name))
 
-    // (a) as duas famílias precisam estar de fato carregadas
-    for (const familia of familias) {
+    // (a) cada família carregada, a partir do arquivo esperado
+    for (const { familia, arquivo } of fontes) {
       const nome = `16px "${familia}"`
       const check = document.fonts.check(nome)
       const faces = [...document.fonts].filter(f => f.family.replace(/^["']|["']$/g, '') === familia)
       const carregada = faces.some(f => f.status === 'loaded')
       const erro = faces.some(f => f.status === 'error')
+      const baixou = recursos.some(u => u.endsWith('/' + arquivo))
       if (!faces.length) motivos.push(`fonte "${familia}": nenhum @font-face declarado`)
       else if (erro) motivos.push(`fonte "${familia}": @font-face em status "error" (arquivo faltando ou corrompido)`)
       else if (!carregada) motivos.push(`fonte "${familia}": nenhum @font-face chegou a "loaded" (status: ${faces.map(f => f.status).join(', ')})`)
       else if (!check) motivos.push(`fonte "${familia}": document.fonts.check(${JSON.stringify(nome)}) deu falso`)
+      else if (!baixou) motivos.push(`fonte "${familia}": carregou, mas não do arquivo esperado ${arquivo}`)
     }
 
     // (b) sentinela do CSS
@@ -72,7 +104,7 @@ async function conferirCarregamento(page, familias) {
     }
 
     return { ok: motivos.length === 0, motivos }
-  }, familias)
+  }, fontes)
 }
 
 /**
@@ -80,9 +112,10 @@ async function conferirCarregamento(page, familias) {
  * Antes de cada tarefa confere fontes e sentinela do CSS; se falhar, PARA tudo
  * com código de saída 1 dizendo qual largura e o quê.
  */
-export async function porLargura(larguras, tarefa, { antesDeCarregar } = {}) {
+export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false } = {}) {
   const servidor = await subirServidor()
   const navegador = await chromium.launch()
+  const fontes = fontesDaPagina(pagina)
   const resultados = []
   let falha = null
 
@@ -91,7 +124,7 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar } = {}) {
       const contexto = await navegador.newContext({
         viewport: { width: largura, height: ALTURA },
         deviceScaleFactor: 1,
-        reducedMotion: 'reduce', // prefers-reduced-motion: reduce
+        reducedMotion: movimento ? 'no-preference' : 'reduce',
         colorScheme: 'dark',
       })
       const page = await contexto.newPage()
@@ -102,14 +135,15 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar } = {}) {
       if (antesDeCarregar) await antesDeCarregar(page)
 
       try {
-        await page.goto(servidor.url, { waitUntil: 'load', timeout: 30000 })
-        const sanidade = await conferirCarregamento(page, FAMILIAS)
-        if (!sanidade.ok) {
+        const url = servidor.url + (pagina === 'index.html' ? '' : pagina)
+        await page.goto(url, { waitUntil: 'load', timeout: 30000 })
+        const sanidade = await conferirCarregamento(page, fontes)
+        if (!sanidade.ok || quebrados.length) {
           const detalhe = sanidade.motivos.map(m => `      · ${m}`).join('\n')
           const extra = quebrados.length
             ? '\n      · respostas com erro: ' + quebrados.join('; ')
             : ''
-          throw new Error(`página carregada pela metade em ${largura}px:\n${detalhe}${extra}`)
+          throw new Error(`${pagina} carregada pela metade em ${largura}px:\n${detalhe}${extra}`)
         }
         resultados.push(await tarefa({ page, largura }))
       } finally {

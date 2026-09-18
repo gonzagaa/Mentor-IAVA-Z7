@@ -9,11 +9,13 @@
   font-display: swap;
 }
 
-/* NCS Radhiumz — único peso disponível: 400 Regular.
-   ⚠ Licença Webfonts NÃO confirmada. Ver fonts/NCS-Radhiumz-LICENCA.md */
+/* NCS Radhiumz — único peso: 400 Regular. WOFF original, sem conversão (a licença
+   proíbe converter formato).
+   ⚠ SÓ EM AMBIENTE LOCAL até a licença Webfonts ser confirmada. NÃO PUBLICAR.
+   Ver fonts/NCS-Radhiumz-LICENCA.md */
 @font-face {
   font-family: 'NCS Radhiumz';
-  src: url('../fonts/NCSRadhiumz-Regular.woff2') format('woff2');
+  src: url('../fonts/NcsRadhiumz-Rp3x6.woff') format('woff');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

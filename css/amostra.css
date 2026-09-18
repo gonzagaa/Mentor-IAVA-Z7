@@ -1,0 +1,328 @@
+/* Layout da página de amostra (amostra.html). NÃO vai para produção.
+   Só organiza as vitrines; toda a estética vem de componentes.css e fundos.css. */
+
+/* alternativa display OFL, só para a comparação 7b */
+@font-face {
+  font-family: 'Unbounded';
+  src: url('../fonts/Unbounded-latin-variavel.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* mesma .display (caixa alta, mesmos degraus); só troca a família. A Unbounded vai
+   em 600 porque o peso único da Radhiumz é visualmente um semi-negrito. */
+.fonte-alternativa {
+  --fonte-display: var(--fonte-display-alternativa);
+  --peso-display: 600;
+}
+
+.cantos-z7 {
+  --raio-botao: var(--raio-z7-p);
+  --raio-card: var(--raio-z7);
+  --raio-ladrilho: var(--raio-z7-p);
+}
+
+/* ───────────── moldura ───────────── */
+
+.rotulo-tecnico {
+  font-family: var(--fonte-corpo);
+  font-size: var(--fs-0);
+  line-height: var(--lh-0);
+  color: var(--texto-3);
+}
+
+.rotulo-tecnico code {
+  font-family: var(--fonte-mono);
+  color: var(--texto-2);
+}
+
+.amostra-topo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding: var(--esp-6) var(--gutter);
+  border-block-end: var(--borda);
+}
+
+.amostra-indice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--esp-4);
+}
+
+.amostra-indice a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--alvo-toque);
+  color: var(--texto-2);
+}
+
+.amostra-secao {
+  padding: var(--secao-y) var(--gutter);
+  border-block-end: var(--borda);
+}
+
+.amostra-largura {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-10);
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+.amostra-h {
+  font-family: var(--fonte-corpo);
+  font-weight: var(--peso-forte);
+  font-size: var(--fs-0);
+  line-height: var(--lh-0);
+  letter-spacing: var(--ls-0);
+  text-transform: uppercase;
+  color: var(--ciano);
+}
+
+.amostra-sub {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.amostra-grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--coluna-min, 11rem)), 1fr));
+  gap: var(--esp-6);
+}
+
+/* ───────────── 1 · paleta ───────────── */
+
+.amostra-cor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.amostra-cor__amostra {
+  block-size: 4.5rem;
+  border: var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--c);
+}
+
+.amostra-cor figcaption {
+  display: flex;
+  flex-direction: column;
+  overflow-wrap: anywhere;
+}
+
+.amostra-contraste {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border: var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie-2);
+}
+
+.amostra-contraste__linha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  align-items: baseline;
+  gap: var(--esp-2) var(--esp-6);
+}
+
+.cor-texto { color: var(--texto); }
+.cor-texto-2 { color: var(--texto-2); }
+.cor-texto-3 { color: var(--texto-3); }
+
+/* ───────────── 2 · escala ───────────── */
+
+.amostra-degrau {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+  padding-block-start: var(--esp-6);
+  border-block-start: var(--borda);
+}
+
+.amostra-corpo {
+  color: var(--texto-2);
+}
+
+/* ───────────── 3 · botões ───────────── */
+
+.amostra-estados {
+  --coluna-min: 22rem;
+  align-items: start;
+  row-gap: var(--esp-10);
+}
+
+.amostra-estado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--esp-4);
+}
+
+/* ───────────── 4 · componentes ───────────── */
+
+.amostra-cards {
+  --coluna-min: 19rem;
+  align-items: start;
+}
+
+/* ───────────── 5 · fundos ───────────── */
+
+.amostra-fundo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-8);
+  min-block-size: 100svh;
+  padding: var(--secao-y) var(--gutter);
+  border-block-end: var(--borda);
+  text-align: center;
+}
+
+/* conteúdo sempre acima da decoração (que é posicionada) */
+.amostra-fundo > :not(.arco),
+.hero-teste > :not(.arco) {
+  position: relative;
+  z-index: 1;
+}
+
+.amostra-fundo > h2 {
+  max-inline-size: 22ch;
+}
+
+.amostra-fundo > .amostra-fundo__rotulo {
+  position: absolute;
+  inset-block-start: var(--esp-4);
+  inset-inline-start: var(--gutter);
+}
+
+.amostra-fundo--arco {
+  justify-content: flex-start;
+  padding-inline: 0;
+}
+
+.amostra-fundo--arco > .arco {
+  align-self: stretch;
+}
+
+.amostra-fundo--arco > h2 {
+  margin-block-start: calc(-1 * var(--esp-16));
+  padding-inline: var(--gutter);
+}
+
+.amostra-fundo--palco {
+  justify-content: space-between;
+}
+
+.amostra-fundo--palco > .botao {
+  margin-block-end: 12svh;
+}
+
+/* ───────────── 6 · composição do hero ───────────── */
+
+.hero-teste {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-block-start: var(--esp-6);
+  border-block-end: var(--borda);
+  background: var(--preto);
+  text-align: center;
+}
+
+.hero-teste__nav {
+  inline-size: 100%;
+  padding-inline: var(--gutter);
+}
+
+.hero-teste__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  max-inline-size: 82rem;
+  padding: clamp(var(--esp-12), 8vw, var(--esp-24)) var(--gutter) 0;
+}
+
+.hero-teste__conteudo > .titulo-duas-linhas > h1 {
+  max-inline-size: 20ch;
+  margin-inline: auto;
+}
+
+.hero-teste__sub {
+  max-inline-size: 46rem;
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  letter-spacing: var(--ls-2);
+  color: var(--texto-2);
+}
+
+.hero-teste__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--esp-6);
+  margin-block-start: var(--esp-4);
+}
+
+.hero-teste > .arco {
+  align-self: stretch;
+  margin-block-start: calc(-1 * var(--esp-8));
+}
+
+@media (max-width: 36rem) {
+  .hero-teste__acoes {
+    flex-direction: column;
+    align-items: stretch;
+    inline-size: 100%;
+    padding-inline: var(--esp-2);
+  }
+}
+
+/* ───────────── 7 · comparações ───────────── */
+
+.amostra-lado-a-lado {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: var(--esp-8);
+}
+
+/* fontes: uma em cima da outra — o h1 em 66px precisa da largura inteira */
+.amostra-lado-a-lado--pilha {
+  grid-template-columns: 1fr;
+}
+
+.amostra-opcao {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--esp-6);
+  min-inline-size: 0;
+  padding: var(--esp-6);
+  border: 1px dashed var(--linha-forte);
+  border-radius: var(--raio-m);
+}
+
+.amostra-opcao > .card {
+  align-self: stretch;
+}
+
+/* no celular a moldura da opção não pode roubar largura do título comparado */
+@media (max-width: 36rem) {
+  .amostra-opcao {
+    padding: var(--esp-6) 0 0;
+    border-width: 1px 0 0;
+    border-radius: 0;
+  }
+}
+
+.amostra-opcao__botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-6);
+}

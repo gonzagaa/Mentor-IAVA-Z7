@@ -4,10 +4,12 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { RAIZ, lerLarguras, lerRotulo, porLargura, ALTURA } from './comum.mjs'
+import { RAIZ, lerLarguras, lerRotulo, lerPagina, lerMovimento, porLargura, ALTURA } from './comum.mjs'
 
 const rotulo = lerRotulo()
 const larguras = lerLarguras()
+const pagina = lerPagina()
+const movimento = lerMovimento()
 
 // Observa layout-shift desde antes do primeiro pixel.
 const OBSERVADOR = () => {
@@ -84,6 +86,12 @@ const medicoes = await porLargura(
           if (s[p] && s[p] !== 'normal' && s[p] !== '0px') gaps.add(s[p])
         }
       }
+      // inline puro não tem caixa própria (clientWidth 0): fica de fora
+      const estouros = comTexto.filter(el => {
+        const d = getComputedStyle(el).display
+        if (d === 'inline') return false
+        return el.scrollWidth > el.clientWidth + 1
+      })
       const fontesTexto = new Set(comTexto.map(el => getComputedStyle(el).fontSize))
       const coresTexto = new Set(comTexto.map(el => getComputedStyle(el).color))
 
@@ -103,12 +111,19 @@ const medicoes = await porLargura(
         nFontes: fontesTexto.size,
         nCores: coresTexto.size,
         nGaps: gaps.size,
+        // texto mais largo que a própria caixa (palavra que não cabe na linha)
+        nEstouros: estouros.length,
+        estourosIds: estouros
+          .map(el => el.getAttribute('data-copy') || el.className || el.tagName.toLowerCase())
+          .slice(0, 5),
+        // animações rodando agora (CSS animations e transitions); com reduce tem que dar 0
+        nAnimacoes: document.getAnimations().filter(a => a.playState === 'running').length,
       }
     })
 
     return { largura, ...m }
   },
-  { antesDeCarregar: page => page.addInitScript(OBSERVADOR) }
+  { antesDeCarregar: page => page.addInitScript(OBSERVADOR), pagina, movimento }
 )
 
 const pct = (a, b) => (b ? (a / b * 100).toFixed(1) + '%' : '—')
@@ -117,7 +132,7 @@ const n = v => (v === null || v === undefined ? '—' : v)
 const cab = [
   'largura', ':root', 'h1', 'p longo', 'menor fonte',
   'largura conteúdo', '% da tela', 'scroll-x', 'CLS',
-  'raios', 'font-sizes', 'cores', 'gaps',
+  'raios', 'font-sizes', 'cores', 'gaps', 'animações', 'estouros',
 ]
 
 const linhas = medicoes.map(m => [
@@ -134,6 +149,8 @@ const linhas = medicoes.map(m => [
   m.nFontes,
   m.nCores,
   m.nGaps,
+  m.nAnimacoes,
+  m.nEstouros ? `**${m.nEstouros}** (${m.estourosIds.join(', ')})` : '0',
 ])
 
 const tabela = [
@@ -144,10 +161,10 @@ const tabela = [
 
 const idP = medicoes.find(m => m.pLongoId)?.pLongoId
 const md = [
-  `# medidas · ${rotulo}`,
+  `# medidas · ${rotulo} · ${pagina}`,
   '',
   `Gerado em ${new Date().toISOString()}`,
-  `Viewport ${ALTURA}px de altura · \`prefers-reduced-motion: reduce\` · escala de tela 1`,
+  `Viewport ${ALTURA}px de altura · \`prefers-reduced-motion: ${movimento ? 'no-preference' : 'reduce'}\` · escala de tela 1`,
   '',
   tabela,
   '',
@@ -157,6 +174,8 @@ const md = [
   '- **menor fonte**: menor \`font-size\` entre os elementos visíveis que desenham texto.',
   '- **largura conteúdo**: caixa que envolve todo o conteúdo visível com texto.',
   '- **CLS**: soma de \`layout-shift\` sem interação, com a página rolada até o fim.',
+  '- **animações**: \`document.getAnimations()\` rodando no fim da medição. Com reduce, tem que ser 0.',
+  '- **estouros**: elementos de texto cujo conteúdo é mais largo que a própria caixa.',
   '- **raios / font-sizes / cores / gaps**: quantidade de valores DISTINTOS computados.',
   '',
   '## Altura da página',

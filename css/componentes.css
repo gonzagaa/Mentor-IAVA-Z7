@@ -1,0 +1,371 @@
+/* Componentes. Só tokens: nenhum valor literal de cor, raio, espaço, sombra, fonte
+   ou duração aqui (CONTEXTO.md, regra 6).
+
+   Estados forçados (.is-hover, .is-active, .is-focus, .is-disabled) existem para a
+   amostra mostrar os estados lado a lado. Usam as mesmas regras do estado real. */
+
+/* ═════════════════════════════ TIPOGRAFIA ═════════════════════════════
+   Degraus: tamanho + entrelinha + tracking andam juntos. Servem ao corpo (Inter)
+   direto, e à .display pelas variáveis --degrau-*-display. */
+
+.degrau-0 { --degrau-fs: var(--fs-0); --degrau-lh: var(--lh-0); --degrau-ls: var(--ls-0); --degrau-lh-display: var(--lh-display-0); --degrau-ls-display: var(--ls-display-0); }
+.degrau-1 { --degrau-fs: var(--fs-1); --degrau-lh: var(--lh-1); --degrau-ls: var(--ls-1); --degrau-lh-display: var(--lh-display-1); --degrau-ls-display: var(--ls-display-1); }
+.degrau-2 { --degrau-fs: var(--fs-2); --degrau-lh: var(--lh-2); --degrau-ls: var(--ls-2); --degrau-lh-display: var(--lh-display-2); --degrau-ls-display: var(--ls-display-2); }
+.degrau-3 { --degrau-fs: var(--fs-3); --degrau-lh: var(--lh-3); --degrau-ls: var(--ls-3); --degrau-lh-display: var(--lh-display-3); --degrau-ls-display: var(--ls-display-3); }
+.degrau-4 { --degrau-fs: var(--fs-4); --degrau-lh: var(--lh-4); --degrau-ls: var(--ls-4); --degrau-lh-display: var(--lh-display-4); --degrau-ls-display: var(--ls-display-4); }
+.degrau-5 { --degrau-fs: var(--fs-5); --degrau-lh: var(--lh-5); --degrau-ls: var(--ls-5); --degrau-lh-display: var(--lh-display-5); --degrau-ls-display: var(--ls-display-5); }
+.degrau-6 { --degrau-fs: var(--fs-6); --degrau-lh: var(--lh-6); --degrau-ls: var(--ls-6); --degrau-lh-display: var(--lh-display-6); --degrau-ls-display: var(--ls-display-6); }
+
+.degrau-0,
+.degrau-1,
+.degrau-2,
+.degrau-3,
+.degrau-4,
+.degrau-5,
+.degrau-6 {
+  font-size: var(--degrau-fs);
+  line-height: var(--degrau-lh);
+  letter-spacing: var(--degrau-ls);
+}
+
+/* A ÚNICA porta de entrada da NCS Radhiumz. Sempre caixa alta — o texto no HTML
+   continua literal como no copy.json; a caixa alta é só CSS.
+   Uso: class="display degrau-5". Sem degrau, vale o 4. Vem depois dos degraus
+   para que a entrelinha e o tracking da display prevaleçam. */
+.display {
+  font-family: var(--fonte-display);
+  font-weight: var(--peso-display);
+  font-synthesis: none;
+  text-transform: uppercase;
+  font-size: var(--degrau-fs, var(--fs-4));
+  line-height: var(--degrau-lh-display, var(--lh-display-4));
+  letter-spacing: var(--degrau-ls-display, var(--ls-display-4));
+  color: var(--texto);
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+/* ═══════════════════════════════ BOTÕES ═══════════════════════════════ */
+
+.botao {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-block-size: calc(var(--alvo-toque) + var(--esp-2)); /* 52px: acima do alvo de 44 */
+  min-inline-size: var(--alvo-toque);
+  max-inline-size: 100%;
+  padding: var(--esp-3) var(--esp-6);
+  border: 1px solid transparent;
+  border-radius: var(--raio-botao, var(--raio-m));
+  font-family: var(--fonte-corpo);
+  font-weight: var(--peso-forte);
+  font-size: var(--fs-1);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-0);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background var(--dur-media) var(--saida),
+    border-color var(--dur-media) var(--saida),
+    box-shadow var(--dur-lenta) var(--saida),
+    color var(--dur-media) var(--saida),
+    transform var(--dur-rapida) var(--saida);
+}
+
+/* primário: azul preenchido, com brilho, dentro de um anel externo (ref 01 e 09) */
+.botao--primario {
+  background: var(--gradiente-botao);
+  color: var(--texto-no-azul);
+  box-shadow: var(--brilho-interno-forte), var(--anel-botao), var(--glow-medio);
+}
+
+.botao--primario:hover,
+.botao--primario.is-hover {
+  background: var(--gradiente-botao-hover);
+  box-shadow: var(--brilho-interno-forte), var(--anel-botao), var(--glow-forte);
+  transform: translateY(var(--deslocamento-hover));
+}
+
+.botao--primario:active,
+.botao--primario.is-active {
+  background: var(--azul);
+  box-shadow: var(--anel-botao), var(--glow-sutil);
+  transform: none;
+}
+
+.botao--primario:focus-visible,
+.botao--primario.is-focus {
+  outline: var(--foco);
+  outline-offset: var(--foco-afastamento-anel);
+}
+
+/* secundário: vidro escuro com borda que acende */
+.botao--secundario {
+  background: var(--vidro-claro);
+  border-color: var(--linha-forte);
+  color: var(--texto);
+  box-shadow: var(--brilho-interno);
+  -webkit-backdrop-filter: var(--vidro-desfoque);
+  backdrop-filter: var(--vidro-desfoque);
+}
+
+.botao--secundario:hover,
+.botao--secundario.is-hover {
+  background: var(--vidro-claro-2);
+  border-color: var(--linha-acesa);
+  box-shadow: var(--brilho-interno), var(--glow-sutil);
+  transform: translateY(var(--deslocamento-hover));
+}
+
+.botao--secundario:active,
+.botao--secundario.is-active {
+  background: var(--vidro-claro);
+  border-color: var(--azul);
+  box-shadow: none;
+  transform: none;
+}
+
+.botao--secundario:focus-visible,
+.botao--secundario.is-focus {
+  outline: var(--foco);
+  outline-offset: var(--foco-afastamento);
+}
+
+/* desabilitado — vale para os dois */
+.botao:disabled,
+.botao[aria-disabled='true'],
+.botao.is-disabled {
+  background: var(--desabilitado-fundo);
+  border-color: var(--linha);
+  color: var(--desabilitado-texto);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+.botao--primario:disabled,
+.botao--primario[aria-disabled='true'],
+.botao--primario.is-disabled {
+  box-shadow: var(--anel-botao);
+}
+
+/* ═══════════════════════════ NAV EM PÍLULA ═══════════════════════════ */
+
+.nav-pilula {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-1);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  margin-inline: auto;
+  padding: var(--esp-2);
+  border: var(--borda);
+  border-radius: var(--raio-g);
+  /* fallback sólido: sem backdrop-filter, a pílula continua legível */
+  background: var(--superficie);
+  box-shadow: var(--brilho-interno);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .nav-pilula {
+    background: var(--vidro);
+    -webkit-backdrop-filter: var(--vidro-desfoque);
+    backdrop-filter: var(--vidro-desfoque);
+  }
+}
+
+.nav-pilula__item {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--alvo-toque);
+  padding: var(--esp-2) var(--esp-4);
+  border-radius: var(--raio-pilula);
+  color: var(--texto-2);
+  font-size: var(--fs-0);
+  font-weight: var(--peso-forte);
+  text-decoration: none;
+  transition:
+    background var(--dur-media) var(--saida),
+    color var(--dur-media) var(--saida);
+}
+
+.nav-pilula__item:hover {
+  background: var(--vidro-claro-2);
+  color: var(--texto);
+}
+
+/* item ativo preenchido */
+.nav-pilula__item[aria-current] {
+  background: var(--gradiente-botao);
+  color: var(--texto-no-azul);
+  box-shadow: var(--brilho-interno-forte), var(--glow-sutil);
+}
+
+/* enquanto os itens não existem, a pílula abriga o pendente */
+.nav-pilula > .pendente {
+  border-radius: var(--raio-m);
+}
+
+/* ═══════════════════════════════ CARDS ═══════════════════════════════ */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+  padding: clamp(var(--esp-6), 4vw, var(--esp-8));
+  border: var(--borda);
+  border-radius: var(--raio-card, var(--raio-m));
+  background: var(--gradiente-card), var(--superficie);
+  transition:
+    border-color var(--dur-media) var(--saida),
+    box-shadow var(--dur-lenta) var(--saida);
+}
+
+.card:hover,
+.card:focus-within,
+.card.is-hover {
+  border-color: var(--linha-acesa);
+  box-shadow: var(--glow-sutil);
+}
+
+.card > p {
+  color: var(--texto-2);
+}
+
+/* destaque: o elemento mais importante de uma seção — borda neon + glow médio */
+.card--destaque {
+  border-color: transparent;
+  background: var(--gradiente-card-destaque);
+  box-shadow: var(--glow-medio);
+}
+
+.card--destaque:hover,
+.card--destaque:focus-within,
+.card--destaque.is-hover {
+  border-color: transparent;
+  box-shadow: var(--glow-forte);
+}
+
+/* ═════════════════════════════ BORDA NEON ═════════════════════════════
+   Gradiente cônico girando via @property, 1px. Com parcimônia: um por seção. */
+
+.card--destaque,
+.borda-neon {
+  isolation: isolate;
+}
+
+.borda-neon {
+  position: relative;
+}
+
+.card--destaque::before,
+.borda-neon::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  padding: 1px;
+  border-radius: inherit;
+  background: var(--gradiente-neon), var(--gradiente-linha-forte);
+  -webkit-mask: var(--mascara-cheia) content-box, var(--mascara-cheia);
+  -webkit-mask-composite: xor;
+  mask: var(--mascara-cheia) content-box exclude, var(--mascara-cheia);
+  pointer-events: none;
+  animation: girar-neon var(--dur-giro) linear infinite;
+}
+
+@keyframes girar-neon {
+  to {
+    --angulo-neon: 360deg;
+  }
+}
+
+/* ═════════════════════════ LADRILHO DE ÍCONE ═════════════════════════
+   Recebe os ícones 3D do Nano Banana (ref 02/08). */
+
+.ladrilho {
+  display: grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--tamanho-ladrilho);
+  aspect-ratio: 1;
+  padding: var(--esp-2);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-ladrilho, var(--raio-m));
+  background: var(--gradiente-ladrilho);
+  box-shadow: var(--brilho-interno), var(--glow-sutil);
+}
+
+.ladrilho > img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: contain;
+}
+
+/* enquanto a imagem não existe: caixa tracejada em CIANO com o nome do arquivo */
+.slot-imagem {
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+  padding: var(--esp-1);
+  border: var(--slot-borda);
+  border-radius: var(--raio-p);
+  background: var(--slot-fundo);
+  color: var(--slot-cor);
+  font-family: var(--fonte-corpo);
+  font-size: var(--fs-0);
+  line-height: var(--lh-3);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.slot-imagem::after {
+  content: attr(data-arquivo);
+}
+
+/* ═══════════════════════ TÍTULO EM DUAS LINHAS ═══════════════════════
+   Primeira em --texto, segunda com o gradiente de acento.
+   SÓ quando a própria copy já tem duas partes (dois blocos do copy.json).
+   Nunca quebrar um título da copy em dois para caber no efeito. */
+
+/* as duas partes levam class="display degrau-N" — a fonte vem só da .display */
+.titulo-duas-linhas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.texto-acento,
+.titulo-duas-linhas > :last-child {
+  /* o gradiente só pinta dentro da caixa: sem respiro, o acento da maiúscula (Ê, Ã)
+     e a cedilha são cortados. A margem negativa devolve o espaço — layout igual. */
+  padding-block: var(--respiro-acento) var(--respiro-descendente);
+  margin-block-start: calc(-1 * var(--respiro-acento));
+  background: var(--gradiente-acento);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* mantém uma frase inteira na mesma linha quando cabe (não altera o texto) */
+.frase {
+  display: inline-block;
+}
+
+@media (forced-colors: active) {
+  .texto-acento,
+  .titulo-duas-linhas > :last-child {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
