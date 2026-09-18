@@ -239,6 +239,7 @@ if (interacoesProibidas.length) {
 
 // ── links vazios ──
 const linksVazios = []
+const vaziosPermitidos = [] // cópia literal do rodapé da Zero7 (decisão do dono)
 for (const nome of fs.readdirSync(RAIZ).filter(f => f.endsWith('.html')).sort()) {
   const html = fs.readFileSync(path.join(RAIZ, nome), 'utf8')
   for (const m of html.matchAll(/<a\b[^>]*>/gi)) {
@@ -246,7 +247,12 @@ for (const nome of fs.readdirSync(RAIZ).filter(f => f.endsWith('.html')).sort())
     const href = tag.match(/\shref\s*=\s*(["'])(.*?)\1/i)
     const valor = href ? href[2].trim() : null
     const vazio = valor === null || valor === '' || (valor === '#' && !/data-pendente-href=/.test(tag))
-    if (vazio) linksVazios.push({ arquivo: nome, linha: linhaDe(html, m.index), tag: tag.slice(0, 90) })
+    if (!vazio) continue
+    const item = { arquivo: nome, linha: linhaDe(html, m.index), tag: tag.slice(0, 90) }
+    // única exceção: href="" marcado data-href-vazio="copia-zero7" (rodapé idêntico
+    // ao da home, pedido do dono). Sempre listado, nunca silencioso.
+    if (/data-href-vazio="copia-zero7"/.test(tag) && valor === '') vaziosPermitidos.push(item)
+    else linksVazios.push(item)
   }
 }
 if (linksVazios.length) {
@@ -255,6 +261,10 @@ if (linksVazios.length) {
   for (const l of linksVazios) console.error(`  ${l.arquivo}:${l.linha}   ${l.tag}`)
 } else {
   console.log('nenhum link com href vazio (e "#" só com data-pendente-href)')
+}
+if (vaziosPermitidos.length) {
+  console.log(`  aviso: ${vaziosPermitidos.length} link(s) com href vazio por cópia do rodapé da Zero7 (data-href-vazio="copia-zero7"):`)
+  for (const l of vaziosPermitidos) console.log(`    ${l.arquivo}:${l.linha}   ${l.tag}`)
 }
 
 console.log(`\ncontraste sobre ${FUNDO} (${valorToken(FUNDO)}):`)

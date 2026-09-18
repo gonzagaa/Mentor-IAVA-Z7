@@ -362,10 +362,14 @@
   /* bloco de título limitado (H1 da hero, fechamento): ~900px */
   --titulo-bloco-max: 56.25rem;
 
-  /* rodapé (igual ao do site zero7.com.br): fio azul no topo e logo */
-  --linha-rodape: linear-gradient(90deg, transparent, var(--azul-profundo), var(--azul), var(--azul-profundo), transparent);
-  --largura-logo-rodape: 11rem;
-  --tamanho-icone-social: 1.5rem;
+  /* rodapé: cópia 100% do site zero7.com.br — cores da home */
+  --z7-fundo: #000205;
+  --z7-texto: #d2d2d2;
+  --z7-texto-claro: #fff;
+  --z7-aviso: #c6c6c6;
+  --z7-fundo-author: linear-gradient(130deg, #001120, #01050b);
+  --z7-linha: linear-gradient(to right, transparent, #023c83, #0080c9, #023c83, transparent);
+  --z7-gradiente: linear-gradient(to right, #023c83, #0080c9);
 
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);

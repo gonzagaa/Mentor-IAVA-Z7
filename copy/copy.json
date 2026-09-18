@@ -531,6 +531,14 @@
     "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
+    "id": "rodape.pagamento",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "rótulo das formas de pagamento (#pagamento)",
+    "texto": "Formas de Pagamento",
+    "obs": "rodapé do site zero7.com.br, cópia 100% a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
     "id": "rodape.simbolo",
     "secao": "rodapé",
     "tipo": "copy",
@@ -557,14 +565,18 @@
   {
     "id": "rodape.cookie",
     "secao": "rodapé",
-    "tipo": "pendente",
-    "descricao": "Link \"Cookie\" do rodapé — no site da Zero7 o link está vazio (href=\"\"); não há página de cookies"
+    "tipo": "copy",
+    "papel": "link (href vazio, igual ao site da Zero7)",
+    "texto": "Cookie",
+    "obs": "rodapé do site zero7.com.br, cópia 100% a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
     "id": "rodape.uso",
     "secao": "rodapé",
-    "tipo": "pendente",
-    "descricao": "Link \"Políticas de Uso\" do rodapé — no site da Zero7 o link está vazio (href=\"\"); zero7.com.br/termos responde 403"
+    "tipo": "copy",
+    "papel": "link (href vazio, igual ao site da Zero7)",
+    "texto": "Políticas de Uso",
+    "obs": "rodapé do site zero7.com.br, cópia 100% a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
     "id": "rodape.aviso",

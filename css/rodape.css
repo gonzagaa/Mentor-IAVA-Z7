@@ -1,169 +1,253 @@
-/* Rodapé — o mesmo do site zero7.com.br (logo, endereço, horário, navegação,
-   suporte e redes), redesenhado com os tokens da página. Textos em copy.json
-   (rodape.*). Links têm hover (são clicáveis); o resto não reage ao mouse.
-   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+/* Rodapé — CÓPIA 100% do site zero7.com.br (css/footer.css, footerPagamento.css e
+   author.css da home), a pedido do Gustavo. Mesmos tamanhos, espaços, pesos, cores,
+   grades e hovers.
+   A home usa raiz de 50% (1rem = 8px; 65% = 10,4px a partir de 1600px). Aqui a raiz
+   da página é 100% e nunca muda (regra 7), então o rodapé usa uma unidade local
+   --u que vale o "1rem" da home: todo "N rem" do original virou calc(N * var(--u)).
+   Única diferença deliberada: a fonte de texto da home é a "TT Fors Trial" (versão
+   TRIAL, vinda de CDN) — aqui é a Inter. */
 
-.rodape {
-  position: relative;
-  padding: var(--esp-24) var(--gutter);
-  background: var(--preto);
+.rodape-z7 {
+  --u: 0.5rem;
+  text-align: center; /* html/body da home são text-align: center */
 }
 
-/* fio azul no topo, como no site da Zero7 */
-.rodape::before {
+@media (min-width: 1600px) {
+  .rodape-z7 {
+    --u: 0.65rem;
+  }
+}
+
+.rodape-z7 .wrapper {
+  inline-size: min(calc(50 * var(--u)), 100%);
+  margin-inline: auto;
+  padding-inline: calc(2.4 * var(--u));
+}
+
+@media (min-width: 1080px) {
+  .rodape-z7 .wrapper {
+    inline-size: min(calc(110 * var(--u)), 100%);
+  }
+}
+
+@media (min-width: 1200px) {
+  .rodape-z7 .wrapper {
+    inline-size: min(calc(140 * var(--u)), 100%);
+  }
+}
+
+/* ───────────── #footer (footer.css) ───────────── */
+
+#footer {
+  position: relative;
+  overflow: hidden;
+  padding-block: calc(8 * var(--u));
+  background: var(--z7-fundo);
+}
+
+#footer::before {
   content: '';
   position: absolute;
-  inset: 0 0 auto;
-  block-size: 1px;
-  background: var(--linha-rodape);
+  inset-inline: 0;
+  inset-block-start: 0;
+  inline-size: 100%;
+  block-size: 1.1px;
+  background: var(--z7-linha);
 }
 
-.rodape__largura {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-12);
-  max-inline-size: var(--largura-max);
-  margin-inline: auto;
-}
-
-.rodape p,
-.rodape li a {
-  color: var(--texto-2);
-}
-
-.rodape__marca,
-.rodape__coluna {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-2);
-}
-
-.rodape__logo {
-  inline-size: var(--largura-logo-rodape);
+#footer img.logo {
+  inline-size: calc(15 * var(--u));
   block-size: auto;
-  margin-block-end: var(--esp-4);
+  margin-block-end: calc(2 * var(--u));
 }
 
-.rodape__titulo {
-  margin-block-end: var(--esp-2);
-}
-
-.rodape ul {
+#footer .content {
   display: flex;
   flex-direction: column;
+  align-items: start;
+  gap: calc(3 * var(--u));
+  text-align: left;
 }
 
-/* links: alvo de toque de 44px, hover só aqui (são clicáveis) */
-.rodape li a {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: var(--alvo-toque);
-  min-inline-size: var(--alvo-toque); /* "Home" e "Blog" são curtos: alvo de 44px nos dois sentidos */
-  text-decoration: none;
-  transition: color var(--dur-media) var(--saida);
-}
-
-.rodape li a:hover {
-  color: var(--texto);
-}
-
-.rodape__icones {
+#footer div {
   display: flex;
-  gap: var(--esp-2);
+  flex-direction: column;
+  gap: calc(0.5 * var(--u));
 }
 
-.rodape__icones a {
-  display: grid;
-  place-items: center;
-  inline-size: var(--alvo-toque);
-  block-size: var(--alvo-toque);
-  border: var(--borda);
-  border-radius: var(--raio-circulo);
-  color: var(--texto-2);
-  transition:
-    color var(--dur-media) var(--saida),
-    border-color var(--dur-media) var(--saida),
-    box-shadow var(--dur-media) var(--saida);
+#footer .content h3 {
+  font-size: calc(1.6 * var(--u));
+  line-height: normal;
+  letter-spacing: normal;
+  font-weight: 900;
+  font-synthesis: weight; /* a NCS só tem 400: a home mostra o negrito sintético */
+  color: var(--z7-texto-claro);
 }
 
-.rodape__icones a:hover {
-  border-color: var(--linha-acesa);
-  color: var(--texto);
-  box-shadow: var(--glow-sutil);
+#footer .content p {
+  font-size: calc(1.6 * var(--u));
+  line-height: normal;
+  font-weight: 300;
+  color: var(--z7-texto);
 }
 
-.rodape__icones svg {
-  inline-size: var(--tamanho-icone-social);
-  block-size: var(--tamanho-icone-social);
+#footer .content p a {
+  color: var(--z7-texto);
+  text-decoration: none;
 }
 
-/* ≥ 1080px: quatro colunas; as redes alinhadas à direita, como no site */
-@media (min-width: 67.5rem) {
-  .rodape__largura {
+#footer div.redes-sociais .icons {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--u);
+}
+
+#footer div.redes-sociais a {
+  text-decoration: none;
+}
+
+/* os <ion-icon> da home, em SVG local (mesmos desenhos do ionicons 7.1.0) */
+#footer .redes-sociais .ionicon {
+  display: inline-block;
+  inline-size: 1em;
+  block-size: 1em;
+  font-size: calc(2 * var(--u));
+  color: var(--z7-texto);
+  fill: currentColor;
+}
+
+@media (min-width: 1080px) {
+  #footer img.logo {
+    margin-block-end: 0;
+  }
+
+  #footer .wrapper .content {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: var(--esp-16);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    align-content: center;
+    justify-items: center;
+    gap: calc(10 * var(--u));
   }
 
-  .rodape__logo {
-    margin-block-end: var(--esp-2);
+  #footer .wrapper div {
+    gap: var(--u);
   }
 
-  .rodape__social {
+  #footer .wrapper div.redes-sociais {
+    display: flex;
+    flex-direction: column;
     align-items: end;
     text-align: end;
   }
+
+  #footer a {
+    transition: all 200ms ease-in-out;
+  }
+
+  #footer a:hover {
+    color: var(--z7-texto-claro);
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+
+  #footer .redes-sociais .ionicon {
+    font-size: calc(3 * var(--u));
+    padding: calc(0.8 * var(--u));
+    border-radius: var(--raio-circulo);
+    transition: all 400ms ease-in-out;
+  }
+
+  #footer div.redes-sociais .icons {
+    gap: calc(0.5 * var(--u));
+  }
+
+  #footer .redes-sociais a:hover .ionicon {
+    background: var(--z7-gradiente);
+  }
 }
 
-/* ───────────── faixa final: ©, políticas e aviso legal ───────────── */
+/* ───────────── #pagamento (footerPagamento.css) ───────────── */
 
-.rodape__base {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-6);
-  max-inline-size: var(--largura-max);
-  margin: var(--esp-16) auto 0;
-  padding-block-start: var(--esp-8);
-  border-block-start: var(--borda);
+#pagamento {
+  padding-block: calc(2 * var(--u));
+  background: var(--z7-fundo);
 }
 
-.rodape__legal {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-3);
+#pagamento p {
+  font-size: calc(1.3 * var(--u));
+  font-weight: 400;
+  color: var(--z7-texto-claro);
 }
 
-.rodape .rodape__politicas {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-2);
+#pagamento img {
+  display: inline;
+  inline-size: calc(5 * var(--u));
+  block-size: auto;
 }
 
-.rodape__politicas > li {
-  display: flex;
-}
-
-/* aviso legal: LEGÍVEL (na home estava em 8px) — Inter, ≥ 13px, --texto-3,
-   alinhado à esquerda, na medida de leitura */
-.rodape .rodape__aviso {
-  max-inline-size: var(--medida-leitura);
-  font-size: var(--fs-0);
-  line-height: var(--lh-1);
-  color: var(--texto-3);
-  text-align: start;
-}
-
-.rodape .rodape__politicas {
-  align-items: flex-start;
-}
-
-/* ≥ 1080px: políticas lado a lado, sempre alinhadas à esquerda */
-@media (min-width: 67.5rem) {
-  .rodape .rodape__politicas {
-    flex-direction: row;
-    flex-wrap: wrap;
+@media (min-width: 1080px) {
+  #pagamento .content {
+    display: flex;
+    inline-size: 100%;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
-    gap: var(--esp-2) var(--esp-6);
+  }
+}
+
+/* ───────────── #author (author.css) ───────────── */
+
+#author {
+  padding-block: calc(2 * var(--u)) calc(10 * var(--u));
+  background: var(--z7-fundo-author);
+}
+
+#author .content {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--u);
+  text-align: left;
+}
+
+#author p,
+#author a {
+  font-size: calc(1.2 * var(--u));
+  line-height: normal;
+  color: var(--z7-texto-claro);
+  text-decoration: none;
+}
+
+#author p.disclaimer {
+  margin-block-start: calc(2 * var(--u));
+  font-size: var(--u);
+  font-weight: 300;
+  text-align: center;
+  color: var(--z7-aviso);
+}
+
+@media (min-width: 1080px) {
+  #author {
+    padding-block: calc(2 * var(--u));
+  }
+
+  #author .content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    inline-size: 100%;
+    gap: 0;
+  }
+
+  #author .content p {
+    inline-size: 100%;
+    text-align: center;
+  }
+
+  #author .content p:nth-child(1) {
+    text-align: left;
+  }
+
+  #author .content p:nth-child(5) {
+    text-align: right;
   }
 }

@@ -194,6 +194,7 @@ fonts/
 img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
 img/icones/   ícones 3D processados (transparentes) usados nos cards
 img/marca/    logo da Zero7 (SVG, do site zero7.com.br)
+img/pagamento/ bandeiras de pagamento do rodapé (do site zero7.com.br)
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
 copy/         copy.json, COPY.md, ALTERACOES.md, docx original
 scripts/      verificação (Playwright) — não vai para produção
@@ -290,19 +291,19 @@ Gustavo — não mexer).**
   rolagem; o arco é claramente o mais luminoso (`shots/fase7b-halo-e-arco/`).
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
   borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
-- **Rodapé**: o mesmo do site zero7.com.br (pedido do Gustavo): logo (`img/marca/zero7.svg`,
-  copiada do projeto Zero7), endereço, horário, Navegação (links absolutos para
-  zero7.com.br), Suporte (e-mail) e Social (ícones SVG inline, sem CDN). Textos em
-  `rodape.*` no copy.json. 4 colunas ≥ 1080px, empilhado abaixo. Fio azul no topo.
-  CNPJ no bloco da logo. Faixa final: "©" + ano (`<span data-ano>` com o ano atual já no
-  HTML; `js/ano.js` atualiza; o verificador isenta só esse número) + "| Todos os
-  direitos reservados.", Política de Privacidade (link real), pendentes `rodape.cookie`
-  e `rodape.uso` (no site da Zero7 esses links têm href vazio; /termos responde 403) e
-  o aviso legal literal da home, legível (≥ 13px, `--texto-3`, à esquerda, na medida).
-  Fora, por decisão: formas de pagamento (#pagamento, dependem do checkout), selo do
-  Reclame Aqui (script externo). Todos os links do rodapé têm alvo ≥ 44×44px.
-- **Links**: nenhum `href` vazio na página; `#` só com `data-pendente-href`
-  (`npm run tokens` falha se achar).
-- **Copy**: 67 blocos + 7 pendentes (6 em caixa, `d1.cta.destino` só no link).
+- **Rodapé**: CÓPIA 100% do rodapé de zero7.com.br (#footer, #pagamento, #author), por
+  escolha do Gustavo — mesmo conteúdo, estrutura, tamanhos, cores, grades e hovers da home,
+  inclusive o que contraria regras da página: aviso legal em 8px, links "Cookie" e
+  "Políticas de Uso" com href vazio (marcados `data-href-vazio="copia-zero7"`; o
+  `npm run tokens` só aceita esses e sempre os lista), alvos de toque menores que 44px e
+  o selo do Reclame Aqui (script externo de s3.amazonaws.com). `css/rodape.css` usa uma
+  unidade local `--u` = o "1rem" da home (8px; 10,4px ≥ 1600px) — a raiz da página segue
+  100%. Diferenças deliberadas: fonte do texto Inter (a home usa "TT Fors Trial", versão
+  trial via CDN), ícones do ionicons em SVG local (mesmos desenhos, sem CDN) e o ano do ©
+  automático (`js/ano.js`, com o ano atual no HTML). Textos em `rodape.*`; logo em
+  `img/marca/`, bandeiras em `img/pagamento/` (copiadas do projeto Zero7).
+- **Links**: nenhum `href` vazio fora os dois do rodapé copiado; `#` só com
+  `data-pendente-href` (`npm run tokens` falha se achar outro).
+- **Copy**: 70 blocos + 5 pendentes (4 em caixa, `d1.cta.destino` só no link).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

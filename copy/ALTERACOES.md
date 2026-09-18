@@ -13,3 +13,5 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-18 | `rodape.*` (11 blocos) | *(não existiam)* | textos do rodapé do site zero7.com.br: endereço, horário, Navegação (Home, Blog, Planos, Regulamento, Área do Trader), Suporte (suporte@zero7.com.br), Social | Gustavo |
 | 2026-09-18 | `rodape.cnpj`, `rodape.simbolo`, `rodape.direitos`, `rodape.privacidade`, `rodape.aviso` | *(não existiam)* | textos do #author do site zero7.com.br, literais: razão social + CNPJ, "©", "| Todos os direitos reservados." (o ano é gerado por JS), "Política de Privacidade" e o aviso legal completo | Gustavo |
 | 2026-09-18 | `rodape.cookie`, `rodape.uso` | *(não existiam)* | *(pendentes: no site da Zero7 os links "Cookie" e "Políticas de Uso" estão com href vazio)* | Gustavo |
+| 2026-09-18 | `rodape.cookie`, `rodape.uso` | *(pendentes)* | Cookie · Políticas de Uso (links com href vazio, cópia 100% do site da Zero7) | Gustavo |
+| 2026-09-18 | `rodape.pagamento` | *(não existia)* | Formas de Pagamento (#pagamento do site da Zero7, com as 6 imagens) | Gustavo |
