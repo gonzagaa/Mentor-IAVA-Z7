@@ -34,16 +34,8 @@
     "secao": "d1 · Primeira dobra (hero)",
     "tipo": "copy",
     "papel": "botão primário",
-    "texto": "COMECE A ANALISAR SUAS OPERAÇÕES COM O IAVA",
-    "obs": "docx §16, colchetes removidos (indicam botão)"
-  },
-  {
-    "id": "d1.cta2",
-    "secao": "d1 · Primeira dobra (hero)",
-    "tipo": "copy",
-    "papel": "botão secundário",
-    "texto": "COMO O IAVA FUNCIONA",
-    "obs": "docx §18, colchetes removidos (indicam botão)"
+    "texto": "Experimentar agora o IAVA",
+    "obs": "alterado em 2026-09-18 a pedido do Gustavo — ver ALTERACOES.md (original: docx §16)"
   },
   {
     "id": "d1.cta.destino",

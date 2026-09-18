@@ -11,12 +11,13 @@
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/componentes.css">
   <link rel="stylesheet" href="css/fundos.css">
+  <link rel="stylesheet" href="css/hero.css">
   <link rel="stylesheet" href="css/pendente.css">
 </head>
 <body>
 
-  <header>
-    <nav>
+  <header class="topo">
+    <nav class="nav-pilula">
       <div class="pendente" data-pendente="nav.itens">[PENDENTE: Itens do menu de navegação — não existem na copy]</div>
     </nav>
   </header>
@@ -24,13 +25,24 @@
   <main>
 
     <!-- d1 · primeira dobra (hero) -->
-    <section id="hero">
-      <h1 data-copy="d1.titulo">Seu novo mentor de trading 24 horas por dia analisando cada operação sua.</h1>
-      <p data-copy="d1.apoio">Você opera. O IAVA analisa.</p>
-      <p data-copy="d1.sub">O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance, identificando padrões de erro, impulsividade, horários, estratégias e comportamentos que podem estar prejudicando seus resultados.</p>
-      <a data-copy="d1.cta1" href="#" data-pendente-href="d1.cta.destino">COMECE A ANALISAR SUAS OPERAÇÕES COM O IAVA</a>
-      <a data-copy="d1.cta2" href="#demonstracao">COMO O IAVA FUNCIONA</a>
-      <div class="pendente" data-pendente="d1.cta.destino">[PENDENTE: Destino (href) dos CTAs de compra — não informado]</div>
+    <section id="hero" class="hero">
+      <div class="hero__luz" aria-hidden="true">
+        <div class="fundo-grade hero__grade"></div>
+        <div class="hero__foco">
+          <div class="arco arco--invertido hero__arco"></div>
+          <div class="hero__cone"></div>
+        </div>
+      </div>
+
+      <div class="hero__conteudo">
+        <p class="selo" data-copy="d1.apoio"><span class="selo__frase">Você opera.</span> <span class="selo__frase selo__frase--acento">O IAVA analisa.</span></p>
+        <h1 class="display degrau-5 hero__titulo" data-copy="d1.titulo"><span class="grupo">Seu novo</span> <span class="grupo">mentor de</span> <span class="grupo">trading 24</span> <span class="grupo">horas por dia</span> <span class="grupo">analisando cada</span> <span class="grupo">operação sua.</span></h1>
+        <p class="degrau-2 hero__sub" data-copy="d1.sub">O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance, identificando padrões de erro, impulsividade, horários, estratégias e comportamentos que podem estar prejudicando seus resultados.</p>
+        <div class="hero__acao">
+          <a class="botao botao--primario" data-copy="d1.cta1" href="#" data-pendente-href="d1.cta.destino">Experimentar agora o IAVA</a>
+          <div class="pendente" data-pendente="d1.cta.destino">[PENDENTE: Destino (href) dos CTAs de compra — não informado]</div>
+        </div>
+      </div>
     </section>
 
     <!-- d2 · segunda dobra (dor) -->

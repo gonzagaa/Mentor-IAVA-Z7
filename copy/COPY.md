@@ -3,6 +3,7 @@
 Gerado a partir de `LP - Mentor IAVA.docx`. **Fonte da verdade é o `copy.json`.**
 Texto literal: nada foi corrigido. Espaços no início/fim de parágrafo foram aparados; espaços duplos internos foram mantidos (o HTML os colapsa na tela).
 Blocos `PENDENTE` são lacunas que precisam aparecer na página como caixa pendente — nunca preenchidas com texto inventado.
+Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Este arquivo é gerado por `node scripts/gerar-copy-md.mjs`.
 
 
 ## nav
@@ -18,9 +19,7 @@ Blocos `PENDENTE` são lacunas que precisam aparecer na página como caixa pende
 - **`d1.sub`** · _subtítulo_  
   O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance, identificando padrões de erro, impulsividade, horários, estratégias e comportamentos que podem estar prejudicando seus resultados.
 - **`d1.cta1`** · _botão primário_  
-  COMECE A ANALISAR SUAS OPERAÇÕES COM O IAVA
-- **`d1.cta2`** · _botão secundário_  
-  COMO O IAVA FUNCIONA
+  Experimentar agora o IAVA
 - **`d1.cta.destino`** — ⚠ PENDENTE: Destino (href) dos CTAs de compra — não informado
 
 ## d2 · Segunda dobra (dor)

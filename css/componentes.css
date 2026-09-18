@@ -58,12 +58,13 @@
   max-inline-size: 100%;
   padding: var(--esp-3) var(--esp-6);
   border: 1px solid transparent;
-  border-radius: var(--raio-botao, var(--raio-m));
+  border-radius: var(--raio-botao); /* assinatura Zero7 */
   font-family: var(--fonte-corpo);
   font-weight: var(--peso-forte);
   font-size: var(--fs-1);
   line-height: var(--lh-3);
   letter-spacing: var(--ls-0);
+  text-transform: uppercase; /* todo CTA em caixa alta por CSS; o texto segue a copy */
   text-align: center;
   text-decoration: none;
   cursor: pointer;
@@ -153,6 +154,113 @@
   box-shadow: var(--anel-botao);
 }
 
+/* ═══════════════════════════════ SELO ═══════════════════════════════
+   Pílula pequena de vidro: ponto "ao vivo" pulsando + frases curtas em caixa alta.
+   Marcação: <p class="selo" data-copy="…"><span class="selo__frase">…</span>
+   <span class="selo__frase selo__frase--acento">…</span></p>
+   O separador entre frases é pseudo-elemento: nunca um caractere de texto. */
+
+.selo {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: auto auto auto; /* ponto · frase · frase */
+  align-items: center;
+  gap: 0 var(--esp-3);
+  max-inline-size: 100%;
+  text-align: start;
+  padding: var(--esp-2) var(--esp-4) var(--esp-2) var(--esp-3);
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie); /* fallback sem backdrop-filter */
+  box-shadow: var(--brilho-interno);
+  font-family: var(--fonte-corpo);
+  font-weight: var(--peso-forte);
+  font-size: var(--fs-0);
+  line-height: var(--lh-0);
+  letter-spacing: var(--ls-selo);
+  text-transform: uppercase;
+  color: var(--texto-2);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .selo {
+    background: var(--vidro);
+    -webkit-backdrop-filter: var(--vidro-desfoque);
+    backdrop-filter: var(--vidro-desfoque);
+  }
+}
+
+/* o ponto azul, e o anel que pulsa por cima dele (só transform + opacity) */
+.selo::before,
+.selo::after {
+  content: '';
+  inline-size: var(--selo-ponto);
+  block-size: var(--selo-ponto);
+  border-radius: 50%;
+  background: var(--selo-acento);
+}
+
+.selo::before {
+  box-shadow: var(--glow-sutil);
+}
+
+.selo::after {
+  position: absolute;
+  inset-inline-start: var(--esp-3);
+  inset-block-start: calc(50% - var(--selo-ponto) / 2);
+  opacity: 0;
+  animation: pulso-ao-vivo var(--dur-pulso) var(--saida-suave) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes pulso-ao-vivo {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  70%,
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+.selo__frase {
+  white-space: nowrap;
+}
+
+/* separador: um traço fino antes da segunda frase */
+.selo__frase + .selo__frase::before {
+  content: '';
+  display: inline-block;
+  inline-size: var(--esp-4);
+  block-size: 1px;
+  margin-inline-end: var(--esp-3);
+  vertical-align: middle;
+  background: var(--selo-separador);
+}
+
+.selo__frase--acento {
+  color: var(--selo-acento);
+}
+
+/* estreito demais para uma linha (13px é o piso de fonte): as frases empilham ao
+   lado do ponto, e o separador sai de cena */
+@media (max-width: 26rem) {
+  .selo {
+    grid-template-columns: auto auto;
+    border-radius: var(--raio-g);
+  }
+
+  .selo::before {
+    grid-row: span 2;
+  }
+
+  .selo__frase + .selo__frase::before {
+    display: none;
+  }
+}
+
 /* ═══════════════════════════ NAV EM PÍLULA ═══════════════════════════ */
 
 .nav-pilula {
@@ -221,7 +329,7 @@
   gap: var(--esp-4);
   padding: clamp(var(--esp-6), 4vw, var(--esp-8));
   border: var(--borda);
-  border-radius: var(--raio-card, var(--raio-m));
+  border-radius: var(--raio-card); /* assinatura Zero7 */
   background: var(--gradiente-card), var(--superficie);
   transition:
     border-color var(--dur-media) var(--saida),
@@ -298,7 +406,7 @@
   aspect-ratio: 1;
   padding: var(--esp-2);
   border: 1px solid var(--linha-forte);
-  border-radius: var(--raio-ladrilho, var(--raio-m));
+  border-radius: var(--raio-m); /* ladrilho não é superfície: canto simétrico */
   background: var(--gradiente-ladrilho);
   box-shadow: var(--brilho-interno), var(--glow-sutil);
 }

@@ -69,7 +69,6 @@
    ~75% dela no desktop; máscara nas laterais e no topo, então nunca "corta" seco. */
 
 .arco {
-  --arco-altura: clamp(12rem, 7rem + 22vw, 28rem); /* 192 → 448 */
   --arco-diametro: clamp(32rem, 75%, 92rem); /* 512 → 1380 */
   --arco-topo: calc(var(--arco-altura) * 0.46);
   block-size: var(--arco-altura);
@@ -98,6 +97,12 @@
   background:
     var(--grao),
     var(--arco-foco) 50% calc(var(--arco-topo) - 3rem) / calc(var(--arco-diametro) * 0.55) 6rem no-repeat;
+}
+
+/* invertido: a curva no topo, o bloom virado para baixo (luz vindo de cima).
+   Espelhar o bloco inteiro mantém camadas, máscaras e grão idênticos. */
+.arco--invertido {
+  transform: scaleY(-1);
 }
 
 /* ═════════════ c) PALCO DE LUZ com piso em grade em perspectiva (ref 09) ═════════════ */

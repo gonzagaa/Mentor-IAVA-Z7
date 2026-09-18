@@ -17,8 +17,11 @@ verificação (Playwright) em `scripts/`. Nada de `node_modules` em produção.
 
 ## Arquivos-fonte que não se editam à mão
 
-- `copy/copy.json` — toda a copy da página, literal, com um `id` por bloco.
-- `copy/COPY.md` — versão legível do mesmo conteúdo.
+- `copy/copy.json` — toda a copy da página, literal, com um `id` por bloco. **Fonte da
+  verdade.** Só muda com pedido explícito do dono, e toda mudança ganha uma linha em
+  `copy/ALTERACOES.md` (data, id, texto antigo, texto novo, quem pediu).
+- `copy/COPY.md` — versão legível, gerada: `node scripts/gerar-copy-md.mjs`.
+- `copy/ALTERACOES.md` — histórico de mudanças de copy depois do docx.
 - `copy/LP - Mentor IAVA.docx` — original.
 
 ## REGRAS INVIOLÁVEIS
@@ -27,7 +30,10 @@ verificação (Playwright) em `scripts/`. Nada de `node_modules` em produção.
    inclusive erros de digitação, pontuação e caixa alta. Não corrija, não reescreva, não
    complete, não "melhore". Se um layout parecer pedir texto diferente, PARE e pergunte.
 2. **Todo elemento com texto de copy leva `data-copy="<id>"`** com o id do `copy.json`.
-   `scripts/verificar-copy.mjs` compara um a um e falha se divergir.
+   `scripts/verificar-copy.mjs` compara um a um (`textContent`) e falha se divergir.
+   **Marcação inline dentro da copy é permitida**: envolver trechos em `<span>` para
+   quebra de linha ou destaque. **Proibido** acrescentar ou tirar qualquer caractere, e
+   **proibido `<br>`**. Separadores visuais são CSS (pseudo-elemento), nunca texto.
 3. **Nenhum texto inventado.** Nada de lorem ipsum, número de exemplo, depoimento fictício,
    rótulo de seção, eyebrow, legenda de card, microcopy de botão ou item de menu que não
    esteja no `copy.json`. Onde o design pedir um texto que não existe, use um PENDENTE.
@@ -82,6 +88,16 @@ a proposta é mais agressiva e futurista**.
 - Movimento: entradas curtas e firmes, sem bounce. Tudo respeitando
   `prefers-reduced-motion`.
 
+## Decisões aprovadas (fase 2)
+
+- **Canto: assimétrico Zero7** (`--raio-z7` / `--raio-z7-p`) em toda superfície: cards,
+  botões e campos (`--raio-card`, `--raio-botao`, `--raio-campo`). Os raios simétricos
+  ficam só para o que não é superfície: pílula da nav, selo, ladrilho de ícone, pontos.
+- **Fonte display: NCS Radhiumz** (continua só local até a licença Webfonts).
+  **Unbounded** fica documentada como reserva, sem carregar em página nenhuma.
+- **CTAs em caixa alta por CSS** (`text-transform` na `.botao`); o texto no HTML e no
+  json segue como o dono escreveu.
+
 ## Tipografia
 
 - Títulos (display): **NCS Radhiumz** — a mesma da home zero7.com.br, amarra com a marca.
@@ -99,22 +115,25 @@ a proposta é mais agressiva e futurista**.
 - ⚠ **NCS Radhiumz só em ambiente local até a licença Webfonts ser confirmada. Não
   publicar.** O arquivo é "All Right Reserved" da Namara Creative Studio; `@font-face`
   exige a licença paga Webfonts (onedsgn.com/licenses). Ver `fonts/NCS-Radhiumz-LICENCA.md`.
-- Alternativa OFL em avaliação (só na amostra): **Unbounded**,
-  `fonts/Unbounded-latin-variavel.woff2`, `fonts/Unbounded-LICENSE.txt`. Trocar é mudar
-  um token (`--fonte-display`).
+- Reserva OFL (não carregada em página nenhuma): **Unbounded**,
+  `fonts/Unbounded-latin-variavel.woff2`, `fonts/Unbounded-LICENSE.txt`. Trocar = apontar
+  `--fonte-display` para `--fonte-display-alternativa` e declarar o `@font-face`.
+- **H1 (`--fs-5`)**: 23px em 320, 27px em 375, 64px de 1474 em diante. O teto no celular
+  vem de uma regra, não de gosto: nenhuma linha do H1 pode ter uma palavra só, e o menor
+  par possível para "ANALISANDO" é "ANALISANDO CADA" (12,41em).
 
 ## Estrutura de pastas
 
 ```
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
-css/          tokens.css, base.css, componentes.css, fundos.css, pendente.css
+css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, pendente.css
               amostra.css (NÃO vai para produção)
 js/           amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
-copy/         copy.json, COPY.md, docx original
+copy/         copy.json, COPY.md, ALTERACOES.md, docx original
 scripts/      verificação (Playwright) — não vai para produção
 referencias/  prints de referência visual (NÃO vai para produção, fora do git)
 shots/        capturas (NÃO vai para produção)
@@ -135,26 +154,36 @@ servidor sozinhos.
 | `npm run shots -- <rótulo>` | página inteira em `shots/<rótulo>/<largura>.png` |
 | `npm run medir -- <rótulo>` | tabela de medidas em `medidas/<rótulo>.md` |
 | `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, contraste |
+| `npm run pintura` | trace do Chrome: custo de pintura das animações da hero (com e sem a varredura do H1) |
+| `node scripts/gerar-copy-md.mjs` | regera `copy/COPY.md` a partir do `copy.json` |
 
 Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
 `--pagina=amostra.html` (padrão: index). Emulam `prefers-reduced-motion: reduce`; `--movimento`
-desliga a emulação. Antes de medir ou capturar, cada um confirma que as fontes carregaram
+desliga a emulação. `shots --dobra` captura só a primeira dobra, na altura de tela de
+cada largura (`DOBRA` em `scripts/comum.mjs`); o `medir` mede o H1 (linhas, palavra
+sozinha, palavra partida) e a posição do botão da hero nessas alturas. Antes de medir ou capturar, cada um confirma que as fontes carregaram
 do arquivo esperado (`document.fonts.check()`) e que `--css-carregado` vale 1 no `:root`;
 se falhar, PARA com código 1 e não grava nada. Na amostra, `npm run copy` aceita repetição
 de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 1 concluída — sistema visual aguardando aprovação na `amostra.html`.**
+**Fase 2 concluída — cabeçalho e #hero construídos no index.html.** O resto da página
+(#dor em diante) ainda é o esqueleto sem estilo.
 
-- `css/tokens.css`: paleta, escala fluida de 7 degraus (display e corpo), espaço, raios
-  (3 simétricos + pílula + assinatura Zero7 `--raio-z7`), 3 glows, borda neon, grão,
-  movimento.
-- `css/componentes.css`: `.display` + `.degrau-N`, botões primário/secundário, nav em
-  pílula, card base/destaque, borda neon, ladrilho + `.slot-imagem`, título em duas linhas.
-- `css/fundos.css`: `.fundo-grade`, `.arco`, `.palco`, `.feixes`.
-- `index.html` inalterado além dos `<link>` novos: nenhuma classe aplicada. Por isso os
-  títulos do index estão em Inter até a próxima fase.
-- A decidir pelo dono (na amostra): canto simétrico × assimétrico Zero7; NCS Radhiumz ×
-  Unbounded; uso de d1.titulo + d1.apoio como título em duas linhas.
-- Pendentes da fase 0 ainda abertos: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.
+- **Hero**, de cima para baixo: nav (pílula com o pendente `nav.itens`) → selo
+  (`d1.apoio`, ponto "ao vivo" pulsando) → H1 `.display` branco iluminado de cima →
+  subtítulo → um botão (`d1.cta1`, `href="#"` + `data-pendente-href`) → pendente
+  `d1.cta.destino`. Fundo: grade de quadrados + arco de horizonte invertido + cone de luz
+  que respira.
+- **Animações da hero (3)**: respiro da luz (opacity), pulso do selo (transform +
+  opacity) — ambas só compositor, zero pintura —, e a varredura do H1
+  (`background-position`, pinta ~1,2s a cada 7s). Todas param com reduced-motion.
+  O H1 nasce visível: nenhuma entrada animada.
+- **Copy**: 51 blocos (`d1.cta1` mudou, `d1.cta2` saiu — ver `copy/ALTERACOES.md`).
+- `amostra.html` segue como guia do sistema (seções 1–5); as comparações decididas e o
+  hero de teste saíram.
+- A revisar quando a próxima seção for montada: `--fs-4` (h2) é maior que o H1 no
+  celular (29px × 27px em 375) e vai esbarrar na mesma regra de "nenhuma linha com
+  uma palavra só".
+- Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

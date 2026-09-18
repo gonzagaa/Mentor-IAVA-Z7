@@ -10,7 +10,8 @@
     "pendentes": "node scripts/pendentes.mjs",
     "shots": "node scripts/shots.mjs",
     "medir": "node scripts/medir.mjs",
-    "tokens": "node scripts/tokens.mjs"
+    "tokens": "node scripts/tokens.mjs",
+    "pintura": "node scripts/pintura.mjs"
   },
   "devDependencies": {
     "playwright": "^1.47.0"

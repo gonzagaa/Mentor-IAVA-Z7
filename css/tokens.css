@@ -97,7 +97,9 @@
      Nenhum outro seletor usa var(--fonte-display) — `npm run tokens` fiscaliza. */
   --fonte-display: 'NCS Radhiumz', system-ui, sans-serif; /* um peso só: 400 */
   --fonte-corpo: 'Inter', system-ui, sans-serif;
-  --fonte-display-alternativa: 'Unbounded', system-ui, sans-serif; /* OFL — só na comparação da amostra */
+  /* reserva OFL documentada, se a licença da Radhiumz não vier. NÃO é carregada em
+     página nenhuma; trocar = apontar --fonte-display para cá e declarar o @font-face. */
+  --fonte-display-alternativa: 'Unbounded', system-ui, sans-serif;
   --fonte-mono: ui-monospace, 'Cascadia Mono', Consolas, monospace; /* só rótulos técnicos */
 
   --peso-corpo: 400;
@@ -112,10 +114,13 @@
   --fs-2: clamp(1.125rem, 1.056rem + 0.347vw, 1.375rem); /* 18 → 22   lead, subtítulo */
   --fs-3: clamp(1.25rem, 1.111rem + 0.693vw, 1.75rem); /* 20 → 28   h3 */
   --fs-4: clamp(1.75rem, 1.403rem + 1.733vw, 3rem); /* 28 → 48   h2 */
-  /* h1: duas retas via min() — sobe rápido de 320 (30px) a 375 (34,4px) e depois
-     devagar até 1474 (66px). Em caixa alta, "ANALISANDO" a 34px não cabe nos 288px
-     úteis de uma tela de 320; o alvo "≥ 34px" vale a partir de 375. */
-  --fs-5: clamp(1.875rem, min(0.275rem + 8vw, 1.4761rem + 2.8753vw), 4.125rem); /* 30 → 34,4 → 66 */
+  /* h1: duas retas via min() — 23px em 320, 27px em 375, 64px em 1474 e trava.
+     Limites medidos na NCS Radhiumz em caixa alta (fase 2):
+     · no celular, "ANALISANDO" não pode ficar sozinha na linha; o menor par que
+       resolve é "ANALISANDO CADA" = 12,41em → cabe em 288px (320) só até 23px e em
+       343px (375) só até 27px;
+     · em 1474, 3 linhas pedem "SEU NOVO MENTOR DE TRADING" = 21,11em em 1394px. */
+  --fs-5: clamp(1.4375rem, min(-0.017rem + 7.2727vw, 0.8984rem + 3.3667vw), 4rem); /* 23 → 27 → 64 */
   --fs-6: clamp(2.5rem, 1.638rem + 4.333vw, 5.625rem); /* 40 → 90   manchete */
 
   /* corpo (Inter) — entrelinha e tracking por degrau */
@@ -181,13 +186,18 @@
 
   /* ───────────────────────────── FORMA ───────────────────────────── */
 
-  --raio-p: 0.5rem; /* 8  — ladrilho pequeno, campos */
-  --raio-m: 1rem; /* 16 — cards, botões */
-  --raio-g: 2rem; /* 32 — blocos grandes */
+  --raio-p: 0.5rem; /* 8  — slot de imagem, detalhes */
+  --raio-m: 1rem; /* 16 — ladrilho de ícone */
+  --raio-g: 2rem; /* 32 — base do canto grande da assinatura */
   --raio-pilula: 999px; /* forma, não degrau: nav e pílulas */
-  /* assinatura Zero7: canto grande em cima à esquerda e embaixo à direita */
+  /* assinatura Zero7 (APROVADA, fase 2): canto grande em cima à esquerda e embaixo à
+     direita. É o canto de toda SUPERFÍCIE: cards, botões e campos. Os simétricos acima
+     ficam só para o que não é superfície: pílula da nav, selo, ladrilho, pontos. */
   --raio-z7: var(--raio-g) 0.125rem;
   --raio-z7-p: var(--raio-m) 0.125rem;
+  --raio-card: var(--raio-z7);
+  --raio-botao: var(--raio-z7-p);
+  --raio-campo: var(--raio-z7-p);
 
   --borda: 1px solid var(--linha);
   --tamanho-ladrilho: clamp(5rem, 4.4rem + 2vw, 6.5rem); /* 80 → 104 */
@@ -217,7 +227,8 @@
   --halo-azul: radial-gradient(closest-side, rgb(0 128 201 / 45%), rgb(0 59 102 / 22%) 55%, transparent 100%);
   --halo-noite: radial-gradient(closest-side, var(--azul-noite), transparent 100%);
 
-  /* arco de horizonte */
+  /* arco de horizonte — altura no :root para outras peças se alinharem à curva */
+  --arco-altura: clamp(12rem, 7rem + 22vw, 28rem); /* 192 → 448 */
   --arco-borda: var(--ciano);
   --arco-luz:
     0 -1px 0 0 var(--ciano),
@@ -244,6 +255,35 @@
   --palco-piso-linha: rgb(31 163 255 / 55%);
   --palco-piso-brilho: radial-gradient(38% 55% at 50% 0%, rgb(92 225 255 / 55%) 0%, rgb(31 163 255 / 30%) 35%, rgb(0 59 102 / 20%) 70%, transparent 100%);
 
+  /* hero: luz de cima */
+  /* feixe de 64° apontando para baixo (148° + 32° = 180°), bordas bem macias */
+  --cone-luz: conic-gradient(from 148deg at 50% 0%,
+    transparent 0deg,
+    rgb(0 59 102 / 10%) 8deg,
+    rgb(0 128 201 / 16%) 20deg,
+    rgb(31 163 255 / 24%) 32deg,
+    rgb(0 128 201 / 16%) 44deg,
+    rgb(0 59 102 / 10%) 56deg,
+    transparent 64deg 360deg);
+  --respiro-luz: 0.72; /* opacidade mínima do ciclo; o máximo é 1 */
+
+  /* hero: H1 branco iluminado de cima */
+  --h1-topo: #c9f2ff; /* onde a luz bate: ciano bem claro, ainda lido como branco */
+  --gradiente-h1: linear-gradient(180deg, var(--h1-topo) 0%, var(--texto) 58%, var(--texto) 100%);
+  --faixa-h1: linear-gradient(105deg,
+    transparent 44%,
+    rgb(92 225 255 / 55%) 48.5%,
+    rgb(220 248 255 / 95%) 50%,
+    rgb(92 225 255 / 55%) 51.5%,
+    transparent 56%);
+  --brilho-h1: drop-shadow(0 0 0.6rem rgb(31 163 255 / 26%)) drop-shadow(0 0 1px rgb(92 225 255 / 20%));
+
+  /* selo */
+  --ls-selo: 0.14em;
+  --selo-acento: var(--azul-eletrico);
+  --selo-ponto: 0.5rem;
+  --selo-separador: rgb(255 255 255 / 28%);
+
   /* feixes verticais: três intensidades dão profundidade */
   --feixe: rgb(31 163 255 / 80%);
   --feixe-medio: rgb(31 163 255 / 45%);
@@ -254,6 +294,7 @@
   /* máscaras (alfa, não cor) */
   --mascara-cheia: linear-gradient(#000 0 0);
   --mascara-arco: linear-gradient(180deg, transparent 0%, #000 40%, #000 72%, transparent 100%);
+  --mascara-cone: linear-gradient(180deg, #000 0%, #000 25%, transparent 100%);
   --mascara-palco-piso: radial-gradient(ellipse 75% 110% at 50% 0%, #000 25%, transparent 100%);
   --mascara-radial: radial-gradient(ellipse 70% 65% at 50% 35%, #000 25%, transparent 75%);
   --mascara-vertical: linear-gradient(180deg, transparent 0%, #000 18%, #000 70%, transparent 100%);
@@ -269,6 +310,10 @@
   --dur-media: 200ms;
   --dur-lenta: 400ms;
   --dur-giro: 6s; /* borda neon */
+  --dur-varredura: 7s; /* ciclo da faixa de brilho do H1 (passa em ~1,2s) */
+  --dur-respiro: 6s; /* luz de cima */
+  --dur-pulso: 2.4s; /* ponto "ao vivo" do selo */
+  --vai-e-volta: cubic-bezier(0.45, 0, 0.55, 1); /* só para ciclos contínuos e lentos */
   --saida: cubic-bezier(0.22, 1, 0.36, 1); /* firme, desacelera forte */
   --saida-suave: cubic-bezier(0.33, 1, 0.68, 1);
   --deslocamento-hover: -1px;

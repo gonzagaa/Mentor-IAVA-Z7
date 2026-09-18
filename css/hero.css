@@ -1,0 +1,160 @@
+/* Cabeçalho (nav) e #hero — primeira dobra.
+   Composição, de cima para baixo: nav → selo → H1 → subtítulo → um botão.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+/* ═══════════════════════════════ CABEÇALHO ═══════════════════════════════
+   No fluxo (a altura é a do conteúdo, sem chute), acima da luz da hero. */
+
+.topo {
+  position: relative;
+  z-index: 2;
+  padding: var(--esp-4) var(--gutter) 0;
+}
+
+/* ═════════════════════════════════ HERO ═════════════════════════════════ */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding: clamp(var(--esp-8), 6vw, var(--esp-16)) var(--gutter) var(--esp-16);
+  text-align: center;
+}
+
+.hero__conteudo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  /* sem o teto de --largura-max: o H1 precisa de 21,5em (1376px em 1474) para
+     fechar em 3 linhas; subtítulo e botão têm limites próprios */
+  margin-inline: auto;
+}
+
+/* ─────────────────────────── luz de cima ───────────────────────────
+   Camada decorativa (aria-hidden no HTML). Sobe por trás do cabeçalho até o topo
+   da página, não ocupa altura, e corta o que passar das bordas: sem scroll-x. */
+
+.hero__luz {
+  --luz-sobe: 8rem; /* cobre o cabeçalho, qualquer que seja a altura dele */
+  /* onde passa a curva do arco, medido a partir do topo da hero: no celular fica
+     atrás da nav (sem disputar com o selo); no desktop desce para logo abaixo dela */
+  --curva: calc(var(--luz-sobe) + clamp(-2.5rem, -6rem + 8vw, 1.5rem));
+  position: absolute;
+  inset: calc(-1 * var(--luz-sobe)) 0 0;
+  z-index: -1;
+  overflow: clip;
+  pointer-events: none;
+}
+
+/* a grade de quadrados, por baixo de tudo, sumindo nas bordas */
+.hero__grade {
+  position: absolute;
+  inset: 0;
+}
+
+/* arco + cone "respiram" juntos: uma só animação, só opacity */
+.hero__foco {
+  position: absolute;
+  inset: 0;
+  animation: respirar-luz var(--dur-respiro) var(--vai-e-volta) infinite;
+  will-change: opacity;
+}
+
+@keyframes respirar-luz {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: var(--respiro-luz);
+  }
+}
+
+/* o arco da amostra (5b), invertido: curva no topo, parte fora da tela */
+.hero__arco {
+  position: absolute;
+  inset-inline: 0;
+  /* espelhado, a curva fica a 54% da altura do bloco */
+  inset-block-start: calc(var(--curva) - var(--arco-altura) * 0.54);
+}
+
+/* holofote: feixe cônico que nasce na curva do arco e desce até o H1, apagando no
+   caminho. Sem camada de grão: o grão cobriria a caixa inteira do cone e
+   acinzentaria o preto fora do feixe. */
+.hero__cone {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: var(--curva);
+  block-size: clamp(24rem, 50vw, 44rem);
+  background: var(--cone-luz);
+  -webkit-mask-image: var(--mascara-cone);
+  mask-image: var(--mascara-cone);
+}
+
+/* ─────────────────────────────── H1 ───────────────────────────────
+   Branco iluminado de cima: gradiente VERTICAL no bloco inteiro (topo ciano bem
+   claro → branco puro), brilho azul sutil com drop-shadow, e a cada 7s uma faixa
+   estreita atravessa na diagonal. Nasce visível: nenhuma entrada animada (LCP). */
+
+.hero__titulo {
+  max-inline-size: 21.5em; /* 3 linhas em 1474/1920: a mais longa mede 21,11em */
+  padding-block: var(--respiro-acento) var(--respiro-descendente);
+  margin-block: calc(-1 * var(--respiro-acento)) calc(-1 * var(--respiro-descendente));
+  background: var(--faixa-h1), var(--gradiente-h1);
+  background-size: 300% 100%, 100% 100%;
+  background-position: 100% 0, 0 0; /* faixa estacionada fora do texto */
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: var(--brilho-h1);
+  animation: varrer-titulo var(--dur-varredura) linear infinite;
+  /* camada própria: o compositor aplica o drop-shadow, e a varredura só rasteriza
+     o texto de novo, não o filtro (medido com npm run pintura) */
+  will-change: transform;
+}
+
+/* a faixa só anda nos últimos 1,2s do ciclo de 7s (82,857% = 100% − 1,2/7) */
+@keyframes varrer-titulo {
+  0%,
+  82.857% {
+    background-position: 100% 0, 0 0;
+    animation-timing-function: var(--vai-e-volta);
+  }
+  100% {
+    background-position: 0% 0, 0 0;
+  }
+}
+
+/* grupos que não se separam no celular: "ANALISANDO" nunca fica sozinha na linha,
+   e nenhuma linha fica com uma palavra só. Os <span> não mudam o texto. */
+@media (max-width: 47.99rem) {
+  .hero__titulo .grupo {
+    white-space: nowrap;
+  }
+}
+
+@media (forced-colors: active) {
+  .hero__titulo {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+    filter: none;
+  }
+}
+
+/* ─────────────────────────── subtítulo e CTA ─────────────────────────── */
+
+.hero__sub {
+  max-inline-size: 60ch;
+  color: var(--texto-2);
+}
+
+.hero__acao {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  margin-block-start: var(--esp-2);
+}

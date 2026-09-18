@@ -4,7 +4,7 @@
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { RAIZ, lerLarguras, lerRotulo, lerPagina, lerMovimento, porLargura, ALTURA } from './comum.mjs'
+import { RAIZ, lerLarguras, lerRotulo, lerPagina, lerMovimento, porLargura, ALTURA, DOBRA, DOBRA_OBRIGATORIA } from './comum.mjs'
 
 const rotulo = lerRotulo()
 const larguras = lerLarguras()
@@ -50,6 +50,33 @@ const medicoes = await porLargura(
 
       const h1 = document.querySelector('h1')
       const fsH1 = h1 && visivel(h1) ? px(getComputedStyle(h1).fontSize) : null
+
+      // linhas do H1, palavra por palavra: cada palavra vira um Range; o topo de cada
+      // retângulo diz em que linha ela está. Palavra com retângulos em 2 topos = partida.
+      let linhasH1 = null, umaPalavra = [], partidas = []
+      if (h1 && visivel(h1)) {
+        const palavras = []
+        const andar = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT)
+        for (let n = andar.nextNode(); n; n = andar.nextNode()) {
+          for (const m of n.nodeValue.matchAll(/\S+/g)) {
+            const r = document.createRange()
+            r.setStart(n, m.index)
+            r.setEnd(n, m.index + m[0].length)
+            const topos = [...new Set([...r.getClientRects()].filter(q => q.width > 0).map(q => Math.round(q.top)))]
+            palavras.push({ p: m[0], topos })
+          }
+        }
+        partidas = palavras.filter(w => w.topos.length > 1).map(w => w.p)
+        const linhas = []
+        for (const w of palavras) {
+          const topo = w.topos[0]
+          const linha = linhas.find(l => Math.abs(l.topo - topo) <= 3)
+          if (linha) linha.palavras.push(w.p)
+          else linhas.push({ topo, palavras: [w.p] })
+        }
+        linhasH1 = linhas.length
+        umaPalavra = linhas.filter(l => l.palavras.length === 1).map(l => l.palavras[0])
+      }
 
       const pLongo = [...document.querySelectorAll('p')].find(
         el => visivel(el) && el.textContent.trim().length >= 120
@@ -98,6 +125,9 @@ const medicoes = await porLargura(
       return {
         raiz,
         fsH1,
+        linhasH1,
+        umaPalavra,
+        partidas,
         fsP,
         pLongoId: pLongo ? pLongo.getAttribute('data-copy') : null,
         menorFonte,
@@ -121,7 +151,20 @@ const medicoes = await porLargura(
       }
     })
 
-    return { largura, ...m }
+    // botão principal na primeira dobra: mede de novo na altura real de tela
+    let dobra = null
+    if (DOBRA[largura]) {
+      await page.setViewportSize({ width: largura, height: DOBRA[largura] })
+      await page.evaluate(() => scrollTo(0, 0))
+      dobra = await page.evaluate(() => {
+        const b = document.querySelector('#hero .botao--primario')
+        if (!b) return null
+        const r = b.getBoundingClientRect()
+        return { topo: Math.round(r.top), base: Math.round(r.bottom), altura: innerHeight }
+      })
+    }
+
+    return { largura, ...m, dobra }
   },
   { antesDeCarregar: page => page.addInitScript(OBSERVADOR), pagina, movimento }
 )
@@ -153,11 +196,43 @@ const linhas = medicoes.map(m => [
   m.nEstouros ? `**${m.nEstouros}** (${m.estourosIds.join(', ')})` : '0',
 ])
 
-const tabela = [
-  '| ' + cab.join(' | ') + ' |',
-  '| ' + cab.map(() => '---').join(' | ') + ' |',
-  ...linhas.map(l => '| ' + l.join(' | ') + ' |'),
+const tabelaMd = (cabecalho, corpo) => [
+  '| ' + cabecalho.join(' | ') + ' |',
+  '| ' + cabecalho.map(() => '---').join(' | ') + ' |',
+  ...corpo.map(l => '| ' + l.join(' | ') + ' |'),
 ].join('\n')
+
+const tabela = tabelaMd(cab, linhas)
+
+// H1: linhas, palavra sozinha na linha, palavra partida
+const tabelaH1 = tabelaMd(
+  ['largura', 'h1', 'linhas', 'linha com 1 palavra', 'palavra partida'],
+  medicoes.map(m => [
+    `**${m.largura}**`,
+    `${n(m.fsH1)}px`,
+    n(m.linhasH1),
+    m.umaPalavra?.length ? `**${m.umaPalavra.join(', ')}**` : 'nenhuma',
+    m.partidas?.length ? `**${m.partidas.join(', ')}**` : 'nenhuma',
+  ])
+)
+
+// botão principal na primeira dobra, medido na altura real de tela
+const comDobra = medicoes.filter(m => m.dobra)
+const tabelaDobra = comDobra.length
+  ? tabelaMd(
+      ['tela', 'botão (topo → base)', 'sobra até a dobra', 'aparece sem rolar?', 'exigido?'],
+      comDobra.map(m => {
+        const { topo, base, altura } = m.dobra
+        return [
+          `**${m.largura}×${altura}**`,
+          `${topo} → ${base}px`,
+          `${altura - base}px`,
+          base <= altura ? 'sim' : '**não**',
+          DOBRA_OBRIGATORIA.includes(m.largura) ? 'sim' : 'só reportar',
+        ]
+      })
+    )
+  : ''
 
 const idP = medicoes.find(m => m.pLongoId)?.pLongoId
 const md = [
@@ -168,6 +243,11 @@ const md = [
   '',
   tabela,
   '',
+  '## H1',
+  '',
+  tabelaH1,
+  '',
+  ...(tabelaDobra ? ['## Botão principal na primeira dobra', '', tabelaDobra, ''] : []),
   '## Notas',
   '',
   `- **p longo**: primeiro \`<p>\` visível com 120+ caracteres${idP ? ` (\`${idP}\`)` : ''}.`,
@@ -190,4 +270,6 @@ const arquivo = path.join(RAIZ, 'medidas', `${rotulo}.md`)
 fs.writeFileSync(arquivo, md, 'utf8')
 
 console.log(tabela)
+console.log('\n' + tabelaH1)
+if (tabelaDobra) console.log('\n' + tabelaDobra)
 console.log(`\nsalvo em medidas/${rotulo}.md`)

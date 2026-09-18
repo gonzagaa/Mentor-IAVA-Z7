@@ -13,15 +13,20 @@ export const RAIZ = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 export const LARGURAS = [320, 375, 390, 430, 768, 1024, 1280, 1474, 1920]
 export const ALTURA = 900
 
+// Altura de tela por largura, para medir e capturar "a primeira dobra" (o que se vê
+// sem rolar). 390×844, 430×932, 1280×720, 1474×830 e 1920×1080 são exigência do
+// dono; 320×568 e 375×667 são reportados; 768×1024 e 1024×768 são tablets comuns.
+export const DOBRA = { 320: 568, 375: 667, 390: 844, 430: 932, 768: 1024, 1024: 768, 1280: 720, 1474: 830, 1920: 1080 }
+export const DOBRA_OBRIGATORIA = [390, 430, 1280, 1474, 1920]
+
 // Fontes que precisam estar carregadas, e de QUAL arquivo, antes de medir ou capturar.
 // A NCS Radhiumz é o WOFF original do cdnfonts, sem conversão (a licença proíbe).
 const FONTES_BASE = [
   { familia: 'Inter', arquivo: 'fonts/InterVariable.woff2' },
   { familia: 'NCS Radhiumz', arquivo: 'fonts/NcsRadhiumz-Rp3x6.woff' },
 ]
-const FONTES_POR_PAGINA = {
-  'amostra.html': [{ familia: 'Unbounded', arquivo: 'fonts/Unbounded-latin-variavel.woff2' }],
-}
+// fontes extras exigidas por página (a Unbounded saiu: é reserva, não carrega em lugar nenhum)
+const FONTES_POR_PAGINA = {}
 export const fontesDaPagina = pagina => [...FONTES_BASE, ...(FONTES_POR_PAGINA[pagina] || [])]
 
 export function lerLarguras(argv = process.argv.slice(2)) {
@@ -71,9 +76,9 @@ export function lerRotulo(argv = process.argv.slice(2)) {
 
 // Checagem de sanidade da página. Devolve { ok, motivos }.
 async function conferirCarregamento(page, fontes) {
-  // Pede a carga de cada família antes de conferir: uma página pode ainda não usar
-  // a display (o index da fase 1 não tem .display). Se o arquivo faltar, a face vai
-  // para "error" e a checagem abaixo falha do mesmo jeito.
+  // Pede a carga de cada família antes de conferir: uma página pode não usar alguma
+  // delas (ex.: uma seção sem .display). Se o arquivo faltar, a face vai para "error"
+  // e a checagem abaixo falha do mesmo jeito.
   await page.evaluate(async fontes => {
     await Promise.allSettled(fontes.map(f => document.fonts.load(`16px "${f.familia}"`)))
     await document.fonts.ready
@@ -112,7 +117,7 @@ async function conferirCarregamento(page, fontes) {
  * Antes de cada tarefa confere fontes e sentinela do CSS; se falhar, PARA tudo
  * com código de saída 1 dizendo qual largura e o quê.
  */
-export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false } = {}) {
+export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false } = {}) {
   const servidor = await subirServidor()
   const navegador = await chromium.launch()
   const fontes = fontesDaPagina(pagina)
@@ -122,7 +127,7 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = '
   try {
     for (const largura of larguras) {
       const contexto = await navegador.newContext({
-        viewport: { width: largura, height: ALTURA },
+        viewport: { width: largura, height: (dobra && DOBRA[largura]) || ALTURA },
         deviceScaleFactor: 1,
         reducedMotion: movimento ? 'no-preference' : 'reduce',
         colorScheme: 'dark',
