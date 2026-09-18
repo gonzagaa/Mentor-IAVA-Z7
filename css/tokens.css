@@ -176,7 +176,9 @@
   --lh-display-destaque: 1.1;
   --ls-display-destaque: 0.015em;
 
-  --medida-leitura: 65ch;
+  /* medida de leitura: ~65 caracteres reais por linha. O "ch" é a largura do "0", mais
+     larga que a letra média do Inter: 52ch ≈ 65–68 caracteres de texto corrido */
+  --medida-leitura: 52ch;
   --respiro-descendente: 0.12em; /* texto com gradiente não corta a cedilha */
   --respiro-acento: 0.2em; /* nem o acento da maiúscula (Ê, Ã, É) */
 
@@ -197,11 +199,14 @@
   --esp-24: 6rem; /* 96 */
   --esp-32: 8rem; /* 128 */
 
-  --largura-max: 75rem; /* 1200 */
+  /* wrapper de conteúdo: fluido, até 1360px. Em 1920 ≈ 71% da tela; em 1280/1474 o
+     gutter da .secao (40px) garante que nada encoste nas bordas; no celular vale o
+     gutter normal. Medida de LEITURA é outra coisa: --medida-leitura. */
+  --largura-max: min(92vw, 85rem);
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem); /* 16 → 40 */
   /* RITMO: respiro vertical entre seções — todas as seções usam este token */
   --respiro-secao: clamp(6rem, 4.8906rem + 5.546vw, 10rem); /* 96 → 160 */
-  --coluna-estreita: 40rem; /* 640: seções de leitura em sequência (#dor) */
+  --coluna-estreita: 45rem; /* 720: seções de leitura em sequência (#dor) — teto */
   --alvo-toque: 2.75rem; /* 44 */
 
   /* ───────────────────────────── FORMA ───────────────────────────── */

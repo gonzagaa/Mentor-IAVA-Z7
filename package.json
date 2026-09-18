@@ -13,7 +13,8 @@
     "tokens": "node scripts/tokens.mjs",
     "pintura": "node scripts/pintura.mjs",
     "parar": "node scripts/parar.mjs",
-    "lcp": "node scripts/lcp.mjs"
+    "lcp": "node scripts/lcp.mjs",
+    "larguras": "node scripts/larguras.mjs"
   },
   "devDependencies": {
     "playwright": "^1.47.0",

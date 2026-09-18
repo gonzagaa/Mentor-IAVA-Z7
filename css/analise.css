@@ -171,8 +171,9 @@
   color: var(--texto-2);
 }
 
-/* chat: card destaque, mais largo, texto um degrau acima */
+/* chat: card destaque, mais largo, texto um degrau acima — linha com medida de leitura */
 .analise__card--chat p {
+  max-inline-size: var(--medida-leitura);
   font-size: var(--fs-2);
   line-height: var(--lh-2);
   color: var(--texto);

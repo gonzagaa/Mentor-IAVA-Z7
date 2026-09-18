@@ -130,6 +130,12 @@ a proposta é mais agressiva e futurista**.
 - **Lista com barra acesa** (`.lista-barra`, ref. 04): itens com barra vertical à
   esquerda; com `data-revelar="acender"`, a barra acende em azul e o texto vai de
   `--texto-3` a `--texto`, um item de cada vez.
+- **Largura**: `--largura-max: min(92vw, 1360px)` é o wrapper de conteúdo de toda seção
+  (≈ 71% da tela em 1920; gutter da `.secao`, ≥ 40px, em 1280/1474). Cresce com ele:
+  grades, colunas e cards. NÃO cresce (medida de leitura): bloco do H1 (~900px),
+  subtítulo da hero (60ch), coluna da #dor (`--coluna-estreita`, 720px, teto) e textos
+  com `--medida-leitura` (52ch ≈ 65–68 caracteres). Exceção do dono: no card de
+  virada da #para-quem o texto preenche o card inteiro. `npm run larguras` mede tudo.
 - **Degrau "destaque"** (`.degrau-destaque`, `--fs-destaque`): entre o H2 e o H1, para
   o momento tipográfico de uma seção.
 
@@ -205,6 +211,7 @@ servidor sozinhos.
 | `npm run tokens` | cor literal fora do tokens.css, display fora da `.display`, hover/cursor fora de clicável, contraste |
 | `npm run pintura` | trace do Chrome: custo de pintura das animações da hero (tudo × parado) |
 | `npm run lcp` | LCP em 390 e 1474, local e em 4G lento simulado, com o elemento de LCP |
+| `npm run larguras` | largura do conteúdo e % da tela por seção, e maior linha de texto corrido |
 | `npm run parar` | encerra só os processos que os scripts do projeto abriram (PIDs em `.pids/`) |
 | `node scripts/gerar-copy-md.mjs` | regera `copy/COPY.md` a partir do `copy.json` |
 

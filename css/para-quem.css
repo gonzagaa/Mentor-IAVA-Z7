@@ -131,6 +131,7 @@
   color: var(--texto);
 }
 
+/* o texto preenche o card inteiro (escolha do dono — sem teto de medida aqui) */
 .para-quem__virada-2 {
   font-size: var(--fs-1);
   line-height: var(--lh-1);
