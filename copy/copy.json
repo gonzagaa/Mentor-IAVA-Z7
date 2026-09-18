@@ -678,11 +678,5 @@
     "papel": "alt de imagem (atributo, não visível)",
     "texto": "Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações",
     "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
-  },
-  {
-    "id": "img.plataforma.alerta",
-    "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
-    "tipo": "pendente",
-    "descricao": "Print da notificação \"Padrão de Revenge Trading Detectado\" — não existe no dashboard-graficos.png recebido"
   }
 ]

@@ -387,12 +387,9 @@
   --tela-reflexo: radial-gradient(ellipse 50% 100% at 50% 0%, rgb(31 163 255 / 14%) 0%, transparent 100%);
   --tela-inclinar-max: 10deg;
   --hero-tela-max: 68.75rem; /* 1100px: print do topo na hero */
-  /* notificação (slot do alerta na #analise) */
-  --notificacao-altura: 5.5rem;
   /* print do chat × coluna de texto (≥ 1081px): o dono pediu o print menor e mais
      espaço para o texto — fica abaixo dos 60% do recorte por decisão dele */
   --colunas-chat: 1.1fr 1fr;
-  --notificacao-deslize: 1rem;
   /* chip ao fundo dos itens da #o-que-e: nível SUTIL */
   --chip-fundo-opacidade: 0.35;
   --chip-largura: clamp(18rem, 12rem + 25vw, 35rem);

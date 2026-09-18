@@ -199,18 +199,6 @@
 
 /* cards não são clicáveis: nenhum hover (regra do CONTEXTO.md) */
 
-/* ───────────── notificação do alerta (card "Tilt e impulsividade") ─────────────
-   Enquanto o print não chega, um slot com a altura reservada. Entra com um deslize
-   curto quando o card aparece. */
-.analise__alerta {
-  block-size: var(--notificacao-altura);
-  margin-block-start: auto;
-}
-
-.analise__alerta > .slot-imagem {
-  block-size: 100%;
-}
-
 /* ───────────── chat: o print é o visual principal do card ───────────── */
 .analise__chat-tela {
   overflow: hidden;

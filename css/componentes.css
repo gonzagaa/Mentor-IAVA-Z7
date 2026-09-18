@@ -82,11 +82,6 @@
   transform: translateY(var(--revelar-deslocamento));
 }
 
-/* data-revelar="deslizar": entra com um deslize curto de lado (notificações) */
-.revelar-ativo [data-revelar='deslizar']:not(.revelado) {
-  transform: translateX(var(--notificacao-deslize));
-}
-
 /* ═══════════════════════ LISTA COM BARRA ACESA ═══════════════════════
    Itens com uma barra vertical à esquerda (ref. 04). Com data-revelar="acender",
    cada item entra apagado (barra em --barra-apagada, texto em --texto-3) e acende

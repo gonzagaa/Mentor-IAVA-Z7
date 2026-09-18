@@ -291,9 +291,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   dist): **topo** na hero, abaixo do botão, em `.tela` inclinada que endireita; **chat**
   no card do chat da #analise (≥ 1081px: print e texto lado a lado, 1.1fr/1fr — o dono
   pediu o print menor); **evidencias** (2×2 cards) no painel do IAVA; o chip foi para o
-  fundo dos itens 1 e 2 da #o-que-e (nível sutil). **alerta**: slot pendente
-  (`img.plataforma.alerta`) no card "Tilt e impulsividade" até chegar o print da
-  notificação. Componente `.tela` (componentes.css): vidro, --raio-z7, borda acesa no
+  fundo dos itens 1 e 2 da #o-que-e (nível sutil). **alerta**: removido (o print da
+  notificação não vai existir; decisão do Gustavo). Componente `.tela` (componentes.css): vidro, --raio-z7, borda acesa no
   topo, três pontos, glow médio, reflexo. Alts em `alt.*` no copy.json (checados pelo
   `npm run copy`), AGUARDANDO APROVAÇÃO do Gustavo.
 - **LCP**: o H1 NÃO é candidato — o Chrome ignora texto com preenchimento transparente
