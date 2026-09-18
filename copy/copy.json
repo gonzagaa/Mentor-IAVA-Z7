@@ -355,14 +355,10 @@
   {
     "id": "d6.titulo",
     "secao": "d6 · Sexta dobra (demonstração)",
-    "tipo": "pendente",
-    "descricao": "Título da seção — na copy está 'Demonstração Como o IAVA funciona(Vídeo - pedir para o Lucas)'; confirmar se 'Demonstração Como o IAVA funciona' é o título"
-  },
-  {
-    "id": "d6.video",
-    "secao": "d6 · Sexta dobra (demonstração)",
-    "tipo": "pendente",
-    "descricao": "Vídeo de demonstração (Lucas)"
+    "tipo": "copy",
+    "papel": "H2",
+    "texto": "Veja o Mentor IAVA funcionando na prática",
+    "obs": "definido pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
     "id": "d6.texto",
@@ -656,6 +652,7 @@
     "id": "preco",
     "secao": "oferta",
     "tipo": "pendente",
-    "descricao": "Preço / oferta / planos do Mentor IAVA — não existe na copy"
+    "descricao": "Preço / oferta / planos do Mentor IAVA — não existe na copy",
+    "oculto": "fora da página a pedido do Gustavo em 2026-09-18 (não atrapalhar o design); ele resolve depois"
   }
 ]

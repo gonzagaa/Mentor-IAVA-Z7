@@ -52,7 +52,14 @@ for (const p of todos) {
 }
 
 const naPagina = new Set(todos.map(p => p.id))
-const faltando = copy.filter(b => b.tipo === 'pendente' && !naPagina.has(b.id))
+const ocultos = copy.filter(b => b.tipo === 'pendente' && b.oculto && !naPagina.has(b.id))
+for (const b of ocultos) {
+  console.log(`  ${b.id}  (FORA DA PÁGINA — ${b.oculto})`)
+  console.log(`    seção no copy  : ${b.secao}`)
+  console.log(`    descrição      : ${b.descricao}
+`)
+}
+const faltando = copy.filter(b => b.tipo === 'pendente' && !b.oculto && !naPagina.has(b.id))
 if (faltando.length) {
   console.log(`⚠ pendentes do copy.json que NÃO estão na página: ${faltando.map(b => b.id).join(', ')}`)
 }

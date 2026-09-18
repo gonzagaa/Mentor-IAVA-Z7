@@ -110,8 +110,8 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
 
 ## d6 · Sexta dobra (demonstração)
 
-- **`d6.titulo`** — ⚠ PENDENTE: Título da seção — na copy está 'Demonstração Como o IAVA funciona(Vídeo - pedir para o Lucas)'; confirmar se 'Demonstração Como o IAVA funciona' é o título
-- **`d6.video`** — ⚠ PENDENTE: Vídeo de demonstração (Lucas)
+- **`d6.titulo`** · _H2_  
+  Veja o Mentor IAVA funcionando na prática
 - **`d6.texto`** · _parágrafo_  
   Assista a uma demonstração de como o Mentor IAVA analisa suas operações em segundos.
 - **`d6.cta`** · _botão primário_  

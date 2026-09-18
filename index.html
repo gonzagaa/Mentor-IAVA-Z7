@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/analise.css">
   <link rel="stylesheet" href="css/para-quem.css">
   <link rel="stylesheet" href="css/o-que-e.css">
+  <link rel="stylesheet" href="css/demo.css">
   <link rel="stylesheet" href="css/provas.css">
   <link rel="stylesheet" href="css/origem.css">
   <link rel="stylesheet" href="css/rodape.css">
@@ -23,6 +24,8 @@
   <script src="js/revelar.js" defer></script>
   <script src="js/ano.js" defer></script>
   <script src="js/contar.js" defer></script>
+  <script src="js/video.js" defer></script>
+  <script src="js/inclinar.js" defer></script>
 </head>
 <body>
 
@@ -181,12 +184,33 @@
     </section>
 
     <!-- d6 · sexta dobra (demonstração) -->
-    <section id="demonstracao">
-      <div class="pendente" data-pendente="d6.titulo">[PENDENTE: Título da seção — na copy está 'Demonstração Como o IAVA funciona(Vídeo - pedir para o Lucas)'; confirmar se 'Demonstração Como o IAVA funciona' é o título]</div>
-      <div class="pendente" data-pendente="d6.video">[PENDENTE: Vídeo de demonstração (Lucas)]</div>
-      <p data-copy="d6.texto">Assista a uma demonstração de como o Mentor IAVA analisa suas operações em segundos.</p>
-      <div class="pendente" data-pendente="preco">[PENDENTE: Preço / oferta / planos do Mentor IAVA — não existe na copy]</div>
-      <a data-copy="d6.cta" href="#" data-pendente-href="d1.cta.destino">GARANTA AQUI SEU MENTOR IAVA</a>
+    <section id="demonstracao" class="secao demo">
+      <div class="demo__largura">
+        <div class="demo__cabeca">
+          <h2 id="demo-titulo" class="display degrau-4 demo__titulo" data-copy="d6.titulo">Veja o Mentor IAVA funcionando na prática</h2>
+          <p class="demo__texto" data-copy="d6.texto">Assista a uma demonstração de como o Mentor IAVA analisa suas operações em segundos.</p>
+        </div>
+
+        <div class="demo__cena">
+          <div class="palco demo__palco" aria-hidden="true"></div>
+          <div class="card card--destaque demo__tela" data-inclinar>
+            <div class="demo__quadro">
+              <a class="demo__video" href="https://www.youtube.com/watch?v=RjCiGF0Ce7A" data-video="RjCiGF0Ce7A" aria-labelledby="demo-titulo">
+                <picture>
+                  <source type="image/avif" srcset="img/demo/capa-640.avif 640w, img/demo/capa-1280.avif 1280w" sizes="(min-width: 1480px) 1280px, 92vw">
+                  <img src="img/demo/capa-1280.webp" srcset="img/demo/capa-640.webp 640w, img/demo/capa-1280.webp 1280w" sizes="(min-width: 1480px) 1280px, 92vw" width="1280" height="720" alt="" loading="lazy" decoding="async">
+                </picture>
+                <span class="demo__play" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+              </a>
+            </div>
+          </div>
+          <div class="demo__reflexo" aria-hidden="true"></div>
+        </div>
+
+        <div class="demo__compra">
+          <a class="botao botao--primario" data-copy="d6.cta" href="#" data-pendente-href="d1.cta.destino">GARANTA AQUI SEU MENTOR IAVA</a>
+        </div>
+      </div>
     </section>
 
     <!-- d7 · sétima dobra (provas + fechamento) -->

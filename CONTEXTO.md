@@ -188,14 +188,16 @@ a proposta é mais agressiva e futurista**.
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
-              para-quem.css, o-que-e.css, provas.css, origem.css, rodape.css, pendente.css
+              para-quem.css, o-que-e.css, demo.css, provas.css, origem.css, rodape.css,
+              pendente.css
               amostra.css (NÃO vai para produção)
-js/           revelar.js, ano.js, contar.js; amostra.js (NÃO vai para produção)
+js/           revelar.js, ano.js, contar.js, video.js, inclinar.js; amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
 img/icones/   ícones 3D processados (transparentes) usados nos cards
 img/marca/    logo da Zero7 (SVG, do site zero7.com.br)
 img/pagamento/ bandeiras de pagamento do rodapé (do site zero7.com.br)
+img/demo/     capa do vídeo da #demonstracao (AVIF/WebP)
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
 copy/         copy.json, COPY.md, ALTERACOES.md, docx original
 scripts/      verificação (Playwright) — não vai para produção
@@ -238,8 +240,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 7 — todas as seções prontas, menos a #demonstracao (d6, aguarda definições do
-Gustavo — não mexer).**
+**Todas as seções prontas, rodapé incluso.**
 
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
@@ -283,6 +284,16 @@ Gustavo — não mexer).**
   semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG
   (horizontal ≥ 768px; vertical no celular), e de cada um desce uma trilha até o item 3
   (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
+- **#demonstracao**: d6.titulo (.display H2) + d6.texto → tela (card destaque, vidro,
+  --raio-z7) com a capa local do vídeo (`img/demo/capa-640/1280`, AVIF/WebP, lazy) num
+  `<a href="https://www.youtube.com/watch?v=RjCiGF0Ce7A">` com `aria-labelledby` no título e
+  botão de play em CSS/SVG (anel pulsando; hover/foco acendem e crescem). Com JS
+  (`js/video.js`), o clique troca o link por um iframe youtube-nocookie no mesmo espaço
+  16:9 (CLS 0), com title lido do título e foco nele; sem JS, abre o YouTube. NADA do
+  YouTube carrega antes do clique. A tela entra inclinada e endireita com o scroll
+  (`js/inclinar.js`, só transform; reta com reduced-motion). Palco (5c) em nível médio
+  embaixo, com reflexo suave. Depois, o CTA principal d6.cta. A CSP precisa de
+  `frame-src https://www.youtube-nocookie.com`.
 - **#provas**: 3 cards de números com os dados do Iago (`d7.prova1–3.numero/rotulo/
   descricao`): 1 coluna até 767px, 3 colunas a partir de 768px (nunca 2). Número em
   `.display` com gradiente de acento; rótulo Inter semibold `--texto`; descrição
@@ -312,7 +323,7 @@ Gustavo — não mexer).**
   `img/marca/`, bandeiras em `img/pagamento/` (copiadas do projeto Zero7).
 - **Links**: nenhum `href` vazio fora os dois do rodapé copiado; `#` só com
   `data-pendente-href` (`npm run tokens` falha se achar outro).
-- **Copy**: 79 blocos + 4 pendentes (3 em caixa: d6.titulo, d6.video, preco; `d1.cta.destino`
-  só no link).
+- **Copy**: 80 blocos + 2 pendentes: `d1.cta.destino` (só no link) e `preco` (marcado
+  "oculto" — fora da página a pedido do Gustavo; o `npm run pendentes` lista).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

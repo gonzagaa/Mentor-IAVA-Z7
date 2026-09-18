@@ -120,7 +120,7 @@ const displayMaiuscula = regraDisplay && /text-transform\s*:\s*uppercase/.test(r
 // seletor tiver :hover ou :active num elemento que não seja clicável, ou se uma regra
 // com cursor: pointer não mirar um clicável. Clicável = a, button, ou a classe de
 // botão do projeto (.botao e variantes, que só vão em <a href>/<button>).
-const CLICAVEL = /(^|[\s>+~(])(a|button)(\[[^\]]*\])*$|\.botao(--[\w-]+)?$/
+const CLICAVEL = /(^|[\s>+~(])(a|button)(\.[\w-]+|\[[^\]]*\])*$|\.botao(--[\w-]+)?$/
 const interacoesProibidas = []
 
 // o "sujeito" da pseudo-classe: o composto (tag/classes/atributos) logo antes dela

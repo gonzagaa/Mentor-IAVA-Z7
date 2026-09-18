@@ -1,0 +1,171 @@
+/* #demonstracao — d6.titulo, d6.texto, vídeo com capa clicável sobre o palco de luz,
+   pendente preco e o CTA de compra principal (d6.cta).
+   Nada do YouTube carrega antes do clique: a capa é local; js/video.js troca o link
+   por um iframe youtube-nocookie no MESMO espaço (CLS 0).
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.demo {
+  overflow-x: clip; /* palco e reflexo nunca geram scroll lateral */
+  background: var(--preto);
+}
+
+.demo__largura {
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+.demo__cabeca {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  text-align: center;
+}
+
+.demo__titulo {
+  max-inline-size: var(--titulo-bloco-max);
+}
+
+.demo__texto {
+  max-inline-size: var(--medida-leitura);
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  color: var(--texto-2);
+}
+
+/* ───────────── cena: tela + palco + reflexo ─────────────
+   O espaço do piso é reservado no fluxo (padding), o palco é absoluto: nada muda de
+   tamanho depois de carregar. */
+
+.demo__cena {
+  position: relative;
+  isolation: isolate;
+  margin-block-start: var(--esp-12);
+  padding-block-end: var(--demo-piso);
+}
+
+/* o palco (fundos.css, 5c) em nível médio: a linha do horizonte cai exatamente na
+   base da tela, o piso se abre embaixo dela */
+.demo__palco {
+  --palco-piso: var(--demo-piso);
+  position: absolute;
+  inset: 25% calc(-1 * var(--gutter)) 0;
+  z-index: -1;
+  opacity: var(--palco-medio);
+  pointer-events: none;
+}
+
+/* a tela: moldura de vidro escuro com borda neon (card destaque), --raio-z7 */
+.demo__tela {
+  padding: var(--esp-2);
+  transform-origin: 50% 100%;
+  transform: perspective(var(--perspectiva-tela)) rotateX(var(--inclinar, 0deg));
+}
+
+.demo__quadro {
+  position: relative;
+  aspect-ratio: var(--video-proporcao);
+  overflow: hidden;
+  border-radius: var(--raio-z7-p);
+  background: var(--preto);
+}
+
+.demo__video,
+.demo__quadro > iframe {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+}
+
+.demo__video img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* reflexo suave da tela no piso */
+.demo__reflexo {
+  position: absolute;
+  inset-inline: 8%;
+  inset-block-end: 0;
+  block-size: calc(var(--demo-piso) * 0.8);
+  background: var(--reflexo-tela);
+  pointer-events: none;
+}
+
+/* ───────────── botão de play (clicável: tem hover e foco) ───────────── */
+
+.demo__play {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 50%;
+  display: grid;
+  place-items: center;
+  inline-size: var(--tamanho-play);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border: 1px solid var(--linha-forte);
+  border-radius: var(--raio-circulo);
+  background: var(--vidro);
+  box-shadow: var(--brilho-interno), var(--glow-sutil);
+  -webkit-backdrop-filter: var(--vidro-desfoque);
+  backdrop-filter: var(--vidro-desfoque);
+  transition:
+    transform var(--dur-media) var(--saida),
+    box-shadow var(--dur-media) var(--saida),
+    border-color var(--dur-media) var(--saida);
+}
+
+.demo__play svg {
+  inline-size: 42%;
+  block-size: 42%;
+  margin-inline-start: 8%; /* centro ótico do triângulo */
+  fill: var(--play-cor);
+}
+
+/* anel que pulsa devagar (só transform + opacity) */
+.demo__play::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--play-anel);
+  border-radius: inherit;
+  opacity: 0;
+  animation: pulso-play calc(var(--dur-pulso) * 1.5) var(--saida-suave) infinite;
+  pointer-events: none;
+}
+
+@keyframes pulso-play {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  80%,
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+a.demo__video:hover .demo__play,
+a.demo__video:focus-visible .demo__play {
+  border-color: var(--play-anel);
+  box-shadow: var(--brilho-interno), var(--glow-medio);
+  transform: scale(var(--escala-play-hover));
+}
+
+a.demo__video:focus-visible {
+  outline: var(--foco);
+  outline-offset: calc(-2 * var(--foco-afastamento));
+}
+
+/* ───────────── compra: pendente preco + CTA principal ───────────── */
+
+.demo__compra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-8);
+  margin-block-start: var(--esp-8);
+}

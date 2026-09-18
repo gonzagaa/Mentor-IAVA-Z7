@@ -369,6 +369,18 @@
   --z7-linha: linear-gradient(to right, transparent, #023c83, #0080c9, #023c83, transparent);
   --z7-gradiente: linear-gradient(to right, #023c83, #0080c9);
 
+  /* #demonstracao: tela do vídeo sobre o palco de luz */
+  --video-proporcao: 16 / 9;
+  --tamanho-play: clamp(4.5rem, 3.8rem + 3vw, 6rem); /* 72 → 96px: alvo ≥ 64 no celular */
+  --play-cor: var(--azul-eletrico);
+  --play-anel: rgb(92 225 255 / 55%);
+  --demo-piso: clamp(5rem, 3rem + 8vw, 9rem); /* altura do piso abaixo da tela */
+  --palco-medio: 0.6; /* palco em nível MÉDIO da hierarquia de luz */
+  --reflexo-tela: radial-gradient(ellipse 50% 60% at 50% 0%, rgb(31 163 255 / 18%) 0%, rgb(0 128 201 / 7%) 50%, transparent 100%);
+  --inclinar-max: 14deg; /* inclinação inicial da tela (rotateX), endireita com o scroll */
+  --perspectiva-tela: 1400px;
+  --escala-play-hover: 1.08;
+
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);
   --barra-acesa: var(--azul-eletrico);

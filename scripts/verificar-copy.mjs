@@ -117,7 +117,8 @@ await porLargura(larguras, async ({ page, largura }) => {
   //     se for o destino de um link, no atributo data-pendente-href do link (decisão
   //     do dono: o destino dos CTAs não aparece como caixa na página)
   const idsNaPagina = new Set([...d.pendentes.map(p => p.id), ...d.hrefsPendentes.map(h => h.destino)])
-  for (const bloco of vitrine ? [] : blocosPendentes) {
+  // pendente marcado "oculto" no json (decisão do dono) pode ficar fora da página
+  for (const bloco of vitrine ? [] : blocosPendentes.filter(b => !b.oculto)) {
     if (!idsNaPagina.has(bloco.id)) reg(largura, `FALTA PENDENTE ${bloco.id} — nenhum .pendente com data-pendente="${bloco.id}"`)
   }
   for (const p of d.pendentes) {
