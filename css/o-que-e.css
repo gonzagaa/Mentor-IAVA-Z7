@@ -1,0 +1,227 @@
+/* #o-que-e — parte A: o que é (d5.titulo, d5.p1, comparativo planilha × IAVA);
+   parte B: por que supera (d5.subtitulo, d5.intro, itens ligados por circuito).
+   Sem hover (nada aqui é clicável), sem numeração.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.o-que-e {
+  background: var(--preto);
+}
+
+.o-que-e__largura {
+  display: flex;
+  flex-direction: column;
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+/* ───────────── cabeçalhos (centrados, medida de leitura) ───────────── */
+
+.o-que-e__cabeca,
+.o-que-e__porque {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-6);
+  text-align: center;
+}
+
+.o-que-e__titulo .grupo,
+.o-que-e__subtitulo .grupo {
+  white-space: nowrap;
+}
+
+.o-que-e__lead,
+.o-que-e__intro {
+  max-inline-size: var(--medida-leitura);
+  color: var(--texto-2);
+}
+
+.o-que-e__lead {
+  font-size: var(--fs-virada);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+}
+
+/* ───────────── A · comparativo planilha × IAVA ─────────────
+   1 coluna abaixo de 768px (planilha em cima); lado a lado acima, mesma altura. */
+
+.comparativo {
+  display: grid;
+  gap: var(--esp-6);
+  margin-block-start: var(--esp-16);
+}
+
+@media (min-width: 48rem) {
+  .comparativo {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.comparativo p {
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+}
+
+/* planilha: superfície apagada, sem azul, grade de células ao fundo (sem texto) */
+.comparativo__planilha {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--esp-3);
+  min-block-size: var(--planilha-altura-min);
+  padding: clamp(var(--esp-6), 4vw, var(--esp-8));
+  border: var(--borda);
+  border-radius: var(--raio-card);
+  background: var(--planilha-fundo);
+  color: var(--texto-2);
+}
+
+.comparativo__celulas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  --cel: linear-gradient(var(--planilha-celula), var(--planilha-celula));
+  background:
+    var(--cel) calc(1 * var(--planilha-col)) calc(1 * var(--planilha-lin)) / var(--planilha-col) var(--planilha-lin) no-repeat,
+    var(--cel) calc(3 * var(--planilha-col)) calc(2 * var(--planilha-lin)) / calc(2 * var(--planilha-col)) var(--planilha-lin) no-repeat,
+    var(--cel) 0 calc(4 * var(--planilha-lin)) / var(--planilha-col) var(--planilha-lin) no-repeat,
+    var(--cel) calc(2 * var(--planilha-col)) calc(5 * var(--planilha-lin)) / var(--planilha-col) var(--planilha-lin) no-repeat,
+    var(--cel) 0 0 / 100% var(--planilha-lin) no-repeat,
+    linear-gradient(var(--planilha-linha) 1px, transparent 1px) 0 0 / 100% var(--planilha-lin),
+    linear-gradient(90deg, var(--planilha-linha) 1px, transparent 1px) 0 0 / var(--planilha-col) 100%;
+  -webkit-mask-image: var(--planilha-mascara);
+  mask-image: var(--planilha-mascara);
+}
+
+/* IAVA: card destaque. O glow não está no card: está no ::after, para poder subir de
+   zero ao valor final só com opacity quando o painel é revelado (js/revelar.js).
+   Sem JS ou com reduced-motion, o glow já está no valor final. */
+.comparativo__iava {
+  gap: var(--esp-6);
+  box-shadow: none;
+  color: var(--texto);
+}
+
+.comparativo__iava::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  border-radius: inherit;
+  box-shadow: var(--glow-medio);
+  pointer-events: none;
+  transition: opacity var(--dur-lenta) var(--saida-suave);
+  transition-delay: calc((var(--revelar-atraso, 0) + 2) * var(--revelar-passo));
+}
+
+.revelar-ativo .comparativo__iava:not(.revelado)::after {
+  opacity: 0;
+}
+
+.comparativo__ilustracao {
+  aspect-ratio: var(--ilustracao-proporcao);
+}
+
+.comparativo__ilustracao > img,
+.comparativo__ilustracao > .slot-imagem {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.comparativo__ilustracao > img {
+  object-fit: contain;
+}
+
+/* ───────────── B · por que supera: itens ligados por circuito ───────────── */
+
+.o-que-e__porque {
+  margin-block-start: var(--respiro-secao);
+}
+
+/* celular: tudo empilhado, trilhas descendo na vertical */
+.circuito {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'a' 'v1' 'b' 'v2' 'c';
+  justify-items: stretch;
+  margin-block-start: var(--esp-12);
+}
+
+.circuito__item--a { grid-area: a; }
+.circuito__item--b { grid-area: b; }
+.circuito__item--c { grid-area: c; }
+.circuito__v1 { grid-area: v1; }
+.circuito__v2 { grid-area: v2; }
+
+.circuito__rotulo {
+  font-size: var(--fs-3);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+  font-weight: var(--peso-forte);
+  color: var(--texto);
+}
+
+/* item 3: frase de destaque; num card largo a linha fica na medida, centrada */
+.circuito__item--c {
+  align-items: center;
+  text-align: center;
+}
+
+.circuito__item--c p {
+  max-inline-size: var(--medida-leitura);
+  font-size: var(--fs-virada);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+  color: var(--texto);
+}
+
+/* trilhas: SVG decorativo, tamanho fixo (nunca distorce) */
+.trilha {
+  display: block;
+  overflow: visible;
+  filter: var(--trilha-brilho);
+}
+
+.trilha__linha {
+  fill: none;
+  stroke: var(--trilha-linha);
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.trilha__no {
+  fill: var(--trilha-no);
+}
+
+.trilha--v {
+  justify-self: center;
+  inline-size: 1rem;
+  block-size: var(--trilha-h);
+}
+
+.trilha--h {
+  display: none;
+}
+
+/* ≥ 768px: dois cards lado a lado ligados pela trilha horizontal; de cada um desce
+   uma trilha até o item 3, que ocupa a largura dos dois */
+@media (min-width: 48rem) {
+  .circuito {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+      'a h b'
+      'v1 . v2'
+      'c c c';
+  }
+
+  .trilha--h {
+    display: block;
+    grid-area: h;
+    align-self: center;
+    inline-size: var(--trilha-h);
+    block-size: 1rem;
+  }
+}

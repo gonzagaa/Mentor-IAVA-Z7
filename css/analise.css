@@ -76,7 +76,8 @@
 /* ─────────────────────────────── grade ───────────────────────────────
    1 coluna até 640px · 2 colunas até 1080px · 3 acima. Nenhuma célula vazia:
      1 coluna  → 7 itens + chat, um por linha
-     2 colunas → 3 linhas de pares; item 7 e chat ocupam a linha inteira cada
+     2 colunas → 4 linhas de pares (item 7 + chat na última): nenhum card largo
+                 demais, nenhuma linha acima de ~75 caracteres
      3 colunas → 2 linhas de 3; item 7 + chat (2 colunas) fecham a última linha
    Cards da mesma linha com a mesma altura (stretch da grade). */
 
@@ -107,21 +108,12 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--esp-5);
   }
-
-  .analise__card--ultimo,
-  .analise__card--chat {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (min-width: 67.5625rem) {
   .analise__grade {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--esp-6);
-  }
-
-  .analise__card--ultimo {
-    grid-column: auto;
   }
 
   .analise__card--chat {
@@ -171,12 +163,28 @@
   color: var(--texto-2);
 }
 
-/* chat: card destaque, mais largo, texto um degrau acima — linha com medida de leitura */
+/* chat: card destaque, texto um degrau acima. No desktop (3 colunas) ele ocupa 2:
+   ícone grande à esquerda, texto à direita preenchendo o card — a coluna de texto
+   fica curta o bastante para a linha não passar de ~75 caracteres. */
 .analise__card--chat p {
-  max-inline-size: var(--medida-leitura);
   font-size: var(--fs-2);
   line-height: var(--lh-2);
   color: var(--texto);
+}
+
+@media (min-width: 67.5625rem) {
+  .analise__card--chat {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: var(--esp-8);
+  }
+
+  .analise__card--chat .analise__icone,
+  .analise__card--chat .analise__icone > img {
+    inline-size: var(--tamanho-icone-grande);
+    block-size: var(--tamanho-icone-grande);
+  }
 }
 
 /* cards não são clicáveis: nenhum hover (regra do CONTEXTO.md) */

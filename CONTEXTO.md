@@ -134,8 +134,10 @@ a proposta é mais agressiva e futurista**.
   (≈ 71% da tela em 1920; gutter da `.secao`, ≥ 40px, em 1280/1474). Cresce com ele:
   grades, colunas e cards. NÃO cresce (medida de leitura): bloco do H1 (~900px),
   subtítulo da hero (60ch), coluna da #dor (`--coluna-estreita`, 720px, teto) e textos
-  com `--medida-leitura` (52ch ≈ 65–68 caracteres). Exceção do dono: no card de
-  virada da #para-quem o texto preenche o card inteiro. `npm run larguras` mede tudo.
+  com `--medida-leitura` (52ch ≈ 65–68 caracteres). **Nenhum texto corrido passa de 75
+  caracteres por linha.** Card largo não estreita nem deixa vazio: divide o conteúdo em
+  colunas dentro dele (virada da #para-quem, chat da #analise) ou centra a frase na
+  medida (item 3 da #o-que-e). `npm run larguras` mede tudo.
 - **Degrau "destaque"** (`.degrau-destaque`, `--fs-destaque`): entre o H2 e o H1, para
   o momento tipográfico de uma seção.
 
@@ -181,7 +183,7 @@ a proposta é mais agressiva e futurista**.
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
-              para-quem.css, pendente.css
+              para-quem.css, o-que-e.css, pendente.css
               amostra.css (NÃO vai para produção)
 js/           revelar.js; amostra.js (NÃO vai para produção)
 fonts/
@@ -229,8 +231,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 5 — hero, #dor, #analise e #para-quem prontas no index.html.** De #o-que-e em
-diante ainda é o esqueleto sem estilo.
+**Fase 6 — hero, #dor, #analise, #para-quem e #o-que-e prontas no index.html.** De
+#demonstracao em diante ainda é o esqueleto sem estilo.
 
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
@@ -250,8 +252,9 @@ diante ainda é o esqueleto sem estilo.
   de acento (via `<span>`), bloco de até 20em, centrado no celular e à esquerda a
   partir de 1024 → d3.intro → grade de 7 cards (ícone de 64px reservado, H3 em Inter
   semibold, descrição) + card destaque do chat. Grade: 1 coluna até 640px; 2 colunas
-  até 1080px (item 7 e chat ocupam a linha inteira); 3 acima (item 7 + chat em 2
-  colunas fecham a última linha). Cards no fundo original do card base; só o chat em
+  até 1080px (4 linhas de pares, item 7 + chat na última); 3 acima (item 7 + chat em
+  2 colunas fecham a última linha, o chat com ícone grande à esquerda e texto à
+  direita). Cards no fundo original do card base; só o chat em
   destaque (gradiente azul suave). Halo azul suave atrás da grade. Cards revelam em
   sequência; não reagem ao mouse (não são clicáveis). Nada focável na seção.
 - **#para-quem**: ≥ 1080px em duas colunas (5fr/7fr) — d4.titulo em `.display` H2
@@ -259,9 +262,19 @@ diante ainda é o esqueleto sem estilo.
   direita o d4.p1, UM `<p>` com as 6 frases em `<span>` display:block (abertura em
   `--fs-virada` + 5 perfis com fio de 1px e marcador quadrado aceso em CSS),
   revelando em sequência. Abaixo de 1080px, uma coluna. Depois, card destaque de
-  virada com d4.p2 e d4.p3, cada um com o trecho final no gradiente de acento.
+  virada com d4.p2 e d4.p3 (em 2 colunas dentro do card a partir de 1080px; abaixo,
+  empilhados na medida de leitura), cada um com o trecho final no gradiente de acento.
+- **#o-que-e**, parte A: d5.titulo (.display H2, centrado) + d5.p1 na medida → comparativo
+  lado a lado (1 coluna < 768px, planilha em cima), mesma altura: painel da planilha
+  (d5.p2, d5.p3; neutro, sem azul, grade de células em CSS sem números) e card destaque
+  do IAVA (slot `img/icones/ilustracao-iava.webp` com altura reservada 16:9 + d5.p4).
+  A planilha revela primeiro; o IAVA depois, e o glow dele sobe de 0 (só opacity, no
+  `::after`). Parte B: d5.subtitulo (.display H3) + d5.intro → item 1 (H4 Inter
+  semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG
+  (horizontal ≥ 768px; vertical no celular), e de cada um desce uma trilha até o item 3
+  (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
-  borda neon girando nos cards destaque (chat e virada). Mais as revelações, uma vez cada.
+  borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
 - **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

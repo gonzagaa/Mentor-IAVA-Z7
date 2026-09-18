@@ -70,10 +70,20 @@
 
 /* ───────────── perfis (d4.p1) ───────────── */
 
+/* em uma coluna (< 1080px) a lista não se estica: medida de leitura, centrada */
 .perfis {
   display: flex;
   flex-direction: column;
+  inline-size: 100%;
+  max-inline-size: var(--medida-perfis);
+  margin-inline: auto;
   text-align: start;
+}
+
+@media (min-width: 67.5rem) {
+  .perfis {
+    max-inline-size: none;
+  }
 }
 
 .perfis > span {
@@ -131,8 +141,30 @@
   color: var(--texto);
 }
 
-/* o texto preenche o card inteiro (escolha do dono — sem teto de medida aqui) */
 .para-quem__virada-2 {
   font-size: var(--fs-1);
   line-height: var(--lh-1);
+}
+
+/* O card ocupa a largura toda (decisão do dono), mas a LINHA respeita a medida:
+   < 1080px, empilhados, com a medida de leitura e centrados no card (sem vazio de
+   um lado só); ≥ 1080px, duas colunas dentro do card, alinhadas pelo topo. */
+.para-quem__virada > p {
+  inline-size: 100%;
+  max-inline-size: var(--medida-leitura);
+  margin-inline: auto;
+}
+
+@media (min-width: 67.5rem) {
+  .para-quem__virada {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    column-gap: var(--esp-12);
+  }
+
+  .para-quem__virada > p {
+    max-inline-size: none;
+    margin-inline: 0;
+  }
 }

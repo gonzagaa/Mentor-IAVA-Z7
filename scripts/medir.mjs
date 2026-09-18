@@ -291,7 +291,7 @@ const tabelaH1 = tabelaMd(
 )
 
 // demais títulos .display (regra de quebra) e menor fonte das seções já montadas
-const SECOES_PRONTAS = ['hero', 'dor', 'analise', 'para-quem']
+const SECOES_PRONTAS = ['hero', 'dor', 'analise', 'para-quem', 'o-que-e']
 const tabelaSecoes = tabelaMd(
   ['largura', 'outros títulos .display', 'quebra', ...SECOES_PRONTAS.map(id => `menor fonte #${id}`)],
   medicoes.map(m => [

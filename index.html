@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/dor.css">
   <link rel="stylesheet" href="css/analise.css">
   <link rel="stylesheet" href="css/para-quem.css">
+  <link rel="stylesheet" href="css/o-que-e.css">
   <link rel="stylesheet" href="css/pendente.css">
   <script src="js/revelar.js" defer></script>
 </head>
@@ -130,26 +131,48 @@
     </section>
 
     <!-- d5 · quinta dobra (o que é) -->
-    <section id="o-que-e">
-      <h2 data-copy="d5.titulo">O que é o Mentor IAVA?</h2>
-      <p data-copy="d5.p1">O Mentor IAVA é uma aplicação web que utiliza IA para analisar o seu histórico operacional e transformar seus dados em um diagnóstico da sua performance</p>
-      <p data-copy="d5.p2">Não é apenas uma planilha com seus resultados.</p>
-      <p data-copy="d5.p3">Uma planilha mostra seus números.</p>
-      <p data-copy="d5.p4">O IAVA ajuda você a entender porque eles estão ali. Ele cruza suas operações para encontrar padrões de comportamento, desempenho, horários, estratégias e disciplina.</p>
-      <h3 data-copy="d5.subtitulo">Por que ele supera a análise convencional?</h3>
-      <p data-copy="d5.intro">O algoritmo do IAVA foi treinado com base no comportamento de milhares de perfis operacionais, mapeando com clareza o  que separa os traders consistentes dos que quebram suas contas repetidas vezes:</p>
-      <ul>
-        <li>
-          <h3 data-copy="d5.item1.rotulo">Banco de dados de padrões comportamentais</h3>
-          <p data-copy="d5.item1.texto">o sistema reconhece os micro padrões que antecedem, e aponta previamente, as vulnerabilidades do seu estilo de negociação;</p>
-        </li>
-        <li>
-          <p data-copy="d5.item2.texto">A inteligência artificial avalia a interação entre volume financeiro, horário, tempo em posição, contexto de mercado e cumprimento do gerenciamento de risco;</p>
-        </li>
-        <li>
-          <p data-copy="d5.item3.texto">É basicamente como um mentor sênior ao seu lado revisando trade por trade, o que, humanamente falando,  levaria muito tempo e ainda custaria caro. O IAVA entrega essa precisão instantaneamente após cada pregão realizado e por muito menos.</p>
-        </li>
-      </ul>
+    <section id="o-que-e" class="secao o-que-e">
+      <div class="o-que-e__largura">
+
+        <div class="o-que-e__cabeca">
+          <h2 class="display degrau-4 o-que-e__titulo" data-copy="d5.titulo"><span class="grupo">O que é o</span> <span class="grupo">Mentor IAVA?</span></h2>
+          <p class="o-que-e__lead" data-copy="d5.p1">O Mentor IAVA é uma aplicação web que utiliza IA para analisar o seu histórico operacional e transformar seus dados em um diagnóstico da sua performance</p>
+        </div>
+
+        <div class="comparativo">
+          <div class="comparativo__planilha" data-revelar>
+            <div class="comparativo__celulas" aria-hidden="true"></div>
+            <p data-copy="d5.p2">Não é apenas uma planilha com seus resultados.</p>
+            <p data-copy="d5.p3">Uma planilha mostra seus números.</p>
+          </div>
+          <div class="card card--destaque comparativo__iava" data-revelar data-revelar-atraso="3">
+            <div class="comparativo__ilustracao"><div class="slot-imagem" data-arquivo="img/icones/ilustracao-iava.webp"></div></div>
+            <p data-copy="d5.p4">O IAVA ajuda você a entender porque eles estão ali. Ele cruza suas operações para encontrar padrões de comportamento, desempenho, horários, estratégias e disciplina.</p>
+          </div>
+        </div>
+
+        <div class="o-que-e__porque">
+          <h3 class="display degrau-3 o-que-e__subtitulo" data-copy="d5.subtitulo"><span class="grupo">Por que ele</span> <span class="grupo">supera a análise</span> <span class="grupo">convencional?</span></h3>
+          <p class="o-que-e__intro" data-copy="d5.intro">O algoritmo do IAVA foi treinado com base no comportamento de milhares de perfis operacionais, mapeando com clareza o  que separa os traders consistentes dos que quebram suas contas repetidas vezes:</p>
+        </div>
+
+        <div class="circuito">
+          <div class="card circuito__item circuito__item--a" data-revelar>
+            <h4 class="circuito__rotulo" data-copy="d5.item1.rotulo">Banco de dados de padrões comportamentais</h4>
+            <p data-copy="d5.item1.texto">o sistema reconhece os micro padrões que antecedem, e aponta previamente, as vulnerabilidades do seu estilo de negociação;</p>
+          </div>
+          <svg class="trilha trilha--h" viewBox="0 0 64 16" aria-hidden="true" focusable="false"><path class="trilha__linha" d="M5 8 H22 L27 3 H38 L43 8 H59"/><circle class="trilha__no" cx="5" cy="8" r="3"/><circle class="trilha__no" cx="59" cy="8" r="3"/></svg>
+          <svg class="trilha trilha--v circuito__v1" viewBox="0 0 16 64" aria-hidden="true" focusable="false"><path class="trilha__linha" d="M8 5 V22 L3 27 V38 L8 43 V59"/><circle class="trilha__no" cx="8" cy="5" r="3"/><circle class="trilha__no" cx="8" cy="59" r="3"/></svg>
+          <div class="card circuito__item circuito__item--b" data-revelar data-revelar-atraso="2">
+            <p data-copy="d5.item2.texto">A inteligência artificial avalia a interação entre volume financeiro, horário, tempo em posição, contexto de mercado e cumprimento do gerenciamento de risco;</p>
+          </div>
+          <svg class="trilha trilha--v circuito__v2" viewBox="0 0 16 64" aria-hidden="true" focusable="false"><path class="trilha__linha" d="M8 5 V22 L3 27 V38 L8 43 V59"/><circle class="trilha__no" cx="8" cy="5" r="3"/><circle class="trilha__no" cx="8" cy="59" r="3"/></svg>
+          <div class="card card--destaque circuito__item circuito__item--c" data-revelar data-revelar-atraso="4">
+            <p data-copy="d5.item3.texto">É basicamente como um mentor sênior ao seu lado revisando trade por trade, o que, humanamente falando,  levaria muito tempo e ainda custaria caro. O IAVA entrega essa precisão instantaneamente após cada pregão realizado e por muito menos.</p>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- d6 · sexta dobra (demonstração) -->
