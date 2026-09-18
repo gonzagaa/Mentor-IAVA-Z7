@@ -1,0 +1,91 @@
+/* #provas — reserva das provas (pendente d7.provas) + fechamento (d7.titulo, d7.p1,
+   d7.fecho) sobre um halo azul forte. A #demonstracao (d6) ainda não foi desenhada.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.provas {
+  overflow-x: clip; /* o halo nunca gera scroll lateral */
+  background: var(--preto);
+}
+
+.provas__largura {
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+/* ───────────── reserva das provas ─────────────
+   UM pendente só, já no formato final: faixa de 3 blocos (empilhados < 768px), cada
+   um com a altura de um card de número. Quando os dados chegarem, troca-se o pendente
+   por 3 cards na mesma grade, sem mexer no resto da seção. */
+
+.provas__reserva {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-4);
+}
+
+.provas__blocos {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.provas__blocos > span {
+  block-size: var(--altura-card-numero);
+  border: var(--reserva-borda);
+  border-radius: var(--raio-card);
+}
+
+@media (min-width: 48rem) {
+  .provas__blocos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--esp-6);
+  }
+}
+
+/* ───────────── fechamento ───────────── */
+
+.provas__fechamento {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-8);
+  margin-block-start: var(--respiro-secao);
+  padding-block: var(--esp-16);
+  text-align: center;
+}
+
+/* halo azul grande e forte centrado no título, sumindo nas bordas (sem blur) */
+.provas__halo {
+  position: absolute;
+  inset-inline-start: 50%;
+  inset-block-start: 30%;
+  z-index: -1;
+  inline-size: min(140%, 80rem);
+  aspect-ratio: 16 / 10;
+  translate: -50% -50%;
+  background: var(--halo-forte);
+  pointer-events: none;
+}
+
+.provas__titulo {
+  max-inline-size: var(--titulo-bloco-max);
+}
+
+.provas__p1 {
+  max-inline-size: var(--medida-leitura);
+  font-size: var(--fs-virada);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+  color: var(--texto-2);
+}
+
+/* a frase de destaque: H3 da copy, Inter semibold, gradiente de acento inteiro */
+.provas__fecho {
+  max-inline-size: var(--medida-leitura);
+  font-family: var(--fonte-corpo);
+  font-weight: var(--peso-forte);
+  font-size: var(--fs-fecho);
+  line-height: var(--lh-3);
+  letter-spacing: var(--ls-3);
+}

@@ -107,7 +107,7 @@
 .hero__titulo {
   /* bloco proporcional, com respiro dos lados (ref. 01): no desktop não passa de
      ~900px; no celular fica na largura útil, dentro do gutter */
-  max-inline-size: min(56.25rem, 100%);
+  max-inline-size: min(var(--titulo-bloco-max), 100%);
   padding-block: var(--respiro-acento) var(--respiro-descendente);
   margin-block: calc(-1 * var(--respiro-acento)) calc(-1 * var(--respiro-descendente));
   background: var(--gradiente-h1);

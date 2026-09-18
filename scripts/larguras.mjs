@@ -6,7 +6,7 @@
 import { lerLarguras, porLargura } from './comum.mjs'
 
 const larguras = process.argv.some(a => a.startsWith('--larguras=')) ? lerLarguras() : [1280, 1474, 1920]
-const SECOES = ['hero', 'dor', 'analise', 'para-quem', 'o-que-e']
+const SECOES = ['hero', 'dor', 'analise', 'para-quem', 'o-que-e', 'provas', 'origem']
 
 const r = await porLargura(larguras, async ({ page, largura }) =>
   page.evaluate(({ SECOES, largura }) => {
