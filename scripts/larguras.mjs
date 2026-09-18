@@ -48,7 +48,7 @@ const r = await porLargura(larguras, async ({ page, largura }) =>
       }
       // texto corrido: parágrafos (e spans-bloco de parágrafo) que não são .display
       const corridos = [...sec.querySelectorAll('p, p > span')]
-        .filter(el => visivel(el) && !el.closest('.display') && !el.classList.contains('display') &&
+        .filter(el => visivel(el) && !el.closest('.display') && !el.classList.contains('display') && !el.closest('.pendente') &&
           getComputedStyle(el).display !== 'inline' && el.textContent.trim().length > 60)
       const cpl = corridos.map(el => ({ id: el.dataset.copy || el.closest('[data-copy]')?.dataset.copy, c: maiorLinha(el) }))
       const pior = cpl.sort((a, b) => b.c - a.c)[0]

@@ -1,0 +1,64 @@
+/* #origem — o bloco aprovado na amostra (5b): arco de horizonte com bloom subindo e o
+   título logo abaixo da curva; d8.p1 e d8.p2 abaixo. Última seção antes do rodapé:
+   overflow recortado, o bloom não vaza para o rodapé nem gera scroll lateral.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.origem {
+  overflow: clip;
+  background: var(--preto);
+  text-align: center;
+}
+
+/* o arco sangra até as bordas da tela (sai do gutter); as máscaras laterais do
+   .arco fazem ele sumir nas pontas em qualquer largura, de 320 a 1920 */
+.origem__arco {
+  margin-inline: calc(-1 * var(--gutter));
+}
+
+.origem__largura {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-12);
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+/* título logo abaixo da curva, sobre o corpo escuro do planeta */
+.origem__titulo {
+  position: relative;
+  max-inline-size: var(--titulo-bloco-max);
+  margin-block-start: calc(-1 * var(--esp-16));
+}
+
+/* < 1080px: empilhados, na medida, centrados; ≥ 1080px: duas colunas pelo topo */
+.origem__textos {
+  display: grid;
+  gap: var(--esp-6);
+  justify-items: center;
+  font-size: var(--fs-2);
+  line-height: var(--lh-2);
+  color: var(--texto-2);
+  text-align: start;
+}
+
+.origem__textos > p {
+  max-inline-size: var(--medida-leitura);
+}
+
+@media (min-width: 67.5rem) {
+  .origem__textos {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    column-gap: var(--esp-12);
+  }
+
+  .origem__textos > p {
+    max-inline-size: none;
+  }
+}
+
+/* o argumento central da seção: branco cheio, sem gradiente */
+.origem__central {
+  color: var(--texto);
+}

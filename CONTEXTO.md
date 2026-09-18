@@ -183,7 +183,7 @@ a proposta é mais agressiva e futurista**.
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
-              para-quem.css, o-que-e.css, pendente.css
+              para-quem.css, o-que-e.css, provas.css, origem.css, pendente.css
               amostra.css (NÃO vai para produção)
 js/           revelar.js; amostra.js (NÃO vai para produção)
 fonts/
@@ -231,8 +231,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 ## Estado atual
 
-**Fase 6 — hero, #dor, #analise, #para-quem e #o-que-e prontas no index.html.** De
-#demonstracao em diante ainda é o esqueleto sem estilo.
+**Fase 7 — todas as seções prontas, menos a #demonstracao (d6, aguarda definições do
+Gustavo — não mexer) e o rodapé (só o pendente `rodape`, não desenhar ainda).**
 
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
@@ -249,8 +249,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   para exatamente na borda da seção.
 - **#analise**: o feixe pousa no topo (ponto de luz + linha fina, no respiro, nunca sobre
   texto) → d3.titulo em `.display` H2 com "e destrincha isso para você." no gradiente
-  de acento (via `<span>`), bloco de até 20em, centrado no celular e à esquerda a
-  partir de 1024 → d3.intro → grade de 7 cards (ícone de 64px reservado, H3 em Inter
+  de acento (via `<span>`), centrado em todas as larguras; a partir de 1080px em 3
+  linhas fixas e equilibradas (o acento na última) → d3.intro → grade de 7 cards (ícone de 64px reservado, H3 em Inter
   semibold, descrição) + card destaque do chat. Grade: 1 coluna até 640px; 2 colunas
   até 1080px (4 linhas de pares, item 7 + chat na última); 3 acima (item 7 + chat em
   2 colunas fecham a última linha, o chat com ícone grande à esquerda e texto à
@@ -273,6 +273,16 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG
   (horizontal ≥ 768px; vertical no celular), e de cada um desce uma trilha até o item 3
   (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
+- **#provas**: no topo, UM `.pendente` `d7.provas` já no formato final (faixa de 3 blocos
+  tracejados com altura de card de número, empilhados < 768px) — trocar por 3 cards
+  sem mexer no resto. Fechamento: d7.titulo (.display H2, bloco ~900px), d7.p1 na
+  medida, d7.fecho (H3 da copy, Inter semibold, `--fs-fecho`, gradiente de acento),
+  sobre um halo azul forte (`--halo-forte`).
+- **#origem**: arco de horizonte (bloco 5b da amostra) sangrando até as bordas, d8.titulo
+  logo abaixo da curva; d8.p1/d8.p2 em 2 colunas ≥ 1080px (empilhados na medida abaixo);
+  o argumento central do d8.p2 em `--texto`. Overflow recortado: nada vaza no rodapé.
+- **Luz**: o halo das provas e o arco da origem ficam a ~570–740px um do outro, menos que
+  uma tela: na rolagem aparecem juntos. A decidir com o dono.
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
   borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
 - **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).
