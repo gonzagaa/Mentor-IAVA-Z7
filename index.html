@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="css/o-que-e.css">
   <link rel="stylesheet" href="css/provas.css">
   <link rel="stylesheet" href="css/origem.css">
+  <link rel="stylesheet" href="css/rodape.css">
   <link rel="stylesheet" href="css/pendente.css">
   <script src="js/revelar.js" defer></script>
 </head>
@@ -216,8 +217,36 @@
 
   </main>
 
-  <footer>
-    <div class="pendente" data-pendente="rodape">[PENDENTE: Conteúdo do rodapé (links, CNPJ, aviso legal, redes) — não existe na copy]</div>
+  <footer id="rodape" class="rodape">
+    <div class="rodape__largura">
+      <div class="rodape__marca">
+        <img class="rodape__logo" src="img/marca/zero7.svg" width="176" height="55" alt="Zero7" loading="lazy" decoding="async">
+        <p data-copy="rodape.endereco">Av. Dep. Jamel Cecílio, nº 2929 - Jardim Goiás, Goiânia - GO, 74810-240</p>
+        <p data-copy="rodape.horario">Segunda a sexta-feira, 8h às 18h</p>
+      </div>
+      <nav class="rodape__coluna" aria-labelledby="rodape-nav">
+        <h2 id="rodape-nav" class="display degrau-1 rodape__titulo" data-copy="rodape.nav.titulo">Navegação</h2>
+        <ul>
+          <li><a href="https://zero7.com.br/" data-copy="rodape.nav.home">Home</a></li>
+          <li><a href="https://zero7.com.br/blog/" data-copy="rodape.nav.blog">Blog</a></li>
+          <li><a href="https://zero7.com.br/#plan" data-copy="rodape.nav.planos">Planos</a></li>
+          <li><a href="https://zero7.com.br/regulamento/" data-copy="rodape.nav.regulamento">Regulamento</a></li>
+          <li><a href="https://app.zero7.com.br/login" target="_blank" rel="noopener" data-copy="rodape.nav.area">Área do Trader</a></li>
+        </ul>
+      </nav>
+      <div class="rodape__coluna">
+        <h2 class="display degrau-1 rodape__titulo" data-copy="rodape.suporte.titulo">Suporte</h2>
+        <p data-copy="rodape.suporte.email">suporte@zero7.com.br</p>
+      </div>
+      <div class="rodape__coluna rodape__social">
+        <h2 class="display degrau-1 rodape__titulo" data-copy="rodape.social.titulo">Social</h2>
+        <div class="rodape__icones">
+          <a href="https://www.instagram.com/zero7tesouraria/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a>
+          <a href="https://www.tiktok.com/@zero7_mesa" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.5 3c.4 2.1 1.8 3.6 4 3.9v3.4c-1.5 0-2.9-.4-4-1.1v6.3a5.9 5.9 0 1 1-5.9-5.9h.6v3.5a2.5 2.5 0 1 0 1.8 2.4V3h3.5z"/></svg></a>
+          <a href="https://www.facebook.com/zero7tesouraria" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M14 8h3V4h-3c-2.8 0-4.5 1.8-4.5 4.6V11H7v4h2.5v7h4v-7h3l.5-4h-3.5V8.8c0-.5.3-.8.5-.8z"/></svg></a>
+        </div>
+      </div>
+    </div>
   </footer>
 
 </body>

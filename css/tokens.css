@@ -217,6 +217,7 @@
   --raio-p: 0.5rem; /* 8  — slot de imagem, detalhes */
   --raio-m: 1rem; /* 16 — ladrilho de ícone */
   --raio-g: 2rem; /* 32 — base do canto grande da assinatura */
+  --raio-circulo: 50%;
   --raio-pilula: 999px; /* forma, não degrau: nav e pílulas */
   /* assinatura Zero7 (APROVADA, fase 2): canto grande em cima à esquerda e embaixo à
      direita. É o canto de toda SUPERFÍCIE: cards, botões e campos. Os simétricos acima
@@ -360,6 +361,11 @@
 
   /* bloco de título limitado (H1 da hero, fechamento): ~900px */
   --titulo-bloco-max: 56.25rem;
+
+  /* rodapé (igual ao do site zero7.com.br): fio azul no topo e logo */
+  --linha-rodape: linear-gradient(90deg, transparent, var(--azul-profundo), var(--azul), var(--azul-profundo), transparent);
+  --largura-logo-rodape: 11rem;
+  --tamanho-icone-social: 1.5rem;
 
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);

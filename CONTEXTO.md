@@ -187,12 +187,13 @@ a proposta é mais agressiva e futurista**.
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
-              para-quem.css, o-que-e.css, provas.css, origem.css, pendente.css
+              para-quem.css, o-que-e.css, provas.css, origem.css, rodape.css, pendente.css
               amostra.css (NÃO vai para produção)
 js/           revelar.js; amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
 img/icones/   ícones 3D processados (transparentes) usados nos cards
+img/marca/    logo da Zero7 (SVG, do site zero7.com.br)
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
 copy/         copy.json, COPY.md, ALTERACOES.md, docx original
 scripts/      verificação (Playwright) — não vai para produção
@@ -236,7 +237,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 ## Estado atual
 
 **Fase 7 — todas as seções prontas, menos a #demonstracao (d6, aguarda definições do
-Gustavo — não mexer) e o rodapé (só o pendente `rodape`, não desenhar ainda).**
+Gustavo — não mexer).**
 
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
@@ -289,6 +290,11 @@ Gustavo — não mexer) e o rodapé (só o pendente `rodape`, não desenhar aind
   rolagem; o arco é claramente o mais luminoso (`shots/fase7b-halo-e-arco/`).
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
   borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
-- **Copy**: 51 blocos + 6 pendentes (5 em caixa, `d1.cta.destino` só no link).
+- **Rodapé**: o mesmo do site zero7.com.br (pedido do Gustavo): logo (`img/marca/zero7.svg`,
+  copiada do projeto Zero7), endereço, horário, Navegação (links absolutos para
+  zero7.com.br), Suporte (e-mail) e Social (ícones SVG inline, sem CDN). Textos em
+  `rodape.*` no copy.json. 4 colunas ≥ 1080px, empilhado abaixo. Fio azul no topo. O
+  selo do Reclame Aqui do site original (script externo) NÃO foi trazido.
+- **Copy**: 62 blocos + 5 pendentes (4 em caixa, `d1.cta.destino` só no link).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

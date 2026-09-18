@@ -435,10 +435,92 @@
     "paragrafo_docx": 148
   },
   {
-    "id": "rodape",
+    "id": "rodape.endereco",
     "secao": "rodapé",
-    "tipo": "pendente",
-    "descricao": "Conteúdo do rodapé (links, CNPJ, aviso legal, redes) — não existe na copy"
+    "tipo": "copy",
+    "papel": "endereço",
+    "texto": "Av. Dep. Jamel Cecílio, nº 2929 - Jardim Goiás, Goiânia - GO, 74810-240",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.horario",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "horário de atendimento",
+    "texto": "Segunda a sexta-feira, 8h às 18h",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.nav.titulo",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "título de coluna",
+    "texto": "Navegação",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.nav.home",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "link",
+    "texto": "Home",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.nav.blog",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "link",
+    "texto": "Blog",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.nav.planos",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "link",
+    "texto": "Planos",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.nav.regulamento",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "link",
+    "texto": "Regulamento",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.nav.area",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "link",
+    "texto": "Área do Trader",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.suporte.titulo",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "título de coluna",
+    "texto": "Suporte",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.suporte.email",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "e-mail de suporte",
+    "texto": "suporte@zero7.com.br",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+  },
+  {
+    "id": "rodape.social.titulo",
+    "secao": "rodapé",
+    "tipo": "copy",
+    "papel": "título de coluna",
+    "texto": "Social",
+    "obs": "rodapé do site zero7.com.br, trazido a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
     "id": "preco",

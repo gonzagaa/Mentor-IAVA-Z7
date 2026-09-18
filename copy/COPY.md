@@ -138,7 +138,28 @@ Mudanças de copy posteriores ao docx estão registradas em `ALTERACOES.md`. Est
 
 ## rodapé
 
-- **`rodape`** — ⚠ PENDENTE: Conteúdo do rodapé (links, CNPJ, aviso legal, redes) — não existe na copy
+- **`rodape.endereco`** · _endereço_  
+  Av. Dep. Jamel Cecílio, nº 2929 - Jardim Goiás, Goiânia - GO, 74810-240
+- **`rodape.horario`** · _horário de atendimento_  
+  Segunda a sexta-feira, 8h às 18h
+- **`rodape.nav.titulo`** · _título de coluna_  
+  Navegação
+- **`rodape.nav.home`** · _link_  
+  Home
+- **`rodape.nav.blog`** · _link_  
+  Blog
+- **`rodape.nav.planos`** · _link_  
+  Planos
+- **`rodape.nav.regulamento`** · _link_  
+  Regulamento
+- **`rodape.nav.area`** · _link_  
+  Área do Trader
+- **`rodape.suporte.titulo`** · _título de coluna_  
+  Suporte
+- **`rodape.suporte.email`** · _e-mail de suporte_  
+  suporte@zero7.com.br
+- **`rodape.social.titulo`** · _título de coluna_  
+  Social
 
 ## oferta
 

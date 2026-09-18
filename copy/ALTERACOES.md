@@ -9,3 +9,5 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-18 | `d1.cta2` | COMO O IAVA FUNCIONA | *(removido da copy e da página)* | Gustavo |
 | 2026-09-18 | `nav.itens` | *(pendente: itens do menu de navegação)* | *(removido — "não vai ter menu de navegação")* | Gustavo |
 | 2026-09-18 | `d1.apoio` | Você opera. O IAVA analisa. | Você opera, o IAVA analisa. | Gustavo |
+| 2026-09-18 | `rodape` | *(pendente: conteúdo do rodapé)* | *(removido — substituído pelo rodapé do site zero7.com.br)* | Gustavo |
+| 2026-09-18 | `rodape.*` (11 blocos) | *(não existiam)* | textos do rodapé do site zero7.com.br: endereço, horário, Navegação (Home, Blog, Planos, Regulamento, Área do Trader), Suporte (suporte@zero7.com.br), Social | Gustavo |

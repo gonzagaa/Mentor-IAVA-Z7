@@ -1,0 +1,115 @@
+/* Rodapé — o mesmo do site zero7.com.br (logo, endereço, horário, navegação,
+   suporte e redes), redesenhado com os tokens da página. Textos em copy.json
+   (rodape.*). Links têm hover (são clicáveis); o resto não reage ao mouse.
+   Só tokens; os números que ficam aqui são posicionamento desta peça única. */
+
+.rodape {
+  position: relative;
+  padding: var(--esp-24) var(--gutter);
+  background: var(--preto);
+}
+
+/* fio azul no topo, como no site da Zero7 */
+.rodape::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  block-size: 1px;
+  background: var(--linha-rodape);
+}
+
+.rodape__largura {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-12);
+  max-inline-size: var(--largura-max);
+  margin-inline: auto;
+}
+
+.rodape p,
+.rodape li a {
+  color: var(--texto-2);
+}
+
+.rodape__marca,
+.rodape__coluna {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+}
+
+.rodape__logo {
+  inline-size: var(--largura-logo-rodape);
+  block-size: auto;
+  margin-block-end: var(--esp-4);
+}
+
+.rodape__titulo {
+  margin-block-end: var(--esp-2);
+}
+
+.rodape ul {
+  display: flex;
+  flex-direction: column;
+}
+
+/* links: alvo de toque de 44px, hover só aqui (são clicáveis) */
+.rodape li a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--alvo-toque);
+  text-decoration: none;
+  transition: color var(--dur-media) var(--saida);
+}
+
+.rodape li a:hover {
+  color: var(--texto);
+}
+
+.rodape__icones {
+  display: flex;
+  gap: var(--esp-2);
+}
+
+.rodape__icones a {
+  display: grid;
+  place-items: center;
+  inline-size: var(--alvo-toque);
+  block-size: var(--alvo-toque);
+  border: var(--borda);
+  border-radius: var(--raio-circulo);
+  color: var(--texto-2);
+  transition:
+    color var(--dur-media) var(--saida),
+    border-color var(--dur-media) var(--saida),
+    box-shadow var(--dur-media) var(--saida);
+}
+
+.rodape__icones a:hover {
+  border-color: var(--linha-acesa);
+  color: var(--texto);
+  box-shadow: var(--glow-sutil);
+}
+
+.rodape__icones svg {
+  inline-size: var(--tamanho-icone-social);
+  block-size: var(--tamanho-icone-social);
+}
+
+/* ≥ 1080px: quatro colunas; as redes alinhadas à direita, como no site */
+@media (min-width: 67.5rem) {
+  .rodape__largura {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
+    gap: var(--esp-16);
+  }
+
+  .rodape__logo {
+    margin-block-end: var(--esp-2);
+  }
+
+  .rodape__social {
+    align-items: end;
+    text-align: end;
+  }
+}
