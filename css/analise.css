@@ -58,20 +58,30 @@
   margin-inline: auto;
 }
 
+/* o trecho em acento sempre na sua própria linha */
+.analise__linha.texto-acento {
+  display: block;
+}
+
+/* ≥ 1080px: três linhas equilibradas, fixas, centradas (pedido do dono):
+   O IAVA MOSTRA EXATAMENTE O QUE / ESTÁ ACONTECENDO NA SUA OPERAÇÃO /
+   E DESTRINCHA ISSO PARA VOCÊ. — só <span>, o texto não muda */
+@media (min-width: 67.5rem) {
+  .analise__titulo {
+    max-inline-size: none;
+  }
+
+  .analise__linha {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
 .analise__intro {
   color: var(--texto-2);
 }
 
-/* desktop: cabeçalho alinhado à esquerda */
-@media (min-width: 64rem) {
-  .analise__cabeca {
-    text-align: start;
-  }
-
-  .analise__titulo {
-    margin-inline: 0;
-  }
-}
+/* centralizado em todas as larguras (pedido do dono) */
 
 /* ─────────────────────────────── grade ───────────────────────────────
    1 coluna até 640px · 2 colunas até 1080px · 3 acima. Nenhuma célula vazia:
