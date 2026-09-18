@@ -16,6 +16,7 @@
     "lcp": "node scripts/lcp.mjs"
   },
   "devDependencies": {
-    "playwright": "^1.47.0"
+    "playwright": "^1.47.0",
+    "sharp": "^0.35.4"
   }
 }
