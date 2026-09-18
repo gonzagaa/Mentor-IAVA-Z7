@@ -533,3 +533,28 @@
   block-size: auto;
   border-end-end-radius: calc(var(--raio-g) - 1px);
 }
+
+/* ═════════════════════════ PONTO "AO VIVO" ═════════════════════════
+   O mesmo do selo da hero, como peça solta: ponto azul + anel pulsando devagar (só
+   transform + opacity). Decorativo (aria-hidden). Para com reduced-motion. */
+
+.ponto-vivo {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  inline-size: var(--selo-ponto);
+  block-size: var(--selo-ponto);
+  border-radius: var(--raio-circulo);
+  background: var(--selo-acento);
+  box-shadow: var(--glow-sutil);
+}
+
+.ponto-vivo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--selo-acento);
+  opacity: 0;
+  animation: pulso-ao-vivo var(--dur-pulso) var(--saida-suave) infinite;
+}

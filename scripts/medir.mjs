@@ -102,7 +102,9 @@ const medicoes = await porLargura(
       const outrosTitulos = [...document.querySelectorAll('.display')]
         .filter(el => el !== h1 && visivel(el))
         .map(analisarTitulo)
+      // exceção: um número sozinho de contagem (data-contar) é um dado, não uma frase
       const violacoesTitulos = outrosTitulos
+        .filter(t => !document.querySelector(`[data-copy="${t.id}"][data-contar]`) || t.partidas.length || t.foraDaCaixa.length)
         .filter(t => t.curtaSozinha.length || t.partidas.length || t.foraDaCaixa.length)
         .map(t => `${t.id}: ${[...t.curtaSozinha.map(p => `curta "${p}"`), ...t.partidas.map(p => `partida "${p}"`), ...t.foraDaCaixa.map(p => `fora "${p}"`)].join(', ')}`)
 
@@ -211,6 +213,39 @@ const medicoes = await porLargura(
       }
     })
 
+    // títulos cortados: rola até cada h1/h2/h3 e confere, linha a linha, (a) que o ponto
+    // central de cada linha é o próprio título (nada pintado por cima) e (b) que nenhum
+    // ancestral com overflow recortado corta a linha
+    const cortes = []
+    for (let i = 0; await page.evaluate(i => i < document.querySelectorAll('h1, h2, h3').length, i); i++) {
+      const c = await page.evaluate(async i => {
+        const t = document.querySelectorAll('h1, h2, h3')[i]
+        if (!t.getClientRects().length) return null
+        t.scrollIntoView({ block: 'center' })
+        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)))
+        const nome = t.getAttribute('data-copy') || t.tagName.toLowerCase()
+        const faixa = document.createRange()
+        faixa.selectNodeContents(t)
+        const linhas = [...faixa.getClientRects()].filter(r => r.width > 2 && r.height > 2)
+        for (const l of linhas) {
+          const x = l.left + l.width / 2, y = l.top + l.height / 2
+          const topo = document.elementFromPoint(x, y)
+          if (topo && topo !== t && !t.contains(topo)) return `${nome} (coberto por ${topo.tagName.toLowerCase()}${topo.className ? '.' + String(topo.className).split(' ')[0] : ''})`
+          for (let a = t.parentElement; a && a !== document.documentElement; a = a.parentElement) {
+            const s = getComputedStyle(a)
+            const cx = s.overflowX !== 'visible', cy = s.overflowY !== 'visible'
+            if (!cx && !cy) continue
+            const r = a.getBoundingClientRect()
+            if ((cy && (l.top < r.top - 1 || l.bottom > r.bottom + 1)) || (cx && (l.left < r.left - 1 || l.right > r.right + 1))) {
+              return `${nome} (recortado por ${a.tagName.toLowerCase()}${a.id ? '#' + a.id : ''})`
+            }
+          }
+        }
+        return null
+      }, i)
+      if (c) cortes.push(c)
+    }
+
     // botão principal na primeira dobra: mede de novo na altura real de tela
     let dobra = null
     if (DOBRA[largura]) {
@@ -224,7 +259,7 @@ const medicoes = await porLargura(
       })
     }
 
-    return { largura, ...m, dobra }
+    return { largura, ...m, cortes, dobra }
   },
   { antesDeCarregar: page => page.addInitScript(OBSERVADOR), pagina, movimento }
 )
@@ -293,11 +328,12 @@ const tabelaH1 = tabelaMd(
 // demais títulos .display (regra de quebra) e menor fonte das seções já montadas
 const SECOES_PRONTAS = ['hero', 'dor', 'analise', 'para-quem', 'o-que-e', 'provas', 'origem']
 const tabelaSecoes = tabelaMd(
-  ['largura', 'outros títulos .display', 'quebra', ...SECOES_PRONTAS.map(id => `menor fonte #${id}`)],
+  ['largura', 'outros títulos .display', 'quebra', 'títulos cortados', ...SECOES_PRONTAS.map(id => `menor fonte #${id}`)],
   medicoes.map(m => [
     `**${m.largura}**`,
     n(m.outrosTitulos),
     m.violacoesTitulos?.length ? `**${m.violacoesTitulos.join(' · ')}**` : 'ok',
+    m.cortes?.length ? `**${m.cortes.join(' · ')}**` : 'nenhum',
     // a hero tem o selo (13–14px, rótulo); nas demais seções o piso é 16px
     ...SECOES_PRONTAS.map(id => {
       const v = m.menorPorSecao?.[id]
@@ -350,6 +386,7 @@ const md = [
   '- **largura conteúdo**: caixa que envolve todo o conteúdo visível com texto.',
   '- **CLS**: soma de \`layout-shift\` sem interação, com a página rolada até o fim.',
   '- **animações**: \`document.getAnimations()\` rodando no fim da medição. Com reduce, tem que ser 0.',
+  '- **títulos cortados**: cada h1/h2/h3 rolado até o centro da tela; linha coberta por outro elemento (elementFromPoint) ou fora de um ancestral com overflow recortado.',
   '- **estouros**: elementos de texto cujo conteúdo é mais largo que a própria caixa.',
   '- **raios / font-sizes / cores / gaps**: quantidade de valores DISTINTOS computados.',
   '',

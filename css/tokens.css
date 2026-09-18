@@ -346,16 +346,12 @@
   --trilha-h: 4rem; /* comprimento da trilha entre os cards */
 
   /* HIERARQUIA DE LUZ (CONTEXTO.md): forte = só os arcos (hero + cone, #origem);
-     médio = halos de seção e cards destaque; sutil = marcadores, trilhas, barras,
+     médio = cards destaque, palco, glow de molduras; sutil = marcadores, trilhas, barras,
      feixes. Nada além dos arcos chega ao nível forte. */
 
-  /* halo de seção (nível MÉDIO): elipse larga e baixa, quase plana no centro —
-     lê como "a seção está iluminada", não como um ponto de luz */
-  --halo-secao: radial-gradient(closest-side,
-    rgb(0 128 201 / 16%) 0%,
-    rgb(0 128 201 / 13%) 35%,
-    rgb(0 59 102 / 8%) 65%,
-    transparent 100%);
+  /* aproximação #provas → #origem: a #origem sobe até o bloom do arco começar a
+     ~80px (desktop) / ~48px (celular) do fim do d7.fecho */
+  --origem-sobe: calc(var(--arco-altura) * -0.14);
 
   /* bloco de título limitado (H1 da hero, fechamento): ~900px */
   --titulo-bloco-max: 56.25rem;
@@ -401,6 +397,17 @@
   --chip-fundo-opacidade: 0.35;
   --chip-largura: clamp(18rem, 12rem + 25vw, 35rem);
   --chip-topo: 7rem; /* altura da trilha entre os itens 1 e 2 */
+
+  /* painel de dados da #provas */
+  --painel-fundo: #05080d;
+  --fio-vertical: linear-gradient(180deg, transparent 0%, rgb(31 163 255 / 55%) 50%, transparent 100%);
+  --fio-horizontal: linear-gradient(90deg, transparent 0%, rgb(31 163 255 / 55%) 50%, transparent 100%);
+  --fio-texto: linear-gradient(180deg, var(--ciano) 0%, var(--azul-eletrico) 50%, rgb(0 128 201 / 25%) 100%);
+  --vela: rgb(255 255 255 / 10%);
+  --velas-altura: 2.75rem;
+  --vela-passo: 30ms; /* sequência rápida das barras subindo */
+  --fs-numero-painel: calc(var(--fs-5) * 1.05);
+  --fechamento-perto: clamp(4rem, 2.8rem + 3vw, 6rem); /* 64 → 96: painel → fechamento */
 
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);

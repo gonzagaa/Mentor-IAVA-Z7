@@ -131,8 +131,9 @@ a proposta é mais agressiva e futurista**.
   esquerda; com `data-revelar="acender"`, a barra acende em azul e o texto vai de
   `--texto-3` a `--texto`, um item de cada vez.
 - **Hierarquia de luz** (toda seção nova respeita): o arco é a assinatura da página.
-  **Forte**: só o arco da hero (com o cone) e o arco da #origem. **Médio**: halos de
-  seção (`--halo-secao`, elipse larga e baixa) e cards destaque. **Sutil**: marcadores,
+  **Forte**: só o arco da hero (com o cone) e o arco da #origem. **Médio**: cards
+  destaque, painel de dados da #provas, palco do vídeo e glow das molduras `.tela`
+  (não há mais halo de seção: o da #provas saiu, o arco da #origem o substitui). **Sutil**: marcadores,
   trilhas, barras, feixes, pontos. Nenhum outro brilho tem a força do arco.
 - **Largura**: `--largura-max: min(92vw, 1360px)` é o wrapper de conteúdo de toda seção
   (≈ 71% da tela em 1920; gutter da `.secao`, ≥ 40px, em 1280/1474). Cresce com ele:
@@ -308,20 +309,27 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   (`js/inclinar.js`, só transform; reta com reduced-motion). Palco (5c) em nível médio
   embaixo, com reflexo suave. Depois, o CTA principal d6.cta. A CSP precisa de
   `frame-src https://www.youtube-nocookie.com`.
-- **#provas**: 3 cards de números com os dados do Iago (`d7.prova1–3.numero/rotulo/
-  descricao`): 1 coluna até 767px, 3 colunas a partir de 768px (nunca 2). Número em
-  `.display` com gradiente de acento; rótulo Inter semibold `--texto`; descrição
-  `--texto-3`; luz sutil, sem hover. Contagem (`js/contar.js`): o HTML traz o número
+- **#provas**: UM painel de dados (`.provas__painel`, `--raio-z7`, glow médio, linha neon
+  no topo) com os 3 números do Iago (`d7.prova1–3.numero/rotulo/descricao`), separados
+  por fios neon: 1 coluna até 767px (fios horizontais), 3 colunas a partir de 768px
+  (fios verticais; nunca 2). Número maior (`--fs-numero-painel`, sem quebra) com ponto
+  vivo pulsando; rótulo Inter semibold `--texto`; descrição `--texto-3`; na base,
+  26 barras de candle (SVG, 7px, passo 16px, picos acesos em azul) que sobem uma a uma
+  ao revelar (`--vela-passo`). Sem hover. Contagem (`js/contar.js`): o HTML traz o número
   final; a caixa é travada no tamanho final antes de contar (CLS 0); só a parte
   numérica anima, com "+", " mil" e o ponto de milhar em todos os quadros; ~1,2s,
-  uma vez, ao entrar na tela; sem JS ou com reduced-motion, nada anima. Fechamento: d7.titulo (.display H2, bloco ~900px), d7.p1 na
-  medida, d7.fecho (H3 da copy, Inter semibold, `--fs-fecho`, gradiente de acento),
-  sobre um halo de seção de nível médio (`--halo-secao`).
+  uma vez, ao entrar na tela; sem JS ou com reduced-motion, nada anima. Fechamento perto do painel (`--fechamento-perto`, 64→96px): ≥ 1080px em 2 colunas
+  (d7.titulo à esquerda, ~55%; d7.p1 + d7.fecho à direita com linha neon de 2px), abaixo
+  em 1 coluna. d7.p1 em `--texto-2` (≥ 9,77:1). Sem halo; fica acima da camada do arco.
 - **#origem**: arco de horizonte (bloco 5b da amostra) sangrando até as bordas, d8.titulo
-  logo abaixo da curva; d8.p1/d8.p2 em 2 colunas ≥ 1080px (empilhados na medida abaixo);
+  logo abaixo da curva; a seção SOBE (`--origem-sobe`, fundo transparente)
+  para o bloom começar logo abaixo do d7.fecho (0–22px medidos; alvo ≤ 80px desktop /
+  ≤ 48px celular), sem cobrir texto; d8.p1/d8.p2 em 2 colunas ≥ 1080px (empilhados na medida abaixo);
   o argumento central do d8.p2 em `--texto`. Overflow recortado: nada vaza no rodapé.
-- **Luz**: o halo da #provas (médio) e o arco da #origem (forte) aparecem juntos na
-  rolagem; o arco é claramente o mais luminoso (`shots/fase7b-halo-e-arco/`).
+- **Luz**: o painel da #provas (médio) e o arco da #origem (forte) aparecem juntos na
+  rolagem; o arco é claramente o mais luminoso (`shots/fase13/`).
+- **Títulos cortados**: `npm run medir` confere todo h1/h2/h3 rolado até o centro da
+  tela (linha coberta por outro elemento ou recortada por ancestral com overflow).
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
   borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
 - **Rodapé**: CÓPIA 100% do rodapé de zero7.com.br (#footer, #pagamento, #author), por

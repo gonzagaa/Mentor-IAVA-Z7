@@ -1,9 +1,10 @@
-/* #provas — cards de números (d7.prova1–3) + fechamento (d7.titulo, d7.p1,
-   d7.fecho) sobre um halo de seção (nível médio). A #demonstracao (d6) ainda não foi desenhada.
+/* #provas — painel de dados (d7.prova1–3) + fechamento (d7.titulo, d7.p1, d7.fecho).
+   Sem halo próprio: quem ilumina o fechamento é o arco da #origem, logo abaixo.
    Só tokens; os números que ficam aqui são posicionamento desta peça única. */
 
 .provas {
-  overflow-x: clip; /* o halo nunca gera scroll lateral */
+  overflow-x: clip;
+  padding-block-end: 0; /* a #origem sobe até aqui: o arco ilumina o fechamento */
   background: var(--preto);
 }
 
@@ -12,77 +13,186 @@
   margin-inline: auto;
 }
 
-/* ───────────── cards de números (d7.prova1–3) ─────────────
-   1 coluna até 767px; 3 colunas a partir de 768px (lá os três já cabem com todo texto
-   ≥ 16px e nenhum número quebrando). Nunca 2 colunas: sobraria um card sozinho.
-   Card base, sem hover, luz de nível SUTIL (a seção já tem o halo médio). */
+/* ───────────── painel de dados (d7.prova1–3) ─────────────
+   UMA peça de vidro escuro na largura do conteúdo, --raio-z7, linha neon no topo,
+   glow nível MÉDIO. 3 colunas separadas por fios verticais em gradiente (≥ 768px);
+   empilhadas com fios horizontais abaixo. Sem hover. */
 
-.provas__cards {
+.provas__painel {
+  position: relative;
   display: grid;
-  gap: var(--esp-4);
+  border: var(--borda);
+  border-radius: var(--raio-z7);
+  background: var(--gradiente-card), var(--painel-fundo);
+  box-shadow: var(--brilho-interno), var(--glow-medio);
+}
+
+.provas__painel::before {
+  content: '';
+  position: absolute;
+  inset-inline: var(--esp-8);
+  inset-block-start: -1px;
+  block-size: 1px;
+  background: var(--tela-borda-topo);
+  pointer-events: none;
+}
+
+.provas__stat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-2);
+  padding: clamp(var(--esp-6), 3vw, var(--esp-10)) clamp(var(--esp-6), 3vw, var(--esp-10)) 0;
+  text-align: start;
+}
+
+/* fio entre colunas: horizontal no celular, vertical a partir de 768px */
+.provas__stat + .provas__stat::before {
+  content: '';
+  position: absolute;
+  inset-inline: var(--esp-6);
+  inset-block-start: 0;
+  block-size: 1px;
+  background: var(--fio-horizontal);
+  pointer-events: none;
 }
 
 @media (min-width: 48rem) {
-  .provas__cards {
+  .provas__painel {
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--esp-6);
+  }
+
+  .provas__stat + .provas__stat::before {
+    inset-inline: 0 auto;
+    inset-block: var(--esp-6);
+    inline-size: 1px;
+    block-size: auto;
+    background: var(--fio-vertical);
   }
 }
 
-.provas__card {
-  gap: var(--esp-2);
+.provas__topo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
 }
 
-/* o número: o maior texto do card, .display com o gradiente de acento, nunca quebra */
+/* o número: o elemento dominante do painel. Nunca quebra. */
 .provas__numero {
-  align-self: flex-start;
-  font-size: var(--fs-destaque);
+  font-size: var(--fs-numero-painel);
   line-height: var(--lh-display-destaque);
   letter-spacing: var(--ls-display-destaque);
   white-space: nowrap;
 }
 
-.provas__card > .provas__rotulo {
+.provas__stat > .provas__rotulo {
+  margin-block-start: var(--esp-2);
   font-size: var(--fs-2);
   line-height: var(--lh-2);
   font-weight: var(--peso-forte);
   color: var(--texto);
 }
 
-.provas__card > .provas__descricao {
+.provas__stat > .provas__descricao {
   color: var(--texto-3);
 }
 
-/* ───────────── fechamento ───────────── */
-
-.provas__fechamento {
-  position: relative;
-  isolation: isolate;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--esp-8);
-  margin-block-start: var(--respiro-secao);
-  padding-block: var(--esp-16);
-  text-align: center;
+/* candles decorativos na base de cada coluna (sem número nem eixo). Sobem da base
+   quando o painel é revelado, em sequência rápida; sem JS ou com reduced-motion o
+   script de revelação não liga e elas já estão na altura final. */
+.provas__velas {
+  display: block;
+  inline-size: 100%;
+  block-size: var(--velas-altura);
+  margin-block-start: auto;
+  padding-block-start: var(--esp-6);
+  box-sizing: content-box;
 }
 
-/* halo de seção (nível médio): elipse larga e baixa atrás do bloco, sumindo nas
-   bordas (sem blur). O arco da #origem continua sendo o ponto mais luminoso. */
-.provas__halo {
-  position: absolute;
-  inset-inline-start: 50%;
-  inset-block-start: 50%;
-  z-index: -1;
-  inline-size: min(170%, 110rem);
-  aspect-ratio: 3 / 1;
-  translate: -50% -50%;
-  background: var(--halo-secao);
-  pointer-events: none;
+.vela {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform var(--dur-lenta) var(--saida);
+  transition-delay: calc(var(--i, 0) * var(--vela-passo) + 2 * var(--revelar-passo));
+}
+
+.vela__corpo {
+  fill: var(--vela);
+}
+
+/* o topo das barras mais altas, aceso */
+.vela__topo {
+  fill: var(--azul-eletrico);
+  filter: drop-shadow(0 0 3px var(--play-anel));
+}
+
+.revelar-ativo .provas__painel:not(.revelado) .vela {
+  transform: scaleY(0);
+}
+
+.vela:nth-child(1) { --i: 0; }
+.vela:nth-child(2) { --i: 1; }
+.vela:nth-child(3) { --i: 2; }
+.vela:nth-child(4) { --i: 3; }
+.vela:nth-child(5) { --i: 4; }
+.vela:nth-child(6) { --i: 5; }
+.vela:nth-child(7) { --i: 6; }
+.vela:nth-child(8) { --i: 7; }
+.vela:nth-child(9) { --i: 8; }
+.vela:nth-child(10) { --i: 9; }
+.vela:nth-child(11) { --i: 10; }
+.vela:nth-child(12) { --i: 11; }
+.vela:nth-child(13) { --i: 12; }
+.vela:nth-child(14) { --i: 13; }
+.vela:nth-child(15) { --i: 14; }
+.vela:nth-child(16) { --i: 15; }
+.vela:nth-child(17) { --i: 16; }
+.vela:nth-child(18) { --i: 17; }
+.vela:nth-child(19) { --i: 18; }
+.vela:nth-child(20) { --i: 19; }
+.vela:nth-child(21) { --i: 20; }
+.vela:nth-child(22) { --i: 21; }
+.vela:nth-child(23) { --i: 22; }
+.vela:nth-child(24) { --i: 23; }
+.vela:nth-child(25) { --i: 24; }
+.vela:nth-child(26) { --i: 25; }
+
+/* ───────────── fechamento ─────────────
+   Perto do painel. ≥ 1080px: título à esquerda (~55%), e à direita p1 + fecho
+   alinhados pelo centro vertical do título, com um fio neon de 2px à esquerda deles.
+   Abaixo: uma coluna, à esquerda, com o mesmo fio. */
+
+/* acima da camada do arco da #origem, que sobe até aqui: o bloom fica por baixo do texto */
+.provas__fechamento {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--esp-8);
+  margin-block-start: var(--fechamento-perto);
+  text-align: start;
 }
 
 .provas__titulo {
   max-inline-size: var(--titulo-bloco-max);
+}
+
+.provas__textos {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-6);
+  padding-inline-start: var(--esp-6);
+}
+
+.provas__textos::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 2px;
+  border-radius: var(--raio-pilula);
+  background: var(--fio-texto);
+  box-shadow: var(--glow-sutil);
 }
 
 .provas__p1 {
@@ -101,4 +211,12 @@
   font-size: var(--fs-fecho);
   line-height: var(--lh-3);
   letter-spacing: var(--ls-3);
+}
+
+@media (min-width: 67.5rem) {
+  .provas__fechamento {
+    grid-template-columns: 55fr 45fr;
+    align-items: center;
+    column-gap: var(--esp-12);
+  }
 }

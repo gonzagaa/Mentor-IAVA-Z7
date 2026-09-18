@@ -3,9 +3,12 @@
    overflow recortado, o bloom não vaza para o rodapé nem gera scroll lateral.
    Só tokens; os números que ficam aqui são posicionamento desta peça única. */
 
+/* a #origem SOBE para encontrar o fechamento da #provas: o bloom do arco começa logo
+   abaixo do d7.fecho, iluminando-o por baixo. Fundo transparente (a seção avança
+   sobre o fim da #provas); o overflow continua recortado: nada vaza no rodapé. */
 .origem {
   overflow: clip;
-  background: var(--preto);
+  margin-block-start: var(--origem-sobe);
   text-align: center;
 }
 
