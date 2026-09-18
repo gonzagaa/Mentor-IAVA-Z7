@@ -1,0 +1,20 @@
+/* Fontes auto-hospedadas. Nenhuma via CDN. Caminhos relativos a css/. */
+
+/* Inter — variável (100–900), licença OFL. Ver fonts/Inter-LICENSE.txt */
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/InterVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* NCS Radhiumz — único peso disponível: 400 Regular.
+   ⚠ Licença Webfonts NÃO confirmada. Ver fonts/NCS-Radhiumz-LICENCA.md */
+@font-face {
+  font-family: 'NCS Radhiumz';
+  src: url('../fonts/NCSRadhiumz-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

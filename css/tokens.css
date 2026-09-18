@@ -1,0 +1,28 @@
+/* Tokens. Nenhum valor literal de cor, raio, espaço, sombra, fonte ou duração
+   pode existir fora daqui (CONTEXTO.md, regra 6).
+   Fase 0: só o mínimo. A paleta e a escala completas entram na fase de design. */
+
+:root {
+  /* sentinela: os scripts de verificação exigem --css-carregado igual a 1 antes
+     de medir ou capturar qualquer coisa */
+  --css-carregado: 1;
+
+  /* cor */
+  --cor-fundo: #000;
+  --cor-texto: #fff;
+
+  /* tipografia */
+  --fonte-corpo: 'Inter', system-ui, sans-serif;
+  --fonte-titulo: 'NCS Radhiumz', 'Inter', system-ui, sans-serif;
+
+  /* pendente (componente de obra, some no fim do projeto) */
+  --pendente-cor: #ff2bd6;
+  --pendente-borda: 2px dashed var(--pendente-cor);
+  --pendente-raio: 0.25rem;
+  --pendente-espaco: 0.5rem 0.75rem;
+  --pendente-fundo: repeating-linear-gradient(
+    45deg,
+    rgb(255 43 214 / 18%) 0 0.5rem,
+    rgb(255 43 214 / 6%) 0.5rem 1rem
+  );
+}

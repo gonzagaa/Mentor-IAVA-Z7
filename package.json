@@ -1,0 +1,17 @@
+{
+  "name": "mentor-iava",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Landing page do Mentor IAVA (Zero7)",
+  "type": "module",
+  "scripts": {
+    "servir": "node scripts/servidor.mjs",
+    "copy": "node scripts/verificar-copy.mjs",
+    "pendentes": "node scripts/pendentes.mjs",
+    "shots": "node scripts/shots.mjs",
+    "medir": "node scripts/medir.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.47.0"
+  }
+}

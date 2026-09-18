@@ -1,0 +1,12 @@
+/* Componente .pendente — CONTEXTO.md, regra 4.
+   É para saltar aos olhos. Sai do projeto quando não sobrar nenhum. */
+
+.pendente {
+  display: block;
+  border: var(--pendente-borda);
+  border-radius: var(--pendente-raio);
+  background: var(--pendente-fundo);
+  color: var(--pendente-cor);
+  padding: var(--pendente-espaco);
+  font-family: var(--fonte-corpo);
+}
