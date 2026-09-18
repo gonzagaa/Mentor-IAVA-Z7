@@ -335,7 +335,7 @@
   --planilha-mascara: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 55%) 60%, transparent 100%);
 
   /* ilustração do painel do IAVA: altura reservada (CLS 0) */
-  --ilustracao-proporcao: 1448 / 1086; /* proporção real da imagem (4:3) */
+  --ilustracao-proporcao: 1448 / 1086; /* proporção real do chip (4:3) */
   /* esfuma as bordas: as trilhas somem no escuro do card, sem ponta cortada */
   --mascara-ilustracao: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
 
@@ -371,6 +371,7 @@
 
   /* #demonstracao: tela do vídeo sobre o palco de luz */
   --video-proporcao: 16 / 9;
+  --capa-overlay: linear-gradient(180deg, rgb(0 0 0 / 35%) 0%, rgb(0 0 0 / 50%) 100%);
   --tamanho-play: clamp(4.5rem, 3.8rem + 3vw, 6rem); /* 72 → 96px: alvo ≥ 64 no celular */
   --play-cor: var(--azul-eletrico);
   --play-anel: rgb(92 225 255 / 55%);
@@ -380,6 +381,20 @@
   --inclinar-max: 14deg; /* inclinação inicial da tela (rotateX), endireita com o scroll */
   --perspectiva-tela: 1400px;
   --escala-play-hover: 1.08;
+
+  /* moldura .tela (prints reais da plataforma): vidro escuro, borda que acende no
+     topo, barra mínima com três pontos, glow nível MÉDIO, reflexo suave embaixo */
+  --tela-fundo: #070b12;
+  --tela-borda-topo: linear-gradient(90deg, transparent 0%, rgb(92 225 255 / 70%) 30%, rgb(31 163 255 / 80%) 50%, rgb(92 225 255 / 70%) 70%, transparent 100%);
+  --tela-barra: 1.75rem;
+  --tela-ponto: rgb(255 255 255 / 18%);
+  --tela-reflexo: radial-gradient(ellipse 50% 100% at 50% 0%, rgb(31 163 255 / 14%) 0%, transparent 100%);
+  --tela-inclinar-max: 10deg;
+  /* notificação (slot do alerta na #analise) */
+  --notificacao-altura: 5.5rem;
+  --notificacao-deslize: 1rem;
+  /* chip ao fundo dos itens da #o-que-e: nível SUTIL */
+  --chip-fundo-opacidade: 0.35;
 
   /* lista com barra acesa (ref. 04) */
   --barra-apagada: var(--linha-forte);

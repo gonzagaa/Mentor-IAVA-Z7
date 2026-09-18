@@ -78,10 +78,24 @@
   border: 0;
 }
 
+.demo__video {
+  position: relative;
+}
+
 .demo__video img {
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;
+}
+
+/* overlay escuro sobre a capa: o play e a moldura se destacam */
+.demo__video::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: var(--capa-overlay);
+  pointer-events: none;
 }
 
 /* reflexo suave da tela no piso */
@@ -96,15 +110,17 @@
 
 /* ───────────── botão de play (clicável: tem hover e foco) ───────────── */
 
+/* centrado exato no quadro: inset 0 + margin auto (sem translate, que somava com o
+   scale do hover) */
 .demo__play {
   position: absolute;
-  inset-inline-start: 50%;
-  inset-block-start: 50%;
+  inset: 0;
+  z-index: 2;
   display: grid;
   place-items: center;
   inline-size: var(--tamanho-play);
-  aspect-ratio: 1;
-  translate: -50% -50%;
+  block-size: var(--tamanho-play);
+  margin: auto;
   border: 1px solid var(--linha-forte);
   border-radius: var(--raio-circulo);
   background: var(--vidro);
@@ -118,9 +134,8 @@
 }
 
 .demo__play svg {
-  inline-size: 42%;
-  block-size: 42%;
-  margin-inline-start: 8%; /* centro ótico do triângulo */
+  inline-size: 44%;
+  block-size: 44%;
   fill: var(--play-cor);
 }
 
