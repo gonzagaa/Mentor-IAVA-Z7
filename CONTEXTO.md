@@ -305,9 +305,10 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   hero real (selo, H1, luz de cima e fundo) composta para o formato, sem subtítulo e
   botão (scripts/gerar-og.mjs); og:image e twitter:image com URL ABSOLUTA
   (https://zero7.com.br/mentor-iava/img/og-mentor-iava.jpg) + og:image:width/height/type;
-  o publicar copia para o dist/ o que o head cita por URL absoluta. Pendentes (content
-  vazio + data-pendente): `meta.titulo` (o <title> segue "Mentor IAVA" como reserva) e
-  `meta.descricao`.
+  o publicar copia para o dist/ o que o head cita por URL absoluta. **Título e descrição**
+  (aprovados pelo Gustavo, 2026-09-22): `meta.titulo` em <title>, og:title e twitter:title;
+  `meta.descricao` em meta description, og:description e twitter:description. No copy.json
+  são blocos tipo "meta"; cada lugar leva data-copy-meta e o npm run copy confere o texto.
 - **Medidas** (dist/, mediana de 5 rodadas): celular 4G lento + CPU 4× — LCP 2,0 s, TBT
   ~110 ms, CLS 0,002, 240 KB transferidos, 19 requisições (antes da fase 9: LCP 3,5 s,
   CLS 0,12, 1,86 MB, 36 requisições); desktop LCP 0,2 s, TBT 0. CLS com rede lenta nas 9

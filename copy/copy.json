@@ -683,14 +683,18 @@
   {
     "id": "meta.titulo",
     "secao": "head · SEO e compartilhamento",
-    "tipo": "pendente",
-    "descricao": "Título da página (<title> e og:title). Hoje o <title> usa \"Mentor IAVA\" como reserva; o og:title está vazio."
+    "tipo": "meta",
+    "papel": "título da página: <title>, og:title e twitter:title (texto idêntico nos três)",
+    "texto": "Mentor IAVA | Seu mentor de trading 24h por dia | Zero7",
+    "obs": "aprovado pelo Gustavo em 2026-09-22 (ver ALTERACOES.md)"
   },
   {
     "id": "meta.descricao",
     "secao": "head · SEO e compartilhamento",
-    "tipo": "pendente",
-    "descricao": "Descrição da página (meta description e og:description) — não existe na copy."
+    "tipo": "meta",
+    "papel": "descrição da página: meta description, og:description e twitter:description (texto idêntico nos três)",
+    "texto": "O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance: padrões de erro, horários e estratégias.",
+    "obs": "aprovado pelo Gustavo em 2026-09-22 (ver ALTERACOES.md)"
   },
   {
     "id": "cookies.texto",

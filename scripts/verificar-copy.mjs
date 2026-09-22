@@ -78,9 +78,11 @@ async function colher(page) {
 
     // textos alternativos: <img alt="…" data-copy-alt="alt.*">
     const alts = [...document.querySelectorAll('[data-copy-alt]')].map(el => ({ id: el.getAttribute('data-copy-alt'), alt: el.getAttribute('alt') }))
+    // textos do <head>: <title data-copy-meta> (texto) e <meta content data-copy-meta>
+    const metas = [...document.querySelectorAll('[data-copy-meta]')].map(el => ({ id: el.getAttribute('data-copy-meta'), texto: el.tagName === 'TITLE' ? el.textContent : el.getAttribute('content'), onde: el.tagName === 'TITLE' ? '<title>' : `<meta ${el.getAttribute('name') || el.getAttribute('property')}>` }))
     const semAlt = [...document.querySelectorAll('img')].filter(i => !i.hasAttribute('alt')).map(i => i.getAttribute('src'))
 
-    return { porId, pendentes, orfaos, hrefsPendentes, alts, semAlt }
+    return { porId, pendentes, orfaos, hrefsPendentes, alts, semAlt, metas }
   }, vitrine)
 }
 
@@ -151,6 +153,16 @@ await porLargura(larguras, async ({ page, largura }) => {
   }
   for (const a of d.alts) if (!copy.some(b => b.tipo === 'alt' && b.id === a.id)) reg(largura, `ALT INVENTADO data-copy-alt="${a.id}" não existe no copy.json`)
   for (const src of d.semAlt) reg(largura, `IMAGEM SEM ALT ${src}`)
+
+  // 5b · textos do <head> (tipo "meta"): todo lugar marcado tem o texto idêntico ao json
+  for (const bloco of copy.filter(b => b.tipo === 'meta')) {
+    const achados = d.metas.filter(m => m.id === bloco.id)
+    if (!achados.length && !vitrine) reg(largura, `FALTA META ${bloco.id} — nenhum elemento com data-copy-meta="${bloco.id}"`)
+    for (const m of achados) if (colapsar(m.texto || '') !== colapsar(bloco.texto)) reg(largura, `DIVERGE META ${bloco.id} em ${m.onde}
+            json : ${JSON.stringify(bloco.texto)}
+            página: ${JSON.stringify(m.texto)}`)
+  }
+  for (const m of d.metas) if (!copy.some(b => b.tipo === 'meta' && b.id === m.id)) reg(largura, `META INVENTADA data-copy-meta="${m.id}" não existe no copy.json`)
 
   // 6 · órfãos
   for (const o of d.orfaos) {

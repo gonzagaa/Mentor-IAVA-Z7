@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- SEO e compartilhamento. Os TEXTOS (título e descrição) ainda
-       não existem na copy: são pendentes (data-pendente, npm run pendentes). O <title>
-       mantém "Mentor IAVA" como reserva até o texto definitivo chegar. -->
-  <title data-pendente="meta.titulo">Mentor IAVA</title>
-  <meta name="description" content="" data-pendente="meta.descricao">
+  <!-- SEO e compartilhamento. Título e descrição vêm do copy.json (meta.titulo e
+       meta.descricao, tipo "meta"): data-copy-meta marca cada lugar; o npm run copy
+       confere o texto do <title> e o content das metas contra o json. -->
+  <title data-copy-meta="meta.titulo">Mentor IAVA | Seu mentor de trading 24h por dia | Zero7</title>
+  <meta name="description" content="O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance: padrões de erro, horários e estratégias." data-copy-meta="meta.descricao">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://zero7.com.br/mentor-iava/">
   <meta name="theme-color" content="#000000">
@@ -17,13 +17,15 @@
   <meta property="og:url" content="https://zero7.com.br/mentor-iava/">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Zero7">
-  <meta property="og:title" content="" data-pendente="meta.titulo">
-  <meta property="og:description" content="" data-pendente="meta.descricao">
+  <meta property="og:title" content="Mentor IAVA | Seu mentor de trading 24h por dia | Zero7" data-copy-meta="meta.titulo">
+  <meta property="og:description" content="O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance: padrões de erro, horários e estratégias." data-copy-meta="meta.descricao">
   <meta property="og:image" content="https://zero7.com.br/mentor-iava/img/og-mentor-iava.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:type" content="image/jpeg">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Mentor IAVA | Seu mentor de trading 24h por dia | Zero7" data-copy-meta="meta.titulo">
+  <meta name="twitter:description" content="O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance: padrões de erro, horários e estratégias." data-copy-meta="meta.descricao">
   <meta name="twitter:image" content="https://zero7.com.br/mentor-iava/img/og-mentor-iava.jpg">
   <!-- banner da hero: pedido cedo, na versão certa (só quem entende AVIF usa o preload) -->
   <link rel="preload" as="image" type="image/avif" imagesrcset="img/hero/banner-960.avif 960w, img/hero/banner-1280.avif 1280w, img/hero/banner-1920.avif 1920w" imagesizes="(max-width: 1420px) 1420px, 100vw" fetchpriority="high">
