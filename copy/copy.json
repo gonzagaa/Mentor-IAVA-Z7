@@ -669,8 +669,8 @@
     "secao": "textos alternativos de imagem",
     "tipo": "alt",
     "papel": "alt de imagem (atributo, não visível)",
-    "texto": "Evidências estatísticas no painel do Mentor IAVA: saldo do período, taxa de acerto de 54,3%, drawdown máximo e melhor trade",
-    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
+    "texto": "Painel de evidências estatísticas do Mentor IAVA com saldo do período, taxa de acerto, drawdown máximo e melhor trade",
+    "obs": "texto alternativo aprovado pelo Gustavo em 2026-09-22 (ver ALTERACOES.md)"
   },
   {
     "id": "alt.plataforma.chat",
@@ -678,7 +678,7 @@
     "tipo": "alt",
     "papel": "alt de imagem (atributo, não visível)",
     "texto": "Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações",
-    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
+    "obs": "texto alternativo aprovado pelo Gustavo em 2026-09-22 (ver ALTERACOES.md)"
   },
   {
     "id": "meta.titulo",
@@ -691,11 +691,5 @@
     "secao": "head · SEO e compartilhamento",
     "tipo": "pendente",
     "descricao": "Descrição da página (meta description e og:description) — não existe na copy."
-  },
-  {
-    "id": "meta.imagem-og",
-    "secao": "head · SEO e compartilhamento",
-    "tipo": "pendente",
-    "descricao": "Imagem de compartilhamento (og:image), 1200×630, para o WhatsApp e redes — não existe."
   }
 ]

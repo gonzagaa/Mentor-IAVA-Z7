@@ -216,7 +216,6 @@
   --respiro-secao: clamp(6rem, 4.8906rem + 5.546vw, 10rem); /* 96 → 160 */
   --medida-perfis: 36rem; /* 576: lista de perfis em 1 coluna — ~60 caracteres por linha */
   --alvo-toque-minimo: 1.5rem; /* 24px: alvo de toque mínimo (WCAG 2.2, 2.5.8 AA) */
-  --selo-ra-altura: 4.75rem; /* 76px: altura do selo do Reclame Aqui (medida em produção) */
   --coluna-estreita: 45rem; /* 720: seções de leitura em sequência (#dor) — teto */
   /* #dor ≥ 1080px: a pergunta d2.p2 numa linha só, no maior tamanho que cabe no
      wrapper. 17.17 = largura da frase em NCS Radhiumz ÷ font-size (medida no

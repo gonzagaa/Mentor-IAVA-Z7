@@ -95,6 +95,11 @@ const versionar = url => {
 html = html.replace(/(?<=\s)(src|href)="([^"]+)"/g, (m, attr, url) => `${attr}="${versionar(url)}"`)
 html = html.replace(/(?<=\s)(srcset|imagesrcset)="([^"]+)"/g, (m, attr, lista) =>
   `${attr}="${lista.split(',').map(p => { const [u, ...d] = p.trim().split(/\s+/); return [versionar(u), ...d].join(' ') }).join(', ')}"`)
+// arquivos citados por URL ABSOLUTA de produção (og:image, twitter:image): vão para o
+// dist/ no mesmo caminho; a URL fica como está (sem ?v=, é o que os robôs guardam)
+const PRODUCAO = 'https://zero7.com.br/mentor-iava/'
+const absolutos = [...html.matchAll(/content="(https:\/\/zero7\.com\.br\/mentor-iava\/[^"]+)"/g)].map(m => m[1].slice(PRODUCAO.length)).filter(r => r && !r.endsWith('/'))
+for (const rel of absolutos) copiar(rel)
 fs.writeFileSync(path.join(DIST, 'index.html'), html)
 for (const l of LICENCAS) copiar(l)
 
@@ -107,6 +112,7 @@ const tirarVersao = u => u.split('?')[0]
 for (const m of html.matchAll(/(?<=\s)(?:src|href)="([^"]+)"/g)) refs.add(m[1])
 for (const m of html.matchAll(/(?<=\s)(?:srcset|imagesrcset)="([^"]+)"/g)) for (const p of m[1].split(',')) refs.add(p.trim().split(/\s+/)[0])
 for (const m of css.matchAll(/url\((['"]?)(\.\.\/[^'")]+)\1\)/g)) refs.add(path.posix.join('css', m[2]))
+for (const rel of absolutos) refs.add(rel)
 for (const u of refs) {
   if (/^(https?:|data:|#|mailto:|tel:)/.test(u) || u === '') continue
   const rel = path.posix.normalize(tirarVersao(u))

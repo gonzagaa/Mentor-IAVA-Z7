@@ -11,14 +11,8 @@
 # Terceiros liberados hoje (e por quê):
 #   - www.youtube-nocookie.com  (frame-src): o vídeo da #demonstracao, só depois do
 #     clique na capa (antes disso nada do YouTube é pedido)
-#   - selo do Reclame Aqui no rodapé (carregado por js/selo-ra.js depois da página
-#     pronta), levantado em produção com scripts/selo-ra.mjs:
-#       s3.amazonaws.com/raichu-beta/ra-verified/  script, CSS e imagem do selo
-#       api.reclameaqui.com.br                     dados do selo (XHR)
-#       fonts.googleapis.com / fonts.gstatic.com   fontes que o CSS do selo pede
-#     style-src-attr 'unsafe-inline': o selo escreve style="" no HTML que ele injeta
-#     (tamanho e visibilidade do widget). Só atributos style — <style> e <script>
-#     inline continuam bloqueados.
+#   (o selo do Reclame Aqui saiu da página em 2026-09-22; a implementação e as
+#   liberações que ele exigia estão em docs/selo-reclame-aqui.md)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 Options -Indexes
@@ -37,7 +31,7 @@ DirectoryIndex index.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), browsing-topics=(), autoplay=(self \"https://www.youtube-nocookie.com\"), encrypted-media=(self \"https://www.youtube-nocookie.com\"), picture-in-picture=(self \"https://www.youtube-nocookie.com\"), fullscreen=(self \"https://www.youtube-nocookie.com\")"
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://s3.amazonaws.com/raichu-beta/ra-verified/; style-src 'self' https://s3.amazonaws.com/raichu-beta/ra-verified/ https://fonts.googleapis.com; style-src-attr 'unsafe-inline'; img-src 'self' data: https://s3.amazonaws.com/raichu-beta/ra-verified/; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.reclameaqui.com.br; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'"
 </IfModule>
 
 # ─── compressão (texto) ───

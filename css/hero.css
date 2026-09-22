@@ -124,23 +124,25 @@
   filter: var(--brilho-h1);
 }
 
-/* Quebras de linha FIXAS (<br>, que não muda o texto): as mesmas que o balanceamento
-   dava com a NCS Radhiumz — 6 linhas no celular, 4 a partir de 768px. Com as quebras
-   fixas, a fonte reserva (antes de a NCS chegar) monta as MESMAS linhas: a troca de
-   fonte não mexe o H1 (CLS). */
-.hero__titulo br {
+/* Quebras de linha FIXAS — as mesmas que o balanceamento dava com a NCS Radhiumz:
+   6 linhas no celular, 4 a partir de 768px. Com elas a fonte reserva (antes de a NCS
+   chegar) monta as MESMAS linhas: a troca de fonte não mexe o H1 (CLS).
+   Sem <br> (regra do projeto): cada quebra é um <span class="quebra"> VAZIO — sem texto,
+   o textContent do H1 é o da copy — que só vira bloco na faixa de largura em que a
+   quebra existe. Um bloco vazio no meio do texto encerra a linha, sem altura própria. */
+.hero__titulo .quebra {
   display: none;
 }
 
 @media (max-width: 47.99rem) {
-  .hero__titulo .quebra-celular {
-    display: inline;
+  .hero__titulo .quebra--celular {
+    display: block;
   }
 }
 
 @media (min-width: 48rem) {
-  .hero__titulo .quebra-desktop {
-    display: inline;
+  .hero__titulo .quebra--desktop {
+    display: block;
   }
 }
 

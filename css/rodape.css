@@ -194,12 +194,6 @@
 
 /* diferença deliberada da home: bandeiras em AVIF/WebP no tamanho de exibição; o
    <picture> só escolhe o formato e não participa do layout */
-/* diferença deliberada da home: o selo do Reclame Aqui chega depois (js/selo-ra.js);
-   a caixa já nasce com a altura dele (76px, medida em zero7.com.br): CLS 0 */
-#ra-verified-seal {
-  min-block-size: var(--selo-ra-altura);
-}
-
 #pagamento picture {
   display: contents;
 }
