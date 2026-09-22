@@ -179,7 +179,8 @@ async function conferirCarregamento(page, fontes) {
  * Antes de cada tarefa confere fontes e sentinela do CSS; se falhar, PARA tudo
  * com código de saída 1 dizendo qual largura e o quê.
  */
-export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false, semJs = false } = {}) {
+// contexto: opções extras do contexto do navegador (ex.: userAgent)
+export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false, semJs = false, contexto: extrasContexto = {} } = {}) {
   const vigia = vigiar()
   const servidor = await subirServidor(undefined, lerDist() ? { raiz: path.join(RAIZ, 'dist') } : {})
   const { navegador, fechar: fecharNavegador } = await abrirNavegador(vigia)
@@ -195,6 +196,7 @@ export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = '
         reducedMotion: movimento ? 'no-preference' : 'reduce',
         colorScheme: 'dark',
         javaScriptEnabled: !semJs,
+        ...extrasContexto,
       })
       const page = await contexto.newPage()
       page.setDefaultTimeout(30000) // nenhuma espera do Playwright passa de 30s

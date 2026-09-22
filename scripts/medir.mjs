@@ -255,7 +255,11 @@ const medicoes = await porLargura(
         const b = document.querySelector('#hero .botao--primario')
         if (!b) return null
         const r = b.getBoundingClientRect()
-        return { topo: Math.round(r.top), base: Math.round(r.bottom), altura: innerHeight }
+        // o aviso de cookies (fixo na base) não pode cobrir o botão
+        const a = document.getElementById('aviso-cookies')
+        const ra = a && !a.hidden ? a.getBoundingClientRect() : null
+        const coberto = ra ? ra.top < r.bottom && ra.bottom > r.top && ra.left < r.right && ra.right > r.left : false
+        return { topo: Math.round(r.top), base: Math.round(r.bottom), altura: innerHeight, aviso: ra ? Math.round(ra.top) : null, coberto }
       })
     }
 
@@ -347,7 +351,7 @@ const tabelaSecoes = tabelaMd(
 const comDobra = medicoes.filter(m => m.dobra)
 const tabelaDobra = comDobra.length
   ? tabelaMd(
-      ['tela', 'botão (topo → base)', 'sobra até a dobra', 'aparece sem rolar?', 'exigido?'],
+      ['tela', 'botão (topo → base)', 'sobra até a dobra', 'aparece sem rolar?', 'topo do aviso de cookies', 'coberto pelo aviso?', 'exigido?'],
       comDobra.map(m => {
         const { topo, base, altura } = m.dobra
         return [
@@ -355,6 +359,8 @@ const tabelaDobra = comDobra.length
           `${topo} → ${base}px`,
           `${altura - base}px`,
           base <= altura ? 'sim' : '**não**',
+          m.dobra.aviso === null ? '—' : `${m.dobra.aviso}px`,
+          m.dobra.coberto ? '**sim**' : 'não',
           DOBRA_OBRIGATORIA.includes(m.largura) ? 'sim' : 'só reportar',
         ]
       })

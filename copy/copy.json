@@ -628,9 +628,9 @@
     "id": "rodape.cookie",
     "secao": "rodapé",
     "tipo": "copy",
-    "papel": "link (href vazio, igual ao site da Zero7)",
+    "papel": "link que reabre o aviso de cookies (#aviso-cookies)",
     "texto": "Cookie",
-    "obs": "rodapé do site zero7.com.br, cópia 100% a pedido do Gustavo em 2026-09-18 — ver ALTERACOES.md"
+    "obs": "rodapé do site zero7.com.br (2026-09-18); desde 2026-09-22 reabre o aviso de cookies para a pessoa mudar a escolha — ver ALTERACOES.md"
   },
   {
     "id": "rodape.uso",
@@ -691,5 +691,29 @@
     "secao": "head · SEO e compartilhamento",
     "tipo": "pendente",
     "descricao": "Descrição da página (meta description e og:description) — não existe na copy."
+  },
+  {
+    "id": "cookies.texto",
+    "secao": "aviso de cookies (LGPD)",
+    "tipo": "copy",
+    "papel": "texto do aviso (com link para a política de privacidade)",
+    "texto": "Usamos cookies para medir o desempenho dos nossos anúncios e melhorar sua experiência. Saiba mais na nossa Política de Privacidade.",
+    "obs": "aprovado pelo Gustavo em 2026-09-22 · \"Política de Privacidade\" é link para https://zero7.com.br/politica-de-privacidade/"
+  },
+  {
+    "id": "cookies.aceitar",
+    "secao": "aviso de cookies (LGPD)",
+    "tipo": "copy",
+    "papel": "botão",
+    "texto": "Aceitar",
+    "obs": "aprovado pelo Gustavo em 2026-09-22"
+  },
+  {
+    "id": "cookies.recusar",
+    "secao": "aviso de cookies (LGPD)",
+    "tipo": "copy",
+    "papel": "botão",
+    "texto": "Recusar",
+    "obs": "aprovado pelo Gustavo em 2026-09-22"
   }
 ]

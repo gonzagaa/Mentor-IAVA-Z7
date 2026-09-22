@@ -19,7 +19,8 @@
     "diagnostico-movimento": "node scripts/diagnostico-movimento.mjs",
     "publicar": "node scripts/publicar.mjs",
     "imagens": "node scripts/imagens.mjs",
-    "acessibilidade": "node scripts/acessibilidade.mjs"
+    "acessibilidade": "node scripts/acessibilidade.mjs",
+    "pixel": "node scripts/pixel.mjs"
   },
   "devDependencies": {
     "axe-core": "^4.13.0",

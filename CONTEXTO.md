@@ -254,6 +254,7 @@ servidor sozinhos.
 | `npm run desempenho` | celular (CPU 4×, 4G lento) × desktop: LCP, FCP, TBT, CLS, peso, requisições; e CLS com rede lenta nas 9 larguras (`--dist` mede o pacote; `--bloquear=x` isola um arquivo) |
 | `npm run acessibilidade` | axe-core nas 9 larguras (0 sérias/críticas), títulos, landmarks, ordem do Tab com foco visível, contraste dos gradientes na cor mais escura |
 | `npm run imagens` | inventário das imagens: dimensões, peso e tamanho de exibição nas 9 larguras |
+| `npm run pixel` | Meta Pixel com consentimento: registra toda requisição externa sem escolha, depois de Aceitar (eventos nos cliques), depois de Recusar e na recarga (`--dist`: com a CSP ativa, lista violações) |
 | `npm run diagnostico-movimento` | quadros da rolagem + pisca/pulo/nunca/repete/tempo morto, CLS, scroll lateral e console, com o Lenis |
 | `node scripts/processar-imagens.mjs` | banner, ícones e bandeiras em AVIF/WebP no tamanho de exibição (×2) |
 | `node scripts/subsetar-inter.mjs` | Inter → subconjunto latino (falha se faltar caractere da copy) |
@@ -311,6 +312,39 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   ~110 ms, CLS 0,002, 240 KB transferidos, 19 requisições (antes da fase 9: LCP 3,5 s,
   CLS 0,12, 1,86 MB, 36 requisições); desktop LCP 0,2 s, TBT 0. CLS com rede lenta nas 9
   larguras: 0,001–0,007. Acessibilidade: 0 violações sérias/críticas nas 9 larguras.
+
+## Rastreamento: Meta Pixel com consentimento (LGPD)
+
+- **Pixels**: os mesmos da home — `757410515694979` e `553722946901869`. Na home eles NÃO
+  estão no código: vêm do Google Tag Manager `GTM-KCJQPMC` (tag "Facebook Pixel"; o
+  757… com PageView, CompleteRegistration e Contact; o 553… com CompleteRegistration e
+  Contact). Aqui: só pelo navegador, sem API de conversões e sem GTM.
+- **js/pixel.js** (sem script inline; CSP sem 'unsafe-inline'; sem a tag <noscript>):
+  fila do fbq na hora com `fbq('consent','revoke')` ANTES dos `init` (os dois IDs, um
+  carregamento só do fbevents.js); `autoConfig` desligado (sem eventos automáticos),
+  `disablePushState` (sem PageView a mais no href="#" dos CTAs) e
+  `disableConfigLoading` (sem signals/config: é ela que liga o "OpenBridge"/CAPI Gateway,
+  que mandava cópia dos eventos para servidores da API de conversões).
+- **O fbevents.js só é baixado depois do "Aceitar"** (no clique; para quem já aceitou,
+  depois da página pronta). Antes do aceite, NENHUMA requisição vai ao Meta. Motivo:
+  baixado antes (revogado), ele custava ~360ms de TBT em TODA primeira visita no celular
+  (TBT 483ms × 105ms), sem enviar nada.
+- **Eventos** (só com consentimento, nos dois IDs): PageView (carregamento),
+  InitiateCheckout (cliques em d1.cta1 e d6.cta), ViewContent (vídeo carregado pelo play).
+  `npm run pixel` confere tudo. O fbevents.js não envia nada para navegador automatizado
+  (HeadlessChrome/webdriver): o teste se apresenta como Chrome comum.
+- **Aviso de cookies** (js/cookies.js, css/aviso-cookies.css; textos `cookies.*`,
+  aprovados pelo Gustavo): fixo na base, por cima do conteúdo (CLS 0), vidro escuro,
+  --raio-z7, texto na medida de leitura, Aceitar (primário) e Recusar (secundário) no
+  mesmo tamanho (`.botao--md`, 48px). Escolha em localStorage (`mentor-iava:cookies`);
+  o aviso não volta; o link "Cookie" do rodapé reabre. Não cobre o botão da hero nas
+  dobras exigidas (o `npm run medir` confere; em 320×568 e 375×667, só reportadas, cobre).
+- **Desempenho** (dist/, celular 4G lento + CPU 4×, mediana de 5): primeira visita LCP
+  2,0s · TBT 105ms · 243 KB (antes do Pixel: 2,0s · 120ms · 239 KB). Quem já aceitou:
+  LCP 1,9s · TBT 526ms · 351 KB — o fbevents.js é uma tarefa longa de ~420ms (a mesma da
+  home), depois da página pronta.
+- **CSP**: `script-src 'self' https://connect.facebook.net` e `img-src 'self' data:
+  https://www.facebook.com` — só o que o Pixel usou na Network. connect-src segue 'self'.
 
 ## Estado atual
 
@@ -421,7 +455,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 - **Rodapé**: CÓPIA 100% do rodapé de zero7.com.br (#footer, #pagamento, #author), por
   escolha do Gustavo — mesmo conteúdo, estrutura, tamanhos, cores, grades e hovers da home,
   inclusive o que contraria regras da página: aviso legal em 8px, links "Cookie" e
-  "Políticas de Uso" com href vazio (marcados `data-href-vazio="copia-zero7"`; o
+  "Políticas de Uso" com href vazio (marcado `data-href-vazio="copia-zero7"`; "Cookie" reabre
+  o aviso de cookies desde a fase do Pixel; o
   `npm run tokens` só aceita esses e sempre os lista) e alvos de toque menores que 44px. `css/rodape.css` usa uma
   unidade local `--u` = o "1rem" da home (8px; 10,4px ≥ 1600px) — a raiz da página segue
   100%. Diferenças deliberadas: fonte do texto Inter (a home usa "TT Fors Trial", versão
@@ -438,7 +473,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   style-src-attr 'unsafe-inline'). A implementação completa, o levantamento em produção
   (8 requisições, ~141 KB, sem cookies, mas pede fontes ao Google) e a CSP que ele exige
   estão em **docs/selo-reclame-aqui.md**, para voltar quando a verificação funcionar.
-- **Links**: nenhum `href` vazio fora os dois do rodapé copiado; `#` só com
+- **Links**: nenhum `href` vazio fora o "Políticas de Uso" do rodapé copiado; `#` só com
   `data-pendente-href` (`npm run tokens` falha se achar outro).
 - **Copy**: 80 blocos + 2 pendentes: `d1.cta.destino` (só no link) e `preco` (marcado
   "oculto" — fora da página a pedido do Gustavo; o `npm run pendentes` lista).

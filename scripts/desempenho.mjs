@@ -20,6 +20,9 @@ const rodadas = Number(arg('rodadas', '3'))
 // --bloquear=padrão,padrão: aborta as requisições cujo caminho contém o padrão (isola o
 // custo de um script, ex. --bloquear=lenis). Só para diagnóstico.
 const bloquear = arg('bloquear', '').split(',').filter(Boolean)
+// --consentimento=aceito|recusado: grava a escolha do aviso de cookies antes de carregar
+// (mede quem já aceitou o Pixel; sem isso, é a primeira visita, sem escolha)
+const consentimento = arg('consentimento', '')
 
 const PERFIS = {
   390: { nome: 'celular', cpu: 4, rede: { offline: false, latency: 562.5, downloadThroughput: (1474.56 * 1024) / 8, uploadThroughput: (675 * 1024) / 8 } },
@@ -52,6 +55,7 @@ const brutos = await porLargura(larguras, async ({ page, largura }) => {
   movimento: true,
   antesDeCarregar: async page => {
     await page.addInitScript(OBSERVADOR)
+    if (consentimento) await page.addInitScript(v => { try { localStorage.setItem('mentor-iava:cookies', v) } catch {} }, consentimento)
     if (bloquear.length) await page.route(u => bloquear.some(b => u.pathname.includes(b)), r => r.abort())
     const perfil = PERFIS[page.viewportSize().width]
     const cdp = await page.context().newCDPSession(page)
@@ -81,6 +85,7 @@ if (!process.argv.includes('--sem-cls')) {
     movimento: true,
     antesDeCarregar: async page => {
       await page.addInitScript(OBSERVADOR)
+      if (consentimento) await page.addInitScript(v => { try { localStorage.setItem('mentor-iava:cookies', v) } catch {} }, consentimento)
       if (bloquear.length) await page.route(u => bloquear.some(b => u.pathname.includes(b)), r => r.abort())
       const cdp = await page.context().newCDPSession(page)
       await cdp.send('Network.enable')
@@ -94,7 +99,7 @@ if (!process.argv.includes('--sem-cls')) {
 }
 
 const tabela = ['| perfil | LCP | FCP | TBT | CLS (pior) | peso transferido | JS | requisições |', '| --- | --- | --- | --- | --- | --- | --- | --- |', ...linhas].join('\n')
-const md = `# desempenho · ${rotulo}\n\nGerado em ${new Date().toISOString()} · mediana de ${rodadas} rodada(s), cache vazio${bloquear.length ? ' · BLOQUEADO: ' + bloquear.join(', ') : ''}\n\n${tabela}\n${tabelaCls ? `\n## CLS com rede lenta nas 9 larguras\n\n${tabelaCls}\n` : ''}`
+const md = `# desempenho · ${rotulo}\n\nGerado em ${new Date().toISOString()} · mediana de ${rodadas} rodada(s), cache vazio${bloquear.length ? ' · BLOQUEADO: ' + bloquear.join(', ') : ''}${consentimento ? ' · cookies: ' + consentimento : ''}\n\n${tabela}\n${tabelaCls ? `\n## CLS com rede lenta nas 9 larguras\n\n${tabelaCls}\n` : ''}`
 fs.mkdirSync(path.join(RAIZ, 'medidas'), { recursive: true })
 fs.writeFileSync(path.join(RAIZ, 'medidas', `desempenho-${rotulo}.md`), md)
 console.log(tabela)
