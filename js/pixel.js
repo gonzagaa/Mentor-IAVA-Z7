@@ -32,8 +32,8 @@
     fbq.loaded = true
     fbq.version = '2.0'
     fbq.queue = []
-    // sem PageView automático em mudança de URL (o href="#" dos CTAs, enquanto o destino
-    // é pendente, dispararia um PageView a mais) — como o disablePushState da tag do GTM
+    // sem PageView automático em mudança de URL (hash/pushState) — como o disablePushState
+    // da tag do GTM na home
     fbq.disablePushState = true
     // sem a configuração remota de cada pixel (signals/config, ~440 KB cada): é ela que liga
     // o "OpenBridge"/CAPI Gateway (cópia dos eventos para servidores da API de conversões,

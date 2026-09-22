@@ -31,13 +31,24 @@ const cenarios = await porLargura([largura], async ({ page }) => {
   const erros = []
   page.on('console', m => { if (m.type() === 'error' && !/Content Security Policy|Refused/.test(m.text())) erros.push(`[${fase}] ${m.text().slice(0, 200)}`) })
   page.on('pageerror', e => erros.push('pageerror: ' + e.message))
-  const avisoVisivel = () => page.evaluate(() => !document.getElementById('aviso-cookies').hidden)
+  const avisoVisivel = async () => {
+    const ok = await page.evaluate(() => { const a = document.getElementById('aviso-cookies'); return a ? !a.hidden : null })
+    if (ok === null) throw new Error('o aviso de cookies (#aviso-cookies) não está na página')
+    return ok
+  }
+  // os botões de compra levam ao checkout (outra página): o checkout real não é aberto —
+  // uma página de teste responde no lugar dele. O InitiateCheckout tem que sair ANTES da
+  // navegação; depois do clique, volta para a página e segue.
+  const CHECKOUT = 'https://app.zero7.com.br/checkout/cad61e'
+  await page.route('https://app.zero7.com.br/**', r => r.fulfill({ status: 200, contentType: 'text/html', body: '<!doctype html><title>checkout (teste)</title>' }))
   const clicarCompras = async () => {
     for (const sel of ['[data-copy="d1.cta1"]', '[data-copy="d6.cta"]']) {
       await page.evaluate(s => document.querySelector(s).scrollIntoView({ block: 'center' }), sel)
       await page.waitForTimeout(300)
-      await page.click(sel)
+      await Promise.all([page.waitForURL(CHECKOUT, { timeout: 10000 }), page.click(sel)])
       await page.waitForTimeout(800)
+      await page.goBack({ waitUntil: 'load' })
+      await page.waitForTimeout(1500)
     }
     await page.evaluate(() => document.querySelector('a[data-video]').scrollIntoView({ block: 'center' }))
     await page.waitForTimeout(300)

@@ -323,7 +323,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 - **js/pixel.js** (sem script inline; CSP sem 'unsafe-inline'; sem a tag <noscript>):
   fila do fbq na hora com `fbq('consent','revoke')` ANTES dos `init` (os dois IDs, um
   carregamento só do fbevents.js); `autoConfig` desligado (sem eventos automáticos),
-  `disablePushState` (sem PageView a mais no href="#" dos CTAs) e
+  `disablePushState` (sem PageView a mais em mudança de URL) e
   `disableConfigLoading` (sem signals/config: é ela que liga o "OpenBridge"/CAPI Gateway,
   que mandava cópia dos eventos para servidores da API de conversões).
 - **O fbevents.js só é baixado depois do "Aceitar"** (no clique; para quem já aceitou,
@@ -353,8 +353,9 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
-  subtítulo → um botão (`d1.cta1`, **60px**, `href="#"` +
-  `data-pendente-href="d1.cta.destino"` — **sem caixa de pendente na tela**). Fundo, de
+  subtítulo → um botão (`d1.cta1`, **60px**). **Checkout** (2026-09-22): os dois botões de
+  compra (`d1.cta1` e `d6.cta`) levam a https://app.zero7.com.br/checkout/cad61e, na mesma
+  aba; o InitiateCheckout do Pixel sai antes da navegação (conferido). Fundo, de
   baixo para cima: **banner** (troca do Gustavo: anel escuro simétrico, a 70% e sumindo
   para baixo) — desde a fase 9 um `<img>` decorativo (alt="", aria-hidden) com AVIF/WebP
   960/1280/1920 (2–7 KB; o PNG de origem tinha 1,08 MB), object-fit: cover,
@@ -476,7 +477,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   estão em **docs/selo-reclame-aqui.md**, para voltar quando a verificação funcionar.
 - **Links**: nenhum `href` vazio fora o "Políticas de Uso" do rodapé copiado; `#` só com
   `data-pendente-href` (`npm run tokens` falha se achar outro).
-- **Copy**: 80 blocos + 2 pendentes: `d1.cta.destino` (só no link) e `preco` (marcado
+- **Copy**: 83 blocos + 1 pendente: `preco` (marcado
   "oculto" — fora da página a pedido do Gustavo; o `npm run pendentes` lista).
 - `amostra.html` segue como guia do sistema (seções 1–5).
 - Pendentes ainda abertos da fase 0: `<title>` "Mentor IAVA"; `preco` em `#demonstracao`.

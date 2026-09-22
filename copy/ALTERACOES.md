@@ -34,3 +34,4 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-22 | `rodape.cookie` | Cookie *(link com href vazio, cópia da home)* | Cookie *(mesmo texto; o link agora reabre o aviso de cookies)* | Gustavo |
 | 2026-09-22 | `meta.titulo` | *(pendente; o <title> usava "Mentor IAVA" como reserva)* | Mentor IAVA | Seu mentor de trading 24h por dia | Zero7 — **aprovado pelo Gustavo** (<title>, og:title e twitter:title) | Gustavo |
 | 2026-09-22 | `meta.descricao` | *(pendente)* | O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance: padrões de erro, horários e estratégias. — **aprovado pelo Gustavo** (meta description, og:description e twitter:description) | Gustavo |
+| 2026-09-22 | `d1.cta.destino` | *(pendente: destino dos CTAs de compra)* | https://app.zero7.com.br/checkout/cad61e — link do checkout enviado pelo Gustavo, nos dois botões de compra (d1.cta1 e d6.cta) | Gustavo |
