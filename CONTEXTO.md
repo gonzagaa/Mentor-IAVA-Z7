@@ -270,12 +270,19 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   baixo para cima: **banner** `img/banner-hero.png` (troca do Gustavo: anel escuro
   simétrico, 1920×1080, PNG de 1,08 MB, a 70% e sumindo para baixo) → grade de quadrados
   → arco invertido + cone de luz que respira. Botão inteiro na dobra de 375 a 1920
-  (em 320×568 fica 35px abaixo).
+  (em 320×568 fica 35px abaixo). **Sem print** (fase 14): o fundo termina em preto
+  por gradiente, sem linha (conferido linha a linha na luminância das laterais).
 - **LCP**: é o banner (o Chrome atribui à `section#hero`, fundo do `::before`).
   Local: 96 ms (390) e 132 ms (1474). Em 4G lento simulado: ~7,8 s nas duas — o PNG de
   1,08 MB é o gargalo. Ainda NÃO otimizado (o dono vai trocar por AVIF).
-- **#dor**: sequência narrativa em coluna estreita; termina com o feixe-ponte, que agora
-  para exatamente na borda da seção.
+- **#dor**: sequência narrativa em coluna estreita (até 1079px); termina com o
+  feixe-ponte, que para exatamente na borda da seção, sempre no centro. **≥ 1080px**
+  (fase 14): a seção ocupa a largura do wrapper — d2.p1 centrado; a pergunta do d2.p2
+  numa linha só no maior tamanho que cabe (`--fs-pergunta-linha` = wrapper × 0,97 ÷
+  17,17; ~68px em 1280, ~79px em 1474/1920, MAIOR que o H1, por pedido); a resposta
+  centrada embaixo; os três "Talvez" em 3 colunas de mesma altura, com a barra no TOPO
+  de cada card acendendo da esquerda para a direita (0 → 450 → 900ms, um lote só);
+  d2.p6 com no máximo 75 caracteres (`--medida-virada`). Sem hover.
 - **#analise**: o feixe pousa no topo (ponto de luz + linha fina, no respiro, nunca sobre
   texto) → d3.titulo em `.display` H2 com "e destrincha isso para você." no gradiente
   de acento (via `<span>`), centrado em todas as larguras; a partir de 1080px em 3
@@ -307,7 +314,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
 - **Prints reais da plataforma** (`scripts/processar-plataforma.mjs`: só recorte e
   otimização, AVIF/WebP com croma cheio; originais em `img/plataforma/originais/` fora do
-  dist): **topo** na hero, abaixo do botão, em `.tela` inclinada que endireita; **chat**
+  dist): **topo** — SAIU da hero na fase 14 (os arquivos `img/plataforma/topo-*` ficam
+  no repositório mas NÃO vão para o dist/; alt marcado "oculto" no copy.json); **chat**
   no card do chat da #analise (≥ 1081px: print e texto lado a lado, 1.1fr/1fr — o dono
   pediu o print menor); **evidencias** (2×2 cards) no painel do IAVA; o chip foi para o
   fundo dos itens 1 e 2 da #o-que-e (nível sutil). **alerta**: removido (o print da
@@ -315,8 +323,9 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   topo, três pontos, glow médio, reflexo. Alts em `alt.*` no copy.json (checados pelo
   `npm run copy`), AGUARDANDO APROVAÇÃO do Gustavo.
 - **LCP**: o H1 NÃO é candidato — o Chrome ignora texto com preenchimento transparente
-  (o gradiente via background-clip). LCP hoje: subtítulo em 390, print do topo em 1474.
-  A decidir com o dono.
+  (o gradiente via background-clip). LCP hoje (fase 14, sem o print): o banner de teste
+  nas duas larguras locais (348ms em 390, 248ms em 1474); em 4G lento, banner em 390
+  (9,6s) e subtítulo em 1474 (1,8s). A decidir com o dono.
 - **#demonstracao**: d6.titulo (.display H2) + d6.texto → tela (card destaque, vidro,
   --raio-z7) com a capa local do vídeo (`img/demo/capa-640/1280`, AVIF/WebP, lazy) num
   `<a href="https://www.youtube.com/watch?v=RjCiGF0Ce7A">` com `aria-labelledby` no título e

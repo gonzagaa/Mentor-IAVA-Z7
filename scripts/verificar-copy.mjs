@@ -140,7 +140,8 @@ await porLargura(larguras, async ({ page, largura }) => {
 
   // 5 · alt: todo bloco tipo "alt" do json está numa imagem com o texto idêntico, e
   //     nenhuma imagem sem atributo alt (decorativa leva alt="")
-  for (const bloco of copy.filter(b => b.tipo === 'alt')) {
+  // alt marcado "oculto" no json (imagem fora da página por decisão do dono) pode faltar
+  for (const bloco of copy.filter(b => b.tipo === 'alt' && !b.oculto)) {
     const achados = d.alts.filter(a => a.id === bloco.id)
     if (!achados.length && !vitrine) reg(largura, `FALTA ALT ${bloco.id} — nenhuma imagem com data-copy-alt="${bloco.id}"`)
     for (const a of achados) if (colapsar(a.alt || '') !== colapsar(bloco.texto)) reg(largura, `DIVERGE ALT ${bloco.id}

@@ -661,7 +661,8 @@
     "tipo": "alt",
     "papel": "alt de imagem (atributo, não visível)",
     "texto": "Painel do Mentor IAVA com o briefing operacional e um alerta de revenge trading: risco de tilt alto e limite sugerido de 2 trades",
-    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)"
+    "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)",
+    "oculto": "fora da página: o print do topo saiu da hero na fase 14 (pedido do Gustavo); os arquivos ficam em img/plataforma/ mas não vão para o dist/"
   },
   {
     "id": "alt.plataforma.evidencias",

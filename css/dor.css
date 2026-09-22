@@ -1,5 +1,6 @@
 /* #dor — sequência narrativa (d2.p1 a d2.p7). Cada frase ganha seu tempo.
-   Coluna central estreita, fundo preto puro, sem título nem eyebrow.
+   Coluna central estreita até 1079px; a partir de 1080px, a largura do wrapper.
+   Fundo preto puro, sem título nem eyebrow, sem hover.
    Só tokens; os números que ficam aqui são posicionamento desta peça única. */
 
 .dor {
@@ -70,4 +71,50 @@
   -webkit-mask-image: var(--mascara-ponte);
   mask-image: var(--mascara-ponte);
   pointer-events: none;
+}
+
+/* ───────────── ≥ 1080px: a seção na largura do wrapper ─────────────
+   d2.p1 centrado; a pergunta numa linha só, no maior tamanho que cabe; a resposta
+   centrada embaixo; os três "Talvez" em 3 colunas de mesma altura, com a barra no
+   TOPO de cada card, acendendo da esquerda para a direita (js/revelar.js: os três
+   entram no mesmo lote, 0 → 3 → 6 passos); d2.p6 com no máximo 75 caracteres. */
+@media (min-width: 67.5rem) {
+  .dor__coluna {
+    max-inline-size: var(--largura-max);
+  }
+
+  .dor__pergunta-grande {
+    font-size: var(--fs-pergunta-linha);
+    white-space: nowrap;
+  }
+
+  .dor__talvez {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: stretch;
+    gap: var(--esp-6);
+  }
+
+  .dor__talvez > li {
+    padding: var(--esp-8) var(--esp-6) var(--esp-6);
+  }
+
+  /* a barra deita: trilho e luz no topo do card, crescendo da esquerda */
+  .dor__talvez > li::before,
+  .dor__talvez > li::after {
+    inset-block: var(--esp-4) auto;
+    inset-inline: var(--esp-6);
+    inline-size: auto;
+    block-size: 2px;
+  }
+
+  .dor__talvez > li::after {
+    transform-origin: 0 50%;
+    transform: scaleX(var(--acesa, 1));
+  }
+
+  .dor__virada {
+    max-inline-size: var(--medida-virada);
+    margin-inline: auto;
+  }
 }

@@ -210,6 +210,12 @@
   --respiro-secao: clamp(6rem, 4.8906rem + 5.546vw, 10rem); /* 96 → 160 */
   --medida-perfis: 36rem; /* 576: lista de perfis em 1 coluna — ~60 caracteres por linha */
   --coluna-estreita: 45rem; /* 720: seções de leitura em sequência (#dor) — teto */
+  /* #dor ≥ 1080px: a pergunta d2.p2 numa linha só, no maior tamanho que cabe no
+     wrapper. 17.17 = largura da frase em NCS Radhiumz ÷ font-size (medida no
+     navegador); 0.97 deixa 3% de folga. */
+  --pergunta-proporcao: 17.17;
+  --fs-pergunta-linha: calc(var(--largura-max) * 0.97 / var(--pergunta-proporcao));
+  --medida-virada: 75ch; /* d2.p6: nunca mais de 75 caracteres por linha */
   --alvo-toque: 2.75rem; /* 44 */
 
   /* ───────────────────────────── FORMA ───────────────────────────── */
@@ -386,7 +392,6 @@
   --tela-ponto: rgb(255 255 255 / 18%);
   --tela-reflexo: radial-gradient(ellipse 50% 100% at 50% 0%, rgb(31 163 255 / 14%) 0%, transparent 100%);
   --tela-inclinar-max: 10deg;
-  --hero-tela-max: 68.75rem; /* 1100px: print do topo na hero */
   /* print do chat × coluna de texto (≥ 1081px): o dono pediu o print menor e mais
      espaço para o texto — fica abaixo dos 60% do recorte por decisão dele */
   --colunas-chat: 1.1fr 1fr;

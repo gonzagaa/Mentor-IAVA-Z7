@@ -150,12 +150,3 @@
   gap: var(--esp-6);
   margin-block-start: var(--esp-2);
 }
-
-/* ─────────────────── print da plataforma (.tela "topo") ───────────────────
-   Abaixo do botão, centrado, saindo de baixo da hero em perspectiva. Entra no fluxo
-   (width/height reservam o espaço: CLS 0); a hero termina logo depois dele. Não é
-   o LCP: o H1 continua sendo (medido com npm run lcp). */
-.hero__tela {
-  inline-size: min(100%, var(--hero-tela-max));
-  margin: var(--esp-12) auto 0;
-}

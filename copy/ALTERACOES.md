@@ -24,3 +24,4 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-18 | `alt.plataforma.chat` | *(não existia)* | Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações — **proposto pelo Claude Code, AGUARDANDO APROVAÇÃO do Gustavo** | Claude Code |
 | 2026-09-18 | `img.plataforma.alerta` | *(não existia)* | *(pendente: o print da notificação "Padrão de Revenge Trading Detectado" não veio no dashboard-graficos.png; slot no lugar)* | Gustavo |
 | 2026-09-18 | `img.plataforma.alerta` | *(pendente: print da notificação)* | *(removido — o print da notificação não vai existir; o card "Tilt e impulsividade" fica só com ícone, rótulo e texto)* | Gustavo |
+| 2026-09-22 | `alt.plataforma.topo` | *(alt do print do topo na hero)* | *(mantido no copy.json, marcado "oculto": o print saiu da hero na fase 14 — pedido do Gustavo)* | Gustavo |
