@@ -330,7 +330,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 - **LCP** (fase 9, pacote dist/, celular com CPU 4× e 4G lento): **2,0 s** (antes 9,6 s com
   o PNG). O H1 NÃO é candidato — o Chrome ignora texto com preenchimento transparente (o
   gradiente, que fica); o LCP é o banner (celular) ou o subtítulo (desktop).
-- **H1 com quebras FIXAS, sem <br>** (regra 36): `<span class="quebra quebra--celular">` /
+- **H1 com quebras FIXAS, sem <br>** (regra do projeto: proibido <br> em copy): `<span class="quebra quebra--celular">` /
   `<span class="quebra quebra--desktop">` VAZIOS (sem texto: o textContent é o da copy),
   `display: none` e `display: block` só na faixa em que a quebra existe — um bloco vazio
   no meio do texto encerra a linha. Mesmas linhas que o balanceamento dava com a NCS:
