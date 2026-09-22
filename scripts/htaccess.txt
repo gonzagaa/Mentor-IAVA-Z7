@@ -11,9 +11,9 @@
 # Terceiros liberados hoje (e por quê):
 #   - www.youtube-nocookie.com  (frame-src): o vídeo da #demonstracao, só depois do
 #     clique na capa (antes disso nada do YouTube é pedido)
-#   - Meta Pixel (js/pixel.js, com consentimento), levantado na Network com
-#     scripts/pixel.mjs — só o que ele usa de fato:
-#       connect.facebook.net  (script-src): fbevents.js — só depois do "Aceitar"
+#   - Meta Pixel (js/pixel.js; sem pedido de consentimento, decisão do dono), levantado
+#     na Network com scripts/pixel.mjs — só o que ele usa de fato:
+#       connect.facebook.net  (script-src): fbevents.js — depois da página pronta
 #       www.facebook.com      (img-src):    /tr/ — os eventos (GET de imagem)
 #     Com a configuração remota desligada (fbq.disableConfigLoading) e sem eventos
 #     automáticos, ele não baixa signals/config nem fala com os gateways da API de

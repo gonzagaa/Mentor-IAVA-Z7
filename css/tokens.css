@@ -244,8 +244,6 @@
   --borda: 1px solid var(--linha);
   --tamanho-ladrilho: clamp(5rem, 4.4rem + 2vw, 6.5rem); /* 80 → 104 */
   --altura-botao: 3.75rem; /* 60px: botões mais encorpados (pedido do dono) */
-  --altura-botao-md: 3rem; /* 48px: botão médio (aviso de cookies), acima do alvo de 44 */
-  --camada-aviso: 50; /* aviso de cookies acima de tudo */
   --tamanho-icone: 4rem; /* 64px: ícone 3D dos cards — espaço sempre reservado (CLS 0) */
   --tamanho-icone-grande: 7rem; /* 112px: ícone do card largo (fonte de 128px: não amplia) */
   --titulo-secao-max: 20em; /* título longo de seção: bloco, não ponta a ponta */

@@ -154,13 +154,6 @@
     transform var(--dur-rapida) var(--saida);
 }
 
-/* tamanho médio (md): 48px de altura, para ações secundárias da página (aviso de
-   cookies). Mesmo desenho, só mais baixo — o alvo de toque segue acima de 44px. */
-.botao--md {
-  min-block-size: var(--altura-botao-md);
-  padding: var(--esp-3) var(--esp-6);
-}
-
 /* primário: azul preenchido, com brilho, dentro de um anel externo (ref 01 e 09) */
 .botao--primario {
   background: var(--gradiente-botao);
