@@ -23,7 +23,7 @@ const pastaQuadros = path.join(RAIZ, 'shots', `diagnostico-${rotulo}`)
 
 // roda na página antes de tudo: amostra os alvos a cada quadro, só quando algo muda
 const AMOSTRADOR = () => {
-  const SEL = '[data-revelar], [data-inclinar], .vela, [data-contar]'
+  const SEL = '[data-revelar], [data-inclinar], [data-contar]'
   window.__diag = { amostras: {}, inicio: performance.now(), cls: 0, usados: new Set() }
   new PerformanceObserver(l => { for (const e of l.getEntries()) if (!e.hadRecentInput) window.__diag.cls += e.value }).observe({ type: 'layout-shift', buffered: true })
   const nome = el => {
@@ -31,7 +31,7 @@ const AMOSTRADOR = () => {
       const base = el.getAttribute('data-copy') || el.querySelector('[data-copy]')?.getAttribute('data-copy') || el.className.baseVal || el.className || el.tagName
       const irmaos = el.parentElement ? [...el.parentElement.children].indexOf(el) : 0
       let id = `${String(base).split(' ')[0]}#${irmaos}`
-      for (let k = 2; window.__diag.usados.has(id); k++) id = id.replace(/(·\d+)?$/, `·${k}`) // nomes únicos (3 SVGs de velas iguais)
+      for (let k = 2; window.__diag.usados.has(id); k++) id = id.replace(/(·\d+)?$/, `·${k}`) // nomes únicos
       window.__diag.usados.add(id)
       el.__id = id
     }
@@ -71,7 +71,6 @@ const rot = tf => {
 function analisar(amostras) {
   const achados = { pisca: [], pulo: [], nunca: [], repete: [], morto: [], espera: [] }
   for (const [id, lista] of Object.entries(amostras)) {
-    const ehVela = id.startsWith('vela')
     // pisca: visível e na tela, depois some (opacidade < 0.5), depois volta
     let visto = false, sumiu = false, voltas = 0
     for (const a of lista) {
@@ -90,14 +89,14 @@ function analisar(amostras) {
     }
     // pulo de rotação: rotateX deveria só diminuir enquanto a página desce
     const rs = lista.map(a => rot(a.tf)).filter((v, i) => lista[i].na)
-    if (rs.length > 3 && !ehVela) {
+    if (rs.length > 3) {
       let inversoes = 0
       for (let i = 2; i < rs.length; i++) if ((rs[i] - rs[i - 1]) * (rs[i - 1] - rs[i - 2]) < 0 && Math.abs(rs[i] - rs[i - 1]) > 0.5) inversoes++
       if (inversoes) achados.pulo.push(`${id} (rotateX muda de sentido ${inversoes}× descendo a página)`)
     }
     // nunca: está NA TELA no fim e terminou com opacidade < 1 ou transform ainda deslocado
     const fim = lista[lista.length - 1]
-    if (fim && fim.na && (fim.o < 0.99 || Math.abs(ty(fim.tf)) > 0.5) && !ehVela) achados.nunca.push(`${id} (fim: opacidade ${fim.o}, translateY ${ty(fim.tf).toFixed(1)}px, altura ${fim.h}px vs tela ${fim.vh}px)`)
+    if (fim && fim.na && (fim.o < 0.99 || Math.abs(ty(fim.tf)) > 0.5)) achados.nunca.push(`${id} (fim: opacidade ${fim.o}, translateY ${ty(fim.tf).toFixed(1)}px, altura ${fim.h}px vs tela ${fim.vh}px)`)
     // tempo morto: primeira vez com ≥ 30% do elemento (ou 30% da tela) à mostra × primeira opacidade > 0.05
     const entra = lista.find(a => a.na && a.y < a.vh * 0.7)
     const comeca = lista.find(a => a.o > 0.05 && a.o < 0.99) || lista.find(a => a.o >= 0.99)
@@ -105,7 +104,7 @@ function analisar(amostras) {
     // espera: do elemento cruzar a linha de disparo (88% da tela) até começar a mudar
     const cruza = lista.find(a => a.na && a.y < a.vh * 0.88)
     const muda = lista.find((a, i) => i > 0 && (a.o !== lista[i - 1].o || a.tf !== lista[i - 1].tf || a.cor !== lista[i - 1].cor) && lista[i - 1].na)
-    if (cruza && muda && muda.t - cruza.t > 250 && !ehVela) achados.espera.push(`${id} ${muda.t - cruza.t}ms`)
+    if (cruza && muda && muda.t - cruza.t > 250) achados.espera.push(`${id} ${muda.t - cruza.t}ms`)
   }
   return achados
 }

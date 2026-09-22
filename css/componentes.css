@@ -70,7 +70,6 @@
      --revelar-opacidade, --revelar-y  entrada padrão (opacity + translate, que é uma
                                        propriedade separada de transform)
      --acesa    0 → 1 (lista com barra acesa, glow do card IAVA da #o-que-e)
-     --subir    0 → 1 (barras de candle da #provas)
      --inclinar rotateX das molduras com data-inclinar */
 
 [data-revelar]:not([data-revelar='acender']) {

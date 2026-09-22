@@ -42,7 +42,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--esp-2);
-  padding: clamp(var(--esp-6), 3vw, var(--esp-10)) clamp(var(--esp-6), 3vw, var(--esp-10)) 0;
+  padding: clamp(var(--esp-6), 3vw, var(--esp-10));
   text-align: start;
 }
 
@@ -95,34 +95,6 @@
 
 .provas__stat > .provas__descricao {
   color: var(--texto-3);
-}
-
-/* candles decorativos na base de cada coluna (sem número nem eixo). Sobem da base
-   quando o painel é revelado, em sequência rápida (js/revelar.js, GSAP); sem JS ou com
-   reduced-motion elas já estão na altura final. */
-.provas__velas {
-  display: block;
-  inline-size: 100%;
-  block-size: var(--velas-altura);
-  margin-block-start: auto;
-  padding-block-start: var(--esp-6);
-  box-sizing: content-box;
-}
-
-.vela {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  transform: scaleY(var(--subir, 1));
-}
-
-.vela__corpo {
-  fill: var(--vela);
-}
-
-/* o topo das barras mais altas, aceso */
-.vela__topo {
-  fill: var(--azul-eletrico);
-  filter: drop-shadow(0 0 3px var(--play-anel));
 }
 
 

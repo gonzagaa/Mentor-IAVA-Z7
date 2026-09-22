@@ -11,7 +11,7 @@
 //   data-revelar="acender"  → não some: acende (--acesa 0 → 1; .lista-barra da #dor)
 //   data-revelar-atraso="N" → N × --revelar-passo DENTRO do lote que entra junto
 //   .comparativo__iava      → + o glow do card sobe (--acesa no ::after)
-//   .provas__painel         → + barras de candle subindo e contagem dos [data-contar]
+//   .provas__painel         → + contagem dos [data-contar]
 //   data-inclinar           → a moldura endireita conforme sobe na tela (--inclinar)
 //
 // Uma vez por elemento, disparando com o elemento ~15% dentro da tela. O que já está
@@ -42,7 +42,6 @@
   mm.add('(prefers-reduced-motion: no-preference)', () => {
     const DUR = segundos('--dur-lenta')
     const PASSO = segundos('--revelar-passo')
-    const VELA = segundos('--vela-passo')
     const CONTAGEM = segundos('--dur-contagem')
     const DESLOCAMENTO = px('--revelar-deslocamento')
 
@@ -65,7 +64,6 @@
     }
     escrever(alvos.filter(el => el.dataset.revelar !== 'acender'), { '--revelar-opacidade': '0', '--revelar-y': `${DESLOCAMENTO}px` })
     escrever(alvos.filter(el => el.dataset.revelar === 'acender' || el.matches('.comparativo__iava')), { '--acesa': '0' })
-    escrever(alvos.filter(el => el.matches('.provas__painel')).flatMap(el => [...el.querySelectorAll('.vela')]), { '--subir': '0' })
     // moldura já na tela ao carregar: quem define a inclinação é o gatilho (pela posição)
     for (const { el, max, abaixo } of molduras) if (abaixo) escrever([el], { '--inclinar': `${max}deg` })
 
@@ -111,7 +109,6 @@
         tl.to(el, { '--acesa': 1, duration: DUR, ease: SAIDA_SUAVE }, 2 * PASSO)
       }
       if (el.matches('.provas__painel')) {
-        tl.to(el.querySelectorAll('.vela'), { '--subir': 1, duration: DUR, ease: SAIDA, stagger: VELA }, 2 * PASSO)
         for (const n of el.querySelectorAll('[data-contar]')) {
           const t = contar(n)
           if (t) tl.add(t, 0)

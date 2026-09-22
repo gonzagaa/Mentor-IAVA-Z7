@@ -131,12 +131,11 @@ a proposta é mais agressiva e futurista**.
     roda e a página rola no scroll nativo (um salto, sem suavização); durante uma
     rolagem suave o iframe não captura a roda e ela continua suave.
   - **Revelação** (`js/revelar.js`, GSAP ScrollTrigger): TODA animação de entrada passa
-    por ele (revelações, "Talvez", glow do card IAVA, inclinação das molduras, barras de
-    candle, contagem). Nenhuma animação de entrada em CSS. Mesma API: `data-revelar`
+    por ele (revelações, "Talvez", glow do card IAVA, inclinação das molduras, contagem). Nenhuma animação de entrada em CSS. Mesma API: `data-revelar`
     (opacidade + subida de 12px, 400ms), `="acender"`, `data-revelar-atraso="N"` (N ×
     150ms RELATIVO ao lote que entra junto: quem entra sozinho anima na hora). Uma vez
     por elemento, com o elemento ~15% dentro da tela. O GSAP só escreve VARIÁVEIS CSS
-    (`--revelar-opacidade`, `--revelar-y` → opacity + translate; `--acesa`, `--subir`,
+    (`--revelar-opacidade`, `--revelar-y` → opacity + translate; `--acesa`,
     `--inclinar`); o CSS descreve só o estado final. **Progressive enhancement**: o estado
     escondido só é aplicado depois de o script confirmar o GSAP; sem JS/bibliotecas tudo
     aparece; reduced-motion via gsap.matchMedia (nada anima). O que já está na tela ao
@@ -340,9 +339,8 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   no topo) com os 3 números do Iago (`d7.prova1–3.numero/rotulo/descricao`), separados
   por fios neon: 1 coluna até 767px (fios horizontais), 3 colunas a partir de 768px
   (fios verticais; nunca 2). Número maior (`--fs-numero-painel`, sem quebra) com ponto
-  vivo pulsando; rótulo Inter semibold `--texto`; descrição `--texto-3`; na base,
-  26 barras de candle (SVG, 7px, passo 16px, picos acesos em azul) que sobem uma a uma
-  ao revelar (`--vela-passo`). Sem hover. Contagem (`js/revelar.js`, GSAP): o HTML traz o número
+  vivo pulsando; rótulo Inter semibold `--texto`; descrição `--texto-3`. Sem barras de
+  gráfico (removidas a pedido do Gustavo). Sem hover. Contagem (`js/revelar.js`, GSAP): o HTML traz o número
   final; a caixa é travada no tamanho final antes de contar (CLS 0); só a parte
   numérica anima, com "+", " mil" e o ponto de milhar em todos os quadros; ~1,2s,
   uma vez, ao entrar na tela; sem JS ou com reduced-motion, nada anima. Fechamento perto do painel (`--fechamento-perto`, 64→96px): ≥ 1080px em 2 colunas

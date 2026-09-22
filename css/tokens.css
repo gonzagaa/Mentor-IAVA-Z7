@@ -405,9 +405,6 @@
   --fio-vertical: linear-gradient(180deg, transparent 0%, rgb(31 163 255 / 55%) 50%, transparent 100%);
   --fio-horizontal: linear-gradient(90deg, transparent 0%, rgb(31 163 255 / 55%) 50%, transparent 100%);
   --fio-texto: linear-gradient(180deg, var(--ciano) 0%, var(--azul-eletrico) 50%, rgb(0 128 201 / 25%) 100%);
-  --vela: rgb(255 255 255 / 10%);
-  --velas-altura: 2.75rem;
-  --vela-passo: 30ms; /* sequência rápida das barras subindo */
   --fs-numero-painel: calc(var(--fs-5) * 1.05);
   --fechamento-perto: clamp(4rem, 2.8rem + 3vw, 6rem); /* 64 → 96: painel → fechamento */
 
