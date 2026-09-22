@@ -120,13 +120,31 @@ a proposta é mais agressiva e futurista**.
 - **Ritmo entre seções**: `--respiro-secao` (96px no celular → 160px no desktop). Toda
   seção depois da hero usa a classe `.secao` (gutter + `--respiro-secao` embaixo); a
   hero termina com o mesmo respiro. O espaço entre duas seções é sempre esse token.
-- **Revelação no scroll** (`js/revelar.js` + estilos em `componentes.css`), sem
-  biblioteca: `data-revelar` (opacidade + subida de 12px, 400ms, easing de saída),
-  `data-revelar="acender"` (não some: entra apagado e acende), `data-revelar-atraso="N"`
-  (N × 150ms, para sequência). **Progressive enhancement**: o estado escondido só existe
-  depois que o script põe `.revelar-ativo` no `<html>`; sem JS tudo aparece. Com
-  reduced-motion o script não liga (tudo no estado final). O que já está na tela ao
-  carregar aparece direto, sem piscar. **Não se aplica ao H1 da hero.**
+- **Movimento** (fase 15): bibliotecas LOCAIS e fixadas em `js/vendor/` (GSAP 3.15.0 +
+  ScrollTrigger, "Standard No-Charge License" — uso comercial livre, exceto ferramentas
+  tipo construtor visual; Lenis 1.3.26, MIT), com as licenças; todas com defer.
+  - **Scroll suave** (`js/rolagem.js`): Lenis só na roda/trackpad (smoothWheel; toque
+    nativo, syncTouch desligado), no ticker do GSAP (autoRaf desligado,
+    ScrollTrigger.update no scroll, lagSmoothing(0)). Com reduced-motion NÃO inicia.
+    CSS recomendado do Lenis em `base.css`. Teclado, Tab e sticky seguem nativos.
+    Roda sobre o vídeo do YouTube já carregado: com a página parada, o iframe recebe a
+    roda e a página rola no scroll nativo (um salto, sem suavização); durante uma
+    rolagem suave o iframe não captura a roda e ela continua suave.
+  - **Revelação** (`js/revelar.js`, GSAP ScrollTrigger): TODA animação de entrada passa
+    por ele (revelações, "Talvez", glow do card IAVA, inclinação das molduras, barras de
+    candle, contagem). Nenhuma animação de entrada em CSS. Mesma API: `data-revelar`
+    (opacidade + subida de 12px, 400ms), `="acender"`, `data-revelar-atraso="N"` (N ×
+    150ms RELATIVO ao lote que entra junto: quem entra sozinho anima na hora). Uma vez
+    por elemento, com o elemento ~15% dentro da tela. O GSAP só escreve VARIÁVEIS CSS
+    (`--revelar-opacidade`, `--revelar-y` → opacity + translate; `--acesa`, `--subir`,
+    `--inclinar`); o CSS descreve só o estado final. **Progressive enhancement**: o estado
+    escondido só é aplicado depois de o script confirmar o GSAP; sem JS/bibliotecas tudo
+    aparece; reduced-motion via gsap.matchMedia (nada anima). O que já está na tela ao
+    carregar nasce pronto. **Não se aplica ao H1 da hero.** Desempenho: estado escondido
+    escrito sem ler estilo entre escritas e gatilhos criados numa tarefa separada (um
+    set por elemento custava ~0,6s de tarefa longa no celular 4×).
+  - Diagnóstico: `npm run diagnostico-movimento` (quadros da rolagem + pisca/pulo/nunca/
+    repete/tempo morto, CLS, scroll lateral e console, com o Lenis ativo).
 - **Lista com barra acesa** (`.lista-barra`, ref. 04): itens com barra vertical à
   esquerda; com `data-revelar="acender"`, a barra acende em azul e o texto vai de
   `--texto-3` a `--texto`, um item de cada vez.
@@ -192,7 +210,8 @@ css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.c
               para-quem.css, o-que-e.css, demo.css, provas.css, origem.css, rodape.css,
               pendente.css
               amostra.css (NÃO vai para produção)
-js/           revelar.js, ano.js, contar.js, video.js, inclinar.js; amostra.js (NÃO vai para produção)
+js/           rolagem.js, revelar.js, ano.js, video.js; vendor/ (GSAP, ScrollTrigger, Lenis +
+              licenças); amostra.js (NÃO vai para produção)
 fonts/
 img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
 img/icones/   ícones 3D processados (transparentes) usados nos cards
@@ -305,7 +324,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   (`js/video.js`), o clique troca o link por um iframe youtube-nocookie no mesmo espaço
   16:9 (CLS 0), com title lido do título e foco nele; sem JS, abre o YouTube. NADA do
   YouTube carrega antes do clique. A tela entra inclinada e endireita com o scroll
-  (`js/inclinar.js`, só transform; reta com reduced-motion). Palco (5c) em nível médio
+  (`--inclinar` pelo `js/revelar.js`, scrub; reta com reduced-motion). Palco (5c) em nível médio
   embaixo, com reflexo suave. Depois, o CTA principal d6.cta. A CSP precisa de
   `frame-src https://www.youtube-nocookie.com`.
 - **#provas**: UM painel de dados (`.provas__painel`, `--raio-z7`, glow médio, linha neon
@@ -314,7 +333,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   (fios verticais; nunca 2). Número maior (`--fs-numero-painel`, sem quebra) com ponto
   vivo pulsando; rótulo Inter semibold `--texto`; descrição `--texto-3`; na base,
   26 barras de candle (SVG, 7px, passo 16px, picos acesos em azul) que sobem uma a uma
-  ao revelar (`--vela-passo`). Sem hover. Contagem (`js/contar.js`): o HTML traz o número
+  ao revelar (`--vela-passo`). Sem hover. Contagem (`js/revelar.js`, GSAP): o HTML traz o número
   final; a caixa é travada no tamanho final antes de contar (CLS 0); só a parte
   numérica anima, com "+", " mil" e o ponto de milhar em todos os quadros; ~1,2s,
   uma vez, ao entrar na tela; sem JS ou com reduced-motion, nada anima. Fechamento perto do painel (`--fechamento-perto`, 64→96px): ≥ 1080px em 2 colunas
@@ -330,7 +349,7 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 - **Títulos cortados**: `npm run medir` confere todo h1/h2/h3 rolado até o centro da
   tela (linha coberta por outro elemento ou recortada por ancestral com overflow).
 - **Animações contínuas (4)**: respiro da luz e pulso do selo (hero, zero pintura) e a
-  borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as revelações, uma vez cada.
+  borda neon girando nos cards destaque (chat, virada, IAVA e item 3). Mais as entradas do GSAP, uma vez cada.
 - **Rodapé**: CÓPIA 100% do rodapé de zero7.com.br (#footer, #pagamento, #author), por
   escolha do Gustavo — mesmo conteúdo, estrutura, tamanhos, cores, grades e hovers da home,
   inclusive o que contraria regras da página: aviso legal em 8px, links "Cookie" e

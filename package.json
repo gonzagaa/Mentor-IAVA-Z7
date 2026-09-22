@@ -14,7 +14,9 @@
     "pintura": "node scripts/pintura.mjs",
     "parar": "node scripts/parar.mjs",
     "lcp": "node scripts/lcp.mjs",
-    "larguras": "node scripts/larguras.mjs"
+    "larguras": "node scripts/larguras.mjs",
+    "desempenho": "node scripts/desempenho.mjs",
+    "diagnostico-movimento": "node scripts/diagnostico-movimento.mjs"
   },
   "devDependencies": {
     "playwright": "^1.47.0",

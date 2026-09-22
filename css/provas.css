@@ -98,8 +98,8 @@
 }
 
 /* candles decorativos na base de cada coluna (sem número nem eixo). Sobem da base
-   quando o painel é revelado, em sequência rápida; sem JS ou com reduced-motion o
-   script de revelação não liga e elas já estão na altura final. */
+   quando o painel é revelado, em sequência rápida (js/revelar.js, GSAP); sem JS ou com
+   reduced-motion elas já estão na altura final. */
 .provas__velas {
   display: block;
   inline-size: 100%;
@@ -112,8 +112,7 @@
 .vela {
   transform-box: fill-box;
   transform-origin: 50% 100%;
-  transition: transform var(--dur-lenta) var(--saida);
-  transition-delay: calc(var(--i, 0) * var(--vela-passo) + 2 * var(--revelar-passo));
+  transform: scaleY(var(--subir, 1));
 }
 
 .vela__corpo {
@@ -126,36 +125,6 @@
   filter: drop-shadow(0 0 3px var(--play-anel));
 }
 
-.revelar-ativo .provas__painel:not(.revelado) .vela {
-  transform: scaleY(0);
-}
-
-.vela:nth-child(1) { --i: 0; }
-.vela:nth-child(2) { --i: 1; }
-.vela:nth-child(3) { --i: 2; }
-.vela:nth-child(4) { --i: 3; }
-.vela:nth-child(5) { --i: 4; }
-.vela:nth-child(6) { --i: 5; }
-.vela:nth-child(7) { --i: 6; }
-.vela:nth-child(8) { --i: 7; }
-.vela:nth-child(9) { --i: 8; }
-.vela:nth-child(10) { --i: 9; }
-.vela:nth-child(11) { --i: 10; }
-.vela:nth-child(12) { --i: 11; }
-.vela:nth-child(13) { --i: 12; }
-.vela:nth-child(14) { --i: 13; }
-.vela:nth-child(15) { --i: 14; }
-.vela:nth-child(16) { --i: 15; }
-.vela:nth-child(17) { --i: 16; }
-.vela:nth-child(18) { --i: 17; }
-.vela:nth-child(19) { --i: 18; }
-.vela:nth-child(20) { --i: 19; }
-.vela:nth-child(21) { --i: 20; }
-.vela:nth-child(22) { --i: 21; }
-.vela:nth-child(23) { --i: 22; }
-.vela:nth-child(24) { --i: 23; }
-.vela:nth-child(25) { --i: 24; }
-.vela:nth-child(26) { --i: 25; }
 
 /* ───────────── fechamento ─────────────
    Perto do painel. ≥ 1080px: título à esquerda (~55%), e à direita p1 + fecho

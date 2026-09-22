@@ -466,8 +466,8 @@
   --dur-giro: 6s; /* borda neon */
   --dur-respiro: 6s; /* luz de cima */
   --dur-pulso: 2.4s; /* ponto "ao vivo" do selo */
-  --dur-contagem: 1200; /* ms: contagem dos números da #provas (lido pelo js/contar.js) */
-  /* revelação no scroll (js/revelar.js) */
+  --dur-contagem: 1200; /* ms: contagem dos números da #provas (lido pelo js/revelar.js) */
+  /* revelação no scroll (js/revelar.js, GSAP ScrollTrigger) */
   --revelar-deslocamento: 0.75rem; /* 12px de subida, dentro do limite de 16 */
   --revelar-passo: 150ms; /* data-revelar-atraso="N" espera N passos */
   --vai-e-volta: cubic-bezier(0.45, 0, 0.55, 1); /* só para ciclos contínuos e lentos */

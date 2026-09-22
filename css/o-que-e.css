@@ -103,7 +103,7 @@
 }
 
 /* IAVA: card destaque. O glow não está no card: está no ::after, para poder subir de
-   zero ao valor final só com opacity quando o painel é revelado (js/revelar.js).
+   zero ao valor final só com opacity (--acesa) quando o painel é revelado (js/revelar.js).
    Sem JS ou com reduced-motion, o glow já está no valor final. */
 .comparativo__iava {
   gap: var(--esp-6);
@@ -119,12 +119,7 @@
   border-radius: inherit;
   box-shadow: var(--glow-medio);
   pointer-events: none;
-  transition: opacity var(--dur-lenta) var(--saida-suave);
-  transition-delay: calc((var(--revelar-atraso, 0) + 2) * var(--revelar-passo));
-}
-
-.revelar-ativo .comparativo__iava:not(.revelado)::after {
-  opacity: 0;
+  opacity: var(--acesa, 1);
 }
 
 /* print real "evidencias" numa moldura .tela (sem glow próprio: o painel já é

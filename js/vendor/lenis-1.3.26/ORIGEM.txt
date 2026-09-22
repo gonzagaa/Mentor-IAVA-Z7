@@ -1,0 +1,1 @@
+Arquivos de dist/ do pacote npm lenis@1.3.26, sem alteração além da remoção da linha //# sourceMappingURL= (os .map não são publicados). Licença MIT: ver LICENSE.

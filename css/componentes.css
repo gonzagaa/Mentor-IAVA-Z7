@@ -63,23 +63,19 @@
 }
 
 /* ═════════════════════════ REVELAÇÃO NO SCROLL ═════════════════════════
-   js/revelar.js. PROGRESSIVE ENHANCEMENT: o estado "escondido" só existe quando o
-   script põe .revelar-ativo no <html> — sem JS, ou se ele falhar, tudo aparece.
-   Com prefers-reduced-motion o script nem liga: tudo já no estado final.
-     data-revelar            → entra com opacidade + subida curta
-     data-revelar="acender"  → não some: fica apagado e acende (ex.: .lista-barra)
-     data-revelar-atraso="N" → espera N × --revelar-passo (sequência) */
+   Toda animação de entrada está em js/revelar.js (GSAP + ScrollTrigger). O CSS só
+   descreve o estado FINAL: sem JS, sem as bibliotecas ou com reduced-motion, tudo
+   aparece. Pontos de ligação animados pelo GSAP (variáveis, nunca transition; o GSAP
+   só ESCREVE variáveis, sem ler estilo computado elemento a elemento):
+     --revelar-opacidade, --revelar-y  entrada padrão (opacity + translate, que é uma
+                                       propriedade separada de transform)
+     --acesa    0 → 1 (lista com barra acesa, glow do card IAVA da #o-que-e)
+     --subir    0 → 1 (barras de candle da #provas)
+     --inclinar rotateX das molduras com data-inclinar */
 
-[data-revelar] {
-  transition:
-    opacity var(--dur-lenta) var(--saida),
-    transform var(--dur-lenta) var(--saida);
-  transition-delay: calc(var(--revelar-atraso, 0) * var(--revelar-passo));
-}
-
-.revelar-ativo [data-revelar]:not([data-revelar='acender']):not(.revelado) {
-  opacity: 0;
-  transform: translateY(var(--revelar-deslocamento));
+[data-revelar]:not([data-revelar='acender']) {
+  opacity: var(--revelar-opacidade, 1);
+  translate: 0 var(--revelar-y, 0px);
 }
 
 /* ═══════════════════════ LISTA COM BARRA ACESA ═══════════════════════
@@ -100,9 +96,8 @@
   border: var(--borda);
   border-radius: var(--raio-card);
   background: var(--superficie);
-  color: var(--texto);
-  transition: color var(--dur-lenta) var(--saida);
-  transition-delay: calc(var(--revelar-atraso, 0) * var(--revelar-passo));
+  /* apagado (--texto-3) → aceso (--texto) com --acesa; sem JS, aceso */
+  color: color-mix(in srgb, var(--texto) calc(var(--acesa, 1) * 100%), var(--texto-3));
 }
 
 /* a barra: trilho apagado embaixo, luz azul por cima */
@@ -124,19 +119,8 @@
   background: var(--barra-acesa);
   box-shadow: var(--glow-sutil);
   transform-origin: 50% 0;
-  transition:
-    transform var(--dur-lenta) var(--saida),
-    opacity var(--dur-lenta) var(--saida);
-  transition-delay: calc(var(--revelar-atraso, 0) * var(--revelar-passo));
-}
-
-.revelar-ativo .lista-barra > li[data-revelar]:not(.revelado) {
-  color: var(--texto-3);
-}
-
-.revelar-ativo .lista-barra > li[data-revelar]:not(.revelado)::after {
-  opacity: 0;
-  transform: scaleY(0);
+  opacity: var(--acesa, 1);
+  transform: scaleY(var(--acesa, 1));
 }
 
 /* ═══════════════════════════════ BOTÕES ═══════════════════════════════ */
@@ -476,7 +460,7 @@
    Prints REAIS da plataforma (recortes em img/plataforma/). Vidro escuro, --raio-z7,
    borda de 1px que acende no topo, barra mínima com três pontos (CSS, sem texto),
    glow nível MÉDIO, reflexo suave embaixo. Não é clicável: sem hover.
-   Com data-inclinar (js/inclinar.js) entra inclinada e endireita; reta sem JS ou com
+   Com data-inclinar (js/revelar.js) entra inclinada e endireita; reta sem JS ou com
    reduced-motion. A imagem leva width/height: espaço reservado (CLS 0). */
 
 .tela {
