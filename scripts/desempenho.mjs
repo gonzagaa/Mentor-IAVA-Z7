@@ -4,11 +4,15 @@
 // número de requisições. Mediana de N rodadas, cada uma com cache vazio.
 // Alvos (CONTEXTO): LCP < 2,5s · TBT < 200ms · CLS < 0,01.
 //
+// Depois, CLS com REDE LENTA (4G lento + CPU 4×) nas 9 larguras: pega o que só aparece
+// quando fontes e imagens chegam tarde (troca de fonte, imagem sem espaço reservado).
+// Alvo < 0,01 em todas. --sem-cls pula essa parte.
+//
 // TBT: soma de (duração − 50ms) das long tasks entre o FCP e 5s depois do load.
 
 import fs from 'node:fs'
 import path from 'node:path'
-import { RAIZ, porLargura } from './comum.mjs'
+import { RAIZ, LARGURAS, porLargura } from './comum.mjs'
 
 const arg = (nome, padrao) => (process.argv.find(a => a.startsWith(`--${nome}=`)) || '').split('=')[1] || padrao
 const rotulo = arg('rotulo', 'atual')
@@ -67,9 +71,32 @@ const linhas = Object.entries(PERFIS).map(([l, p]) => {
   const marca = (ok, t) => (ok ? t : `**${t}**`)
   return `| ${p.nome} (${l}px${p.cpu > 1 ? ', CPU 4×, Slow 4G' : ''}) | ${marca(lcp < 2500, (lcp / 1000).toFixed(2) + 's')} | ${(med('fcp') / 1000).toFixed(2)}s | ${marca(tbt < 200, Math.round(tbt) + 'ms')} | ${marca(cls < 0.01, cls.toFixed(4))} | ${kb(med('peso'))} | ${kb(med('js'))} | ${med('requisicoes')} |`
 })
+// ─── CLS com rede lenta nas 9 larguras ───
+let tabelaCls = ''
+if (!process.argv.includes('--sem-cls')) {
+  const cls = await porLargura(LARGURAS, async ({ page, largura }) => {
+    await page.waitForTimeout(5000)
+    return { largura, cls: await page.evaluate(() => window.__perf.cls) }
+  }, {
+    movimento: true,
+    antesDeCarregar: async page => {
+      await page.addInitScript(OBSERVADOR)
+      if (bloquear.length) await page.route(u => bloquear.some(b => u.pathname.includes(b)), r => r.abort())
+      const cdp = await page.context().newCDPSession(page)
+      await cdp.send('Network.enable')
+      await cdp.send('Network.setCacheDisabled', { cacheDisabled: true })
+      await cdp.send('Network.emulateNetworkConditions', PERFIS[390].rede)
+      await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 })
+    },
+  })
+  tabelaCls = ['| largura | CLS (4G lento, CPU 4×) |', '| --- | --- |',
+    ...cls.map(c => `| ${c.largura} | ${c.cls < 0.01 ? c.cls.toFixed(4) : `**${c.cls.toFixed(4)}**`} |`)].join('\n')
+}
+
 const tabela = ['| perfil | LCP | FCP | TBT | CLS (pior) | peso transferido | JS | requisições |', '| --- | --- | --- | --- | --- | --- | --- | --- |', ...linhas].join('\n')
-const md = `# desempenho · ${rotulo}\n\nGerado em ${new Date().toISOString()} · mediana de ${rodadas} rodada(s), cache vazio${bloquear.length ? ' · BLOQUEADO: ' + bloquear.join(', ') : ''}\n\n${tabela}\n`
+const md = `# desempenho · ${rotulo}\n\nGerado em ${new Date().toISOString()} · mediana de ${rodadas} rodada(s), cache vazio${bloquear.length ? ' · BLOQUEADO: ' + bloquear.join(', ') : ''}\n\n${tabela}\n${tabelaCls ? `\n## CLS com rede lenta nas 9 larguras\n\n${tabelaCls}\n` : ''}`
 fs.mkdirSync(path.join(RAIZ, 'medidas'), { recursive: true })
 fs.writeFileSync(path.join(RAIZ, 'medidas', `desempenho-${rotulo}.md`), md)
 console.log(tabela)
+if (tabelaCls) console.log('\n' + tabelaCls)
 console.log(`\nsalvo em medidas/desempenho-${rotulo}.md`)

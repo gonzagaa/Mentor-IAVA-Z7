@@ -16,10 +16,11 @@ const [pagina] = await porLargura(larguras, async ({ page }) =>
       if (s) return '#' + s.id
       if (el.closest('header')) return 'header'
       if (el.closest('footer')) return 'footer'
+      if (el.closest('head')) return `<head> (${el.tagName.toLowerCase()}${el.getAttribute('name') || el.getAttribute('property') ? ' ' + (el.getAttribute('name') || el.getAttribute('property')) : ''})`
       return '(solto)'
     }
     return {
-      pendentes: [...document.querySelectorAll('.pendente, .slot-imagem[data-pendente]')].map(el => ({
+      pendentes: [...document.querySelectorAll('.pendente, .slot-imagem[data-pendente], head [data-pendente]')].map(el => ({
         id: el.getAttribute('data-pendente'),
         ondeNaPagina: secao(el),
       })),

@@ -209,18 +209,23 @@ css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.c
               para-quem.css, o-que-e.css, demo.css, provas.css, origem.css, rodape.css,
               pendente.css
               amostra.css (NÃO vai para produção)
-js/           rolagem.js, revelar.js, ano.js, video.js; vendor/ (GSAP, ScrollTrigger, Lenis +
-              licenças); amostra.js (NÃO vai para produção)
-fonts/
-img/          imagens finais usadas pela página (banner-hero.png: teste do dono)
-img/icones/   ícones 3D processados (transparentes) usados nos cards
-img/marca/    logo da Zero7 (SVG, do site zero7.com.br)
-img/pagamento/ bandeiras de pagamento do rodapé (do site zero7.com.br)
+js/           rolagem.js, revelar.js, ano.js, video.js, selo-ra.js; vendor/ (GSAP, ScrollTrigger,
+              Lenis + licenças); amostra.js (NÃO vai para produção)
+fonts/        InterVariable-latin.woff2 (subconjunto latino, é o que a página usa),
+              InterVariable.woff2 (original), NcsRadhiumz-Rp3x6.woff (original, sem conversão)
+img/          banner-hero.png: ORIGEM do banner (não vai para produção)
+img/hero/     banner da hero em AVIF/WebP 960/1280/1920 (scripts/processar-imagens.mjs)
+img/icones/   ícones 3D (AVIF/WebP 128px; os PNG são a origem) e a ilustração do IAVA
+img/marca/    logo da Zero7 (SVG), favicon-32.png e apple-touch-icon.png (do favicon do
+              site da Zero7; o arquivo copiado está em originais/)
+img/pagamento/ bandeiras do rodapé: N-104.avif/webp (os N.webp são a origem)
 img/demo/     capa do vídeo da #demonstracao (AVIF/WebP)
 img/plataforma/ recortes dos prints reais (originais/ não vai para produção)
 img/nano/     imagens geradas no Nano Banana (nomes definidos nos prompts)
 copy/         copy.json, COPY.md, ALTERACOES.md, docx original
-scripts/      verificação (Playwright) — não vai para produção
+scripts/      verificação (Playwright), processamento de imagens/fontes, publicar — não vai
+              para produção; htaccess.txt é a fonte do dist/.htaccess
+dist/         pacote de produção gerado pelo npm run publicar (fora do git)
 referencias/  prints de referência visual (NÃO vai para produção, fora do git)
 shots/        capturas (NÃO vai para produção)
 medidas/      saídas do medir (NÃO vai para produção)
@@ -244,9 +249,19 @@ servidor sozinhos.
 | `npm run lcp` | LCP em 390 e 1474, local e em 4G lento simulado, com o elemento de LCP |
 | `npm run larguras` | largura do conteúdo e % da tela por seção, e maior linha de texto corrido |
 | `npm run parar` | encerra só os processos que os scripts do projeto abriram (PIDs em `.pids/`) |
+| `npm run publicar` | monta `dist/` (só o que a página referencia, CSS numa folha só, URLs com `?v=hash`, `.htaccess`); falha se faltar arquivo; BLOQUEIA (código 1) enquanto a licença da NCS não estiver confirmada |
+| `npm run desempenho` | celular (CPU 4×, 4G lento) × desktop: LCP, FCP, TBT, CLS, peso, requisições; e CLS com rede lenta nas 9 larguras (`--dist` mede o pacote; `--bloquear=x` isola um arquivo) |
+| `npm run acessibilidade` | axe-core nas 9 larguras (0 sérias/críticas), títulos, landmarks, ordem do Tab com foco visível, contraste dos gradientes na cor mais escura |
+| `npm run imagens` | inventário das imagens: dimensões, peso e tamanho de exibição nas 9 larguras |
+| `npm run diagnostico-movimento` | quadros da rolagem + pisca/pulo/nunca/repete/tempo morto, CLS, scroll lateral e console, com o Lenis |
+| `node scripts/processar-imagens.mjs` | banner, ícones e bandeiras em AVIF/WebP no tamanho de exibição (×2) |
+| `node scripts/subsetar-inter.mjs` | Inter → subconjunto latino (falha se faltar caractere da copy) |
+| `node scripts/fontes-reserva.mjs` | recalibra as fontes reserva (rodar de novo se a copy ou o layout da primeira dobra mudar) |
+| `node scripts/selo-ra.mjs` | levanta o selo do Reclame Aqui em produção (domínios, peso, cookies, altura) |
 | `node scripts/gerar-copy-md.mjs` | regera `copy/COPY.md` a partir do `copy.json` |
 
-Todos os de navegador aceitam `--larguras=375,1474` (recorte das 9 larguras) e
+Todos os de navegador aceitam `--dist` (servem a pasta `dist/` com os headers de segurança
+do `dist/.htaccess`, CSP inclusa, e gzip como em produção), `--larguras=375,1474` (recorte das 9 larguras) e
 `--pagina=amostra.html` (padrão: index). Emulam `prefers-reduced-motion: reduce`; `--movimento`
 desliga a emulação. `shots --dobra` captura só a primeira dobra, na altura de tela de
 cada largura (`DOBRA` em `scripts/comum.mjs`); o `medir` mede o H1 (linhas, palavra
@@ -258,6 +273,38 @@ do arquivo esperado (`document.fonts.check()`) e que `--css-carregado` vale 1 no
 se falhar, PARA com código 1 e não grava nada. Na amostra, `npm run copy` aceita repetição
 de blocos e isenta só o texto de `.rotulo-tecnico`.
 
+## Pacote de produção (fase 9)
+
+- `npm run publicar` → `dist/`: index.html sem comentários, as 15 folhas de estilo numa só
+  (`css/estilo.css`, sem comentários), só os arquivos que a página e o CSS referenciam
+  (PNG de origem, img/plataforma/topo-*, img/nano/, amostra.* etc. ficam fora por
+  construção), toda URL local com `?v=<hash>` (cache de 1 ano seguro), licenças do Lenis
+  (MIT) e da Inter (OFL). Falha se o index.html ou o CSS pedir arquivo que não está no
+  dist/.
+- `dist/.htaccess` (fonte: scripts/htaccess.txt): nosniff, Referrer-Policy
+  strict-origin-when-cross-origin, X-Frame-Options SAMEORIGIN, Permissions-Policy
+  restritiva (YouTube liberado para autoplay/fullscreen/PiP/encrypted-media), CSP estrita
+  ('self' + data: em img; terceiros: youtube-nocookie em frame-src e o selo do Reclame
+  Aqui), gzip, cache de 1 ano para css/js/fontes/imagens e no-cache no index.html, e o
+  aviso no topo: GTM, Pixel ou qualquer terceiro exige atualizar a CSP.
+- **BLOQUEIO NCS**: enquanto este arquivo não tiver a linha abaixo (com a licença
+  Webfonts confirmada de verdade), o `npm run publicar` monta o dist/ mas termina com
+  aviso em destaque e código 1 (a linha tem que estar sozinha, sem crase):
+  `Licença NCS Radhiumz (Webfonts): CONFIRMADA` ← ainda NÃO confirmada.
+- **Fontes**: Inter em subconjunto latino (103 KB; era 344 KB). Três FONTES RESERVA com as
+  medidas das fontes da página (`css/fontes.css`, geradas por scripts/fontes-reserva.mjs):
+  Arial → Inter 100–599, Arial Bold → Inter 600–900, Arial Black → NCS Radhiumz; calibradas
+  para os textos da primeira dobra quebrarem nas MESMAS linhas nas 9 larguras. `--ch`
+  (0,625em) no lugar do `ch` das medidas: não muda de largura na troca de fonte.
+- **Head**: canonical https://zero7.com.br/mentor-iava/, robots index,follow, theme-color
+  preto, favicon da Zero7, og:type/url/locale/site_name, twitter:card. Pendentes
+  (content vazio + data-pendente): `meta.titulo` (o <title> segue "Mentor IAVA" como
+  reserva), `meta.descricao`, `meta.imagem-og` (1200×630).
+- **Medidas** (dist/, mediana de 5 rodadas): celular 4G lento + CPU 4× — LCP 2,0 s, TBT
+  ~110 ms, CLS 0,002, 240 KB transferidos, 19 requisições (antes da fase 9: LCP 3,5 s,
+  CLS 0,12, 1,86 MB, 36 requisições); desktop LCP 0,2 s, TBT 0. CLS com rede lenta nas 9
+  larguras: 0,001–0,007. Acessibilidade: 0 violações sérias/críticas nas 9 larguras.
+
 ## Estado atual
 
 **Todas as seções prontas, rodapé incluso.**
@@ -266,14 +313,19 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
   subtítulo → um botão (`d1.cta1`, **60px**, `href="#"` +
   `data-pendente-href="d1.cta.destino"` — **sem caixa de pendente na tela**). Fundo, de
-  baixo para cima: **banner** `img/banner-hero.png` (troca do Gustavo: anel escuro
-  simétrico, 1920×1080, PNG de 1,08 MB, a 70% e sumindo para baixo) → grade de quadrados
+  baixo para cima: **banner** (troca do Gustavo: anel escuro simétrico, a 70% e sumindo
+  para baixo) — desde a fase 9 um `<img>` decorativo (alt="", aria-hidden) com AVIF/WebP
+  960/1280/1920 (2–7 KB; o PNG de origem tinha 1,08 MB), object-fit: cover,
+  fetchpriority="high" e preload com imagesrcset/imagesizes → grade de quadrados
   → arco invertido + cone de luz que respira. Botão inteiro na dobra de 375 a 1920
   (em 320×568 fica 35px abaixo). **Sem print** (fase 14): o fundo termina em preto
   por gradiente, sem linha (conferido linha a linha na luminância das laterais).
-- **LCP**: é o banner (o Chrome atribui à `section#hero`, fundo do `::before`).
-  Local: 96 ms (390) e 132 ms (1474). Em 4G lento simulado: ~7,8 s nas duas — o PNG de
-  1,08 MB é o gargalo. Ainda NÃO otimizado (o dono vai trocar por AVIF).
+- **LCP** (fase 9, pacote dist/, celular com CPU 4× e 4G lento): **2,0 s** (antes 9,6 s com
+  o PNG). O H1 NÃO é candidato — o Chrome ignora texto com preenchimento transparente (o
+  gradiente, que fica); o LCP é o banner (celular) ou o subtítulo (desktop).
+- **H1 com quebras FIXAS**: `<br class="quebra-celular">` / `<br class="quebra-desktop">`
+  (não mudam o texto) com as mesmas linhas que o balanceamento dava com a NCS: 6 no
+  celular, 4 a partir de 768px. Assim a fonte reserva monta as mesmas linhas (CLS).
 - **#dor**: sequência narrativa em coluna estreita (até 1079px); termina com o
   feixe-ponte, que para exatamente na borda da seção, sempre no centro. **≥ 1080px**
   (fase 14): a seção ocupa a largura do wrapper — d2.p1 centrado; a pergunta do d2.p2
@@ -321,10 +373,6 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   notificação não vai existir; decisão do Gustavo). Componente `.tela` (componentes.css): vidro, --raio-z7, borda acesa no
   topo, três pontos, glow médio, reflexo. Alts em `alt.*` no copy.json (checados pelo
   `npm run copy`), AGUARDANDO APROVAÇÃO do Gustavo.
-- **LCP**: o H1 NÃO é candidato — o Chrome ignora texto com preenchimento transparente
-  (o gradiente via background-clip). LCP hoje (fase 14, sem o print): o banner de teste
-  nas duas larguras locais (348ms em 390, 248ms em 1474); em 4G lento, banner em 390
-  (9,6s) e subtítulo em 1474 (1,8s). A decidir com o dono.
 - **#demonstracao**: d6.titulo (.display H2) + d6.texto → tela (card destaque, vidro,
   --raio-z7) com a capa local do vídeo (`img/demo/capa-640/1280`, AVIF/WebP, lazy) num
   `<a href="https://www.youtube.com/watch?v=RjCiGF0Ce7A">` com `aria-labelledby` no título e
@@ -368,6 +416,19 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   trial via CDN), ícones do ionicons em SVG local (mesmos desenhos, sem CDN) e o ano do ©
   automático (`js/ano.js`, com o ano atual no HTML). Textos em `rodape.*`; logo em
   `img/marca/`, bandeiras em `img/pagamento/` (copiadas do projeto Zero7).
+- **Rodapé — diferenças deliberadas da home (fase 9)**: links de Navegação com alvo de
+  toque de 24px (WCAG 2.2, 2.5.8; cada linha ~5px mais alta); bandeiras em AVIF/WebP no
+  tamanho de exibição; selo do Reclame Aqui carregado DEPOIS (js/selo-ra.js: evento load +
+  rodapé a 800px da tela) numa caixa com a altura dele reservada (76px, CLS 0).
+- **Selo do Reclame Aqui** (levantado em zero7.com.br com scripts/selo-ra.mjs): 8
+  requisições, ~141 KB — s3.amazonaws.com/raichu-beta/ra-verified/ (script, CSS, imagem),
+  api.reclameaqui.com.br (XHR), fonts.googleapis.com e fonts.gstatic.com (Open Sans e
+  Inter Tight que o CSS dele pede). **Não grava cookies nem localStorage** (conferido);
+  mas pede fontes ao Google (o IP do visitante vai para o Google) — avaliar na política de
+  privacidade/consentimento. Escreve style="" no HTML que injeta: a CSP libera só
+  style-src-attr 'unsafe-inline' (sem isso, 3 violações). A chamada à API dele FALHA
+  inclusive em zero7.com.br (CORS): hoje o selo mostra o widget genérico "Procure nossa
+  empresa no Reclame AQUI", não o selo verificado — e deixa 3 erros no console.
 - **Links**: nenhum `href` vazio fora os dois do rodapé copiado; `#` só com
   `data-pendente-href` (`npm run tokens` falha se achar outro).
 - **Copy**: 80 blocos + 2 pendentes: `d1.cta.destino` (só no link) e `preco` (marcado

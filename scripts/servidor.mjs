@@ -2,8 +2,13 @@
 // Serve a raiz do projeto em http://localhost:4321/mentor-iava/ — NÃO na raiz do
 // domínio. Assim qualquer caminho absoluto (/css/...) quebra aqui do mesmo jeito que
 // quebraria em zero7.com.br/mentor-iava/.  `/` redireciona para `/mentor-iava/`.
+//
+// Como em produção: texto (html, css, js, svg, json) sai com gzip quando o navegador
+// aceita (o .htaccess liga o mod_deflate). Servindo a pasta dist/ (`raiz`), os headers
+// "Header set/always set" do dist/.htaccess são aplicados — a CSP vale aqui também.
 
 import http from 'node:http'
+import zlib from 'node:zlib'
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
@@ -40,7 +45,24 @@ function responder(res, status, corpo, tipo = 'text/plain; charset=utf-8') {
   res.end(corpo)
 }
 
-export function criarServidor() {
+const COMPRIMIR = new Set(['.html', '.css', '.js', '.mjs', '.svg', '.json', '.txt', '.md'])
+
+// headers de SEGURANÇA do .htaccess (linhas "Header [always] set Nome "valor"") — os de
+// cache ficam de fora: estão dentro de <FilesMatch>, que este leitor não interpreta
+const SEGURANCA = new Set(['content-security-policy', 'x-content-type-options', 'referrer-policy', 'x-frame-options', 'permissions-policy'])
+function lerHeaders(raiz) {
+  const arq = path.join(raiz, '.htaccess')
+  if (!fs.existsSync(arq)) return {}
+  const h = {}
+  for (const l of fs.readFileSync(arq, 'utf8').split(/\r?\n/)) {
+    const m = l.trim().match(/^Header\s+(?:always\s+)?set\s+([\w-]+)\s+"(.*)"\s*$/)
+    if (m && SEGURANCA.has(m[1].toLowerCase())) h[m[1]] = m[2].replace(/\\"/g, '"')
+  }
+  return h
+}
+
+export function criarServidor(raiz = RAIZ) {
+  const extras = raiz === RAIZ ? {} : lerHeaders(raiz)
   return http.createServer((req, res) => {
     let caminho
     try {
@@ -63,15 +85,22 @@ export function criarServidor() {
     let relativo = caminho.slice(BASE.length)
     if (relativo === '' || relativo.endsWith('/')) relativo += 'index.html'
 
-    const arquivo = path.resolve(RAIZ, relativo)
-    if (arquivo !== RAIZ && !arquivo.startsWith(RAIZ + path.sep)) {
+    const arquivo = path.resolve(raiz, relativo)
+    if (arquivo !== raiz && !arquivo.startsWith(raiz + path.sep)) {
       return responder(res, 403, '403 — fora da raiz do projeto')
     }
 
     fs.readFile(arquivo, (erro, dados) => {
       if (erro) return responder(res, 404, `404 — ${relativo}`)
-      const tipo = TIPOS[path.extname(arquivo).toLowerCase()] || 'application/octet-stream'
-      res.writeHead(200, { 'content-type': tipo, 'cache-control': 'no-store' })
+      const ext = path.extname(arquivo).toLowerCase()
+      const tipo = TIPOS[ext] || 'application/octet-stream'
+      const cab = { 'content-type': tipo, 'cache-control': 'no-store', ...(ext === '.html' ? extras : {}) }
+      if (COMPRIMIR.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] || '')) {
+        cab['content-encoding'] = 'gzip'
+        cab.vary = 'Accept-Encoding'
+        dados = zlib.gzipSync(dados, { level: 6 })
+      }
+      res.writeHead(200, cab)
       res.end(dados)
     })
   })
@@ -79,8 +108,8 @@ export function criarServidor() {
 
 // Sobe o servidor numa porta livre e devolve { url, fechar }.
 // Os outros scripts usam isto para subir e derrubar sozinhos.
-export async function subirServidor(porta = PORTA_PADRAO) {
-  const servidor = criarServidor()
+export async function subirServidor(porta = PORTA_PADRAO, { raiz = RAIZ } = {}) {
+  const servidor = criarServidor(raiz)
   await new Promise((ok, erro) => {
     servidor.once('error', e => {
       if (e.code === 'EADDRINUSE') {

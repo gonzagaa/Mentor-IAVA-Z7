@@ -40,7 +40,7 @@ const RECORTES = [
     // a segunda pergunta "Como eu posso melhorar?" (o print tem duas iguais) e a
     // resposta do Mentor até o fim, com o carimbo "Mentor · 15:00"
     area: { left: 612, top: 250, width: 920, height: 716 },
-    larguras: [480, 920],
+    larguras: [480, 844], // exibido até 422px (npm run imagens): 2× = 844
   },
 ]
 

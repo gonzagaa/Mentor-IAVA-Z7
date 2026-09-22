@@ -12,20 +12,26 @@
   text-align: center;
 }
 
-/* TESTE do dono: banner de fundo cobrindo a hero inteira (cover: 100% de largura e
-   altura sem distorcer), um pouco apagado e sumindo para baixo. Fica numa camada
-   própria para a máscara não pegar o conteúdo; grade, arco e cone vêm por cima.
-   Se aprovado, o dono troca por AVIF otimizado. */
-.hero::before {
-  content: '';
+/* Banner de fundo cobrindo a hero inteira (object-fit: cover: 100% de largura e
+   altura sem distorcer), um pouco apagado e sumindo para baixo até o preto — sem
+   linha no fim. É um <img> (AVIF/WebP responsivos, com preload), não um fundo em CSS,
+   para o navegador escolher o tamanho certo. Decorativo: alt="" e aria-hidden. Numa
+   camada própria para a máscara não pegar o conteúdo; grade, arco e cone vêm por cima. */
+.hero__banner {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background: url('../img/banner-hero.png') center / cover no-repeat;
   opacity: var(--banner-opacidade);
   -webkit-mask-image: var(--mascara-baixo);
   mask-image: var(--mascara-baixo);
   pointer-events: none;
+}
+
+.hero__banner img {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
 }
 
 .hero__conteudo {
@@ -118,6 +124,26 @@
   filter: var(--brilho-h1);
 }
 
+/* Quebras de linha FIXAS (<br>, que não muda o texto): as mesmas que o balanceamento
+   dava com a NCS Radhiumz — 6 linhas no celular, 4 a partir de 768px. Com as quebras
+   fixas, a fonte reserva (antes de a NCS chegar) monta as MESMAS linhas: a troca de
+   fonte não mexe o H1 (CLS). */
+.hero__titulo br {
+  display: none;
+}
+
+@media (max-width: 47.99rem) {
+  .hero__titulo .quebra-celular {
+    display: inline;
+  }
+}
+
+@media (min-width: 48rem) {
+  .hero__titulo .quebra-desktop {
+    display: inline;
+  }
+}
+
 /* grupos que não se separam no celular: prendem cada palavra curta (≤ 5
    caracteres) à vizinha, para nenhuma ficar sozinha na linha. Os <span> não mudam
    o texto. */
@@ -139,7 +165,7 @@
 /* ─────────────────────────── subtítulo e CTA ─────────────────────────── */
 
 .hero__sub {
-  max-inline-size: 60ch;
+  max-inline-size: calc(60 * var(--ch));
   color: var(--texto-2);
 }
 

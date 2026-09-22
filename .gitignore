@@ -4,3 +4,4 @@ medidas/
 .DS_Store
 referencias/
 .pids/
+dist/

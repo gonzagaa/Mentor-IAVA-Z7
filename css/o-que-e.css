@@ -223,6 +223,10 @@
 
 /* o chip ao fundo, atrás dos itens 1 e 2, com as trilhas parecendo sair dele. Nível
    sutil; os cards são opacos, então ele nunca fica atrás de texto. */
+.circuito__chip-quadro {
+  display: contents; /* o <picture> só escolhe o formato */
+}
+
 .circuito__chip {
   position: absolute;
   inset-inline-start: 50%;

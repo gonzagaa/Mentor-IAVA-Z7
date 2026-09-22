@@ -96,6 +96,19 @@
   text-decoration: none;
 }
 
+/* diferença deliberada da home (WCAG 2.2, critério 2.5.8): os links de Navegação,
+   empilhados, ganham alvo de toque de 24px de altura (na home têm 15px, a 19,5px um
+   do outro). Cada linha cresce ~5px; o resto do rodapé segue idêntico. */
+#footer .navigation {
+  gap: 0;
+}
+
+#footer .navigation p a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--alvo-toque-minimo);
+}
+
 #footer div.redes-sociais .icons {
   flex-direction: row;
   align-items: center;
@@ -177,6 +190,18 @@
   font-size: calc(1.3 * var(--u));
   font-weight: 400;
   color: var(--z7-texto-claro);
+}
+
+/* diferença deliberada da home: bandeiras em AVIF/WebP no tamanho de exibição; o
+   <picture> só escolhe o formato e não participa do layout */
+/* diferença deliberada da home: o selo do Reclame Aqui chega depois (js/selo-ra.js);
+   a caixa já nasce com a altura dele (76px, medida em zero7.com.br): CLS 0 */
+#ra-verified-seal {
+  min-block-size: var(--selo-ra-altura);
+}
+
+#pagamento picture {
+  display: contents;
 }
 
 #pagamento img {

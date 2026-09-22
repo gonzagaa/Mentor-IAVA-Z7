@@ -3,8 +3,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mentor IAVA</title>
-  <link rel="preload" href="fonts/InterVariable.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- SEO e compartilhamento. Os TEXTOS (título, descrição, imagem de 1200×630) ainda
+       não existem na copy: são pendentes (data-pendente, npm run pendentes). O <title>
+       mantém "Mentor IAVA" como reserva até o texto definitivo chegar. -->
+  <title data-pendente="meta.titulo">Mentor IAVA</title>
+  <meta name="description" content="" data-pendente="meta.descricao">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://zero7.com.br/mentor-iava/">
+  <meta name="theme-color" content="#000000">
+  <link rel="icon" href="img/marca/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="img/marca/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zero7.com.br/mentor-iava/">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Zero7">
+  <meta property="og:title" content="" data-pendente="meta.titulo">
+  <meta property="og:description" content="" data-pendente="meta.descricao">
+  <meta property="og:image" content="" data-pendente="meta.imagem-og">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- banner da hero: pedido cedo, na versão certa (só quem entende AVIF usa o preload) -->
+  <link rel="preload" as="image" type="image/avif" imagesrcset="img/hero/banner-960.avif 960w, img/hero/banner-1280.avif 1280w, img/hero/banner-1920.avif 1920w" imagesizes="(max-width: 1420px) 1420px, 100vw" fetchpriority="high">
+  <link rel="preload" href="fonts/InterVariable-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/NcsRadhiumz-Rp3x6.woff" as="font" type="font/woff" crossorigin>
   <link rel="stylesheet" href="css/fontes.css">
   <link rel="stylesheet" href="css/tokens.css">
@@ -30,6 +49,7 @@
   <script src="js/revelar.js" defer></script>
   <script src="js/ano.js" defer></script>
   <script src="js/video.js" defer></script>
+  <script src="js/selo-ra.js" defer></script>
 </head>
 <body>
 
@@ -37,6 +57,11 @@
 
     <!-- d1 · primeira dobra (hero) -->
     <section id="hero" class="hero">
+      <!-- banner decorativo atrás de tudo (object-fit: cover, some para baixo) -->
+      <picture class="hero__banner" aria-hidden="true">
+        <source type="image/avif" srcset="img/hero/banner-960.avif 960w, img/hero/banner-1280.avif 1280w, img/hero/banner-1920.avif 1920w" sizes="(max-width: 1420px) 1420px, 100vw">
+        <img src="img/hero/banner-1920.webp" srcset="img/hero/banner-960.webp 960w, img/hero/banner-1280.webp 1280w, img/hero/banner-1920.webp 1920w" sizes="(max-width: 1420px) 1420px, 100vw" width="1920" height="1080" alt="" fetchpriority="high" decoding="async">
+      </picture>
       <div class="hero__luz" aria-hidden="true">
         <div class="fundo-grade hero__grade"></div>
         <div class="hero__foco">
@@ -47,7 +72,7 @@
 
       <div class="hero__conteudo">
         <p class="selo" data-copy="d1.apoio">Você opera, o IAVA analisa.</p>
-        <h1 class="display degrau-5 hero__titulo" data-copy="d1.titulo"><span class="grupo">Seu novo</span> <span class="grupo">mentor de</span> <span class="grupo">trading</span> <span class="grupo">24 horas</span> <span class="grupo">por dia</span> <span class="grupo">analisando cada</span> <span class="grupo">operação sua.</span></h1>
+        <h1 class="display degrau-5 hero__titulo" data-copy="d1.titulo"><span class="grupo">Seu novo</span> <br class="quebra-celular"><span class="grupo">mentor <br class="quebra-desktop">de</span> <br class="quebra-celular"><span class="grupo">trading</span> <br class="quebra-celular"><span class="grupo">24 horas</span> <br class="quebra-desktop"><span class="grupo">por dia</span> <br class="quebra-celular"><span class="grupo">analisando <br class="quebra-desktop">cada</span> <br class="quebra-celular"><span class="grupo">operação sua.</span></h1>
         <p class="degrau-2 hero__sub" data-copy="d1.sub">O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance, identificando padrões de erro, impulsividade, horários, estratégias e comportamentos que podem estar prejudicando seus resultados.</p>
         <div class="hero__acao">
           <a class="botao botao--primario" data-copy="d1.cta1" href="#" data-pendente-href="d1.cta.destino">Experimentar agora o IAVA</a>
@@ -83,48 +108,48 @@
         <div class="analise__area">
           <ul class="analise__grade">
           <li class="card analise__card" data-revelar>
-            <div class="analise__icone"><img src="img/icones/icone-estrategias.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-estrategias.avif"><img src="img/icones/icone-estrategias.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item1.rotulo">Quais estratégias te dão lucro</h3>
             <p data-copy="d3.item1.texto">o IAVA mostra claramente quais setups funcionam de verdade pra você e quais não dão muito certo;</p>
           </li>
           <li class="card analise__card" data-revelar data-revelar-atraso="1">
-            <div class="analise__icone"><img src="img/icones/icone-horarios.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-horarios.avif"><img src="img/icones/icone-horarios.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item2.rotulo">Melhores e piores horários</h3>
             <p data-copy="d3.item2.texto">ele aponta exatamente os horários em que você opera bem e os momentos em que você mais perde pra você saber quando entrar e quando parar;</p>
           </li>
           <li class="card analise__card" data-revelar data-revelar-atraso="2">
-            <div class="analise__icone"><img src="img/icones/icone-disciplina.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-disciplina.avif"><img src="img/icones/icone-disciplina.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item3.rotulo">Onde sua disciplina tem baixa</h3>
             <p data-copy="d3.item3.texto">o IAVA identifica o momento do dia em que seu foco acaba e os erros começam a aparecer;</p>
           </li>
           <li class="card analise__card" data-revelar data-revelar-atraso="3">
-            <div class="analise__icone"><img src="img/icones/icone-tilt.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-tilt.avif"><img src="img/icones/icone-tilt.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item4.rotulo">Tilt e impulsividade</h3>
             <p data-copy="d3.item4.texto">ele calcula o prejuízo exato que o descontrole causando por uma operação impulsiva causa na sua conta, para você que você veja na prática o quão prejudicial está sendo;</p>
           </li>
           <li class="card analise__card" data-revelar data-revelar-atraso="4">
-            <div class="analise__icone"><img src="img/icones/icone-dias.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-dias.avif"><img src="img/icones/icone-dias.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item5.rotulo">Melhores e piores dias</h3>
             <p data-copy="d3.item5.texto">quais dias da semana você tem o maior saldo positivo, e o pior, com maior saldo negativo;</p>
           </li>
           <li class="card analise__card" data-revelar data-revelar-atraso="5">
-            <div class="analise__icone"><img src="img/icones/icone-numeros.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-numeros.avif"><img src="img/icones/icone-numeros.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item6.rotulo">Números da sua performance</h3>
             <p data-copy="d3.item6.texto">taxa de acerto, média de trades por dia, melhor e pior operação, tudo organizado e fácil de ler e identificar;.</p>
           </li>
           <li class="card analise__card analise__card--ultimo" data-revelar data-revelar-atraso="6">
-            <div class="analise__icone"><img src="img/icones/icone-padroes.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-padroes.avif"><img src="img/icones/icone-padroes.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <h3 class="analise__rotulo" data-copy="d3.item7.rotulo">Padrões que se repetem</h3>
             <p data-copy="d3.item7.texto">o IAVA encontra coisas no seu histórico que você dificilmente veria sozinho, por mais que ficasse um bom tempo analisando seus dados.</p>
           </li>
           <li class="card card--destaque analise__card analise__card--chat" data-revelar data-revelar-atraso="7">
             <div class="analise__chat-tela">
               <picture>
-                <source type="image/avif" srcset="img/plataforma/chat-480.avif 480w, img/plataforma/chat-920.avif 920w" sizes="(min-width: 1081px) 560px, (min-width: 641px) 45vw, 88vw">
-                <img src="img/plataforma/chat-920.webp" srcset="img/plataforma/chat-480.webp 480w, img/plataforma/chat-920.webp 920w" sizes="(min-width: 1081px) 560px, (min-width: 641px) 45vw, 88vw" width="920" height="716" alt="Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações" data-copy-alt="alt.plataforma.chat" loading="lazy" decoding="async">
+                <source type="image/avif" srcset="img/plataforma/chat-480.avif 480w, img/plataforma/chat-844.avif 844w" sizes="(min-width: 1081px) 560px, (min-width: 641px) 45vw, 88vw">
+                <img src="img/plataforma/chat-844.webp" srcset="img/plataforma/chat-480.webp 480w, img/plataforma/chat-844.webp 844w" sizes="(min-width: 1081px) 560px, (min-width: 641px) 45vw, 88vw" width="844" height="657" alt="Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações" data-copy-alt="alt.plataforma.chat" loading="lazy" decoding="async">
               </picture>
             </div>
-            <div class="analise__icone"><img src="img/icones/icone-chat.png" width="64" height="64" alt="" loading="lazy" decoding="async"></div>
+            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-chat.avif"><img src="img/icones/icone-chat.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
             <p data-copy="d3.chat">Além de todos os relatórios estruturados, você tem à disposição um chat conversacional direto: se você quiser aprofundar uma dúvida ou entender uma operação específica, basta perguntar diretamente para a IA</p>
           </li>
           </ul>
@@ -182,7 +207,7 @@
         </div>
 
         <div class="circuito">
-          <img class="circuito__chip" src="img/icones/ilustracao-iava-640.webp" srcset="img/icones/ilustracao-iava-640.webp 640w, img/icones/ilustracao-iava.webp 1208w" sizes="(min-width: 768px) 560px, 80vw" width="1208" height="906" alt="" aria-hidden="true" loading="lazy" decoding="async">
+          <picture class="circuito__chip-quadro"><source type="image/avif" srcset="img/icones/ilustracao-iava-560.avif 560w, img/icones/ilustracao-iava-1120.avif 1120w" sizes="(min-width: 768px) 560px, 80vw"><img class="circuito__chip" src="img/icones/ilustracao-iava-560.webp" srcset="img/icones/ilustracao-iava-560.webp 560w, img/icones/ilustracao-iava-1120.webp 1120w" sizes="(min-width: 768px) 560px, 80vw" width="1120" height="840" alt="" aria-hidden="true" loading="lazy" decoding="async"></picture>
           <div class="card circuito__item circuito__item--a" data-revelar>
             <h4 class="circuito__rotulo" data-copy="d5.item1.rotulo">Banco de dados de padrões comportamentais</h4>
             <p data-copy="d5.item1.texto">o sistema reconhece os micro padrões que antecedem, e aponta previamente, as vulnerabilidades do seu estilo de negociação;</p>
@@ -286,10 +311,7 @@
             <p data-copy="rodape.endereco">Av. Dep. Jamel Cecílio, nº 2929 - Jardim Goiás, Goiânia - GO, 74810-240</p>
             <p data-copy="rodape.horario">Segunda a sexta-feira, 8h às 18h</p>
             <div id="ra-verified-seal">
-              <script type="text/javascript" id="ra-embed-verified-seal"
-                src="https://s3.amazonaws.com/raichu-beta/ra-verified/bundle.js"
-                data-id="WDRYanlCUWlyT0xFUTFZeDp6ZXJvNy10ZXNvdXJhcmlh" data-target="ra-verified-seal"
-                data-model="2"></script>
+              <!-- o script do selo é inserido por js/selo-ra.js, depois da página pronta -->
             </div>
           </div>
 
@@ -323,12 +345,12 @@
       <div class="wrapper">
         <div class="content">
         <p data-copy="rodape.pagamento">Formas de Pagamento</p>
-        <img src="img/pagamento/1.webp" width="730" height="369" alt="" loading="lazy" decoding="async">
-        <img src="img/pagamento/2.webp" width="730" height="369" alt="" loading="lazy" decoding="async">
-        <img src="img/pagamento/3.webp" width="730" height="369" alt="" loading="lazy" decoding="async">
-        <img src="img/pagamento/4.webp" width="730" height="369" alt="" loading="lazy" decoding="async">
-        <img src="img/pagamento/5.webp" width="730" height="369" alt="" loading="lazy" decoding="async">
-        <img src="img/pagamento/6.webp" width="730" height="369" alt="" loading="lazy" decoding="async">
+        <picture><source type="image/avif" srcset="img/pagamento/1-104.avif"><img src="img/pagamento/1-104.webp" width="104" height="53" alt="" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/avif" srcset="img/pagamento/2-104.avif"><img src="img/pagamento/2-104.webp" width="104" height="53" alt="" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/avif" srcset="img/pagamento/3-104.avif"><img src="img/pagamento/3-104.webp" width="104" height="53" alt="" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/avif" srcset="img/pagamento/4-104.avif"><img src="img/pagamento/4-104.webp" width="104" height="53" alt="" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/avif" srcset="img/pagamento/5-104.avif"><img src="img/pagamento/5-104.webp" width="104" height="53" alt="" loading="lazy" decoding="async"></picture>
+        <picture><source type="image/avif" srcset="img/pagamento/6-104.avif"><img src="img/pagamento/6-104.webp" width="104" height="53" alt="" loading="lazy" decoding="async"></picture>
         </div>
       </div>
     </div>

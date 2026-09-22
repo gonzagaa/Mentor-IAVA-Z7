@@ -43,10 +43,11 @@ async function colher(page) {
     }
 
     // elementos .pendente
-    const pendentes = [...document.querySelectorAll('.pendente, .slot-imagem[data-pendente]')].map(el => ({
+    const pendentes = [...document.querySelectorAll('.pendente, .slot-imagem[data-pendente], head [data-pendente]')].map(el => ({
       id: el.getAttribute('data-pendente'),
       texto: el.textContent,
-      visivel: visivel(el),
+      // pendente do <head> (meta/title) não tem caixa na tela: conta como presente
+      visivel: el.closest('head') ? true : visivel(el),
     }))
 
     // varredura de nós de texto visíveis, procurando órfãos

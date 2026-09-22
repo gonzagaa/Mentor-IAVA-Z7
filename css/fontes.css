@@ -1,9 +1,10 @@
 /* Fontes auto-hospedadas. Nenhuma via CDN. Caminhos relativos a css/. */
 
-/* Inter — variável (100–900), licença OFL. Ver fonts/Inter-LICENSE.txt */
+/* Inter — variável (100–900), licença OFL. Ver fonts/Inter-LICENSE.txt. Subconjunto
+   latino (scripts/subsetar-inter.mjs): 103 KB em vez de 344 KB. */
 @font-face {
   font-family: 'Inter';
-  src: url('../fonts/InterVariable.woff2') format('woff2');
+  src: url('../fonts/InterVariable-latin.woff2') format('woff2');
   font-weight: 100 900;
   font-style: normal;
   font-display: swap;
@@ -20,3 +21,40 @@
   font-style: normal;
   font-display: swap;
 }
+
+/* ═══ fontes reserva (início) ═══ */
+/* Inter 100–599 ← Arial: textos da primeira dobra com as mesmas quebras de linha
+   nas 9 larguras (0 de 26 diferentes). Gerado por scripts/fontes-reserva.mjs. */
+@font-face {
+  font-family: 'Inter Reserva';
+  src: local('Arial'), local('ArialMT');
+  font-weight: 100 599;
+  size-adjust: 104.89%;
+  ascent-override: 92.48%;
+  descent-override: 22.88%;
+  line-gap-override: 0.00%;
+}
+
+/* Inter 600–900 ← Arial Bold: textos da primeira dobra com as mesmas quebras de linha
+   nas 9 larguras (0 de 18 diferentes). Gerado por scripts/fontes-reserva.mjs. */
+@font-face {
+  font-family: 'Inter Reserva';
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  font-weight: 600 900;
+  size-adjust: 96.62%;
+  ascent-override: 100.40%;
+  descent-override: 24.84%;
+  line-gap-override: 0.00%;
+}
+
+/* NCS Radhiumz ← Arial Black: textos da primeira dobra com as mesmas quebras de linha
+   nas 9 larguras (0 de 18 diferentes). Gerado por scripts/fontes-reserva.mjs. */
+@font-face {
+  font-family: 'NCS Radhiumz Reserva';
+  src: local('Arial Black'), local('Arial-Black'), local('ArialBlack');
+  size-adjust: 110.64%;
+  ascent-override: 84.06%;
+  descent-override: 29.83%;
+  line-gap-override: 8.13%;
+}
+/* ═══ fontes reserva (fim) ═══ */

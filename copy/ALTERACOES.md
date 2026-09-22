@@ -25,3 +25,4 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-18 | `img.plataforma.alerta` | *(não existia)* | *(pendente: o print da notificação "Padrão de Revenge Trading Detectado" não veio no dashboard-graficos.png; slot no lugar)* | Gustavo |
 | 2026-09-18 | `img.plataforma.alerta` | *(pendente: print da notificação)* | *(removido — o print da notificação não vai existir; o card "Tilt e impulsividade" fica só com ícone, rótulo e texto)* | Gustavo |
 | 2026-09-22 | `alt.plataforma.topo` | *(alt do print do topo na hero)* | *(mantido no copy.json, marcado "oculto": o print saiu da hero na fase 14 — pedido do Gustavo)* | Gustavo |
+| 2026-09-22 | `meta.titulo`, `meta.descricao`, `meta.imagem-og` | *(não existiam)* | *(pendentes do head: título, descrição e imagem de compartilhamento — textos a definir; o <title> segue "Mentor IAVA" como reserva)* | revisão técnica (fase 9) |

@@ -22,7 +22,7 @@ export const DOBRA_OBRIGATORIA = [390, 430, 1280, 1474, 1920]
 // Fontes que precisam estar carregadas, e de QUAL arquivo, antes de medir ou capturar.
 // A NCS Radhiumz é o WOFF original do cdnfonts, sem conversão (a licença proíbe).
 const FONTES_BASE = [
-  { familia: 'Inter', arquivo: 'fonts/InterVariable.woff2' },
+  { familia: 'Inter', arquivo: 'fonts/InterVariable-latin.woff2' },
   { familia: 'NCS Radhiumz', arquivo: 'fonts/NcsRadhiumz-Rp3x6.woff' },
 ]
 // fontes extras exigidas por página (a Unbounded saiu: é reserva, não carrega em lugar nenhum)
@@ -63,6 +63,8 @@ export const lerMovimento = (argv = process.argv.slice(2)) => argv.includes('--m
 
 // --sem-js carrega a página com JavaScript desligado (progressive enhancement)
 export const lerSemJs = (argv = process.argv.slice(2)) => argv.includes('--sem-js')
+// --dist: mede o PACOTE DE PRODUÇÃO (pasta dist/, com os headers do dist/.htaccess)
+export const lerDist = (argv = process.argv.slice(2)) => argv.includes('--dist')
 
 export function lerRotulo(argv = process.argv.slice(2)) {
   const rotulo = argv.find(a => !a.startsWith('--'))
@@ -154,7 +156,7 @@ async function conferirCarregamento(page, fontes) {
       const faces = [...document.fonts].filter(f => f.family.replace(/^["']|["']$/g, '') === familia)
       const carregada = faces.some(f => f.status === 'loaded')
       const erro = faces.some(f => f.status === 'error')
-      const baixou = recursos.some(u => u.endsWith('/' + arquivo))
+      const baixou = recursos.some(u => u.split('?')[0].endsWith('/' + arquivo)) // o dist/ versiona com ?v=
       if (!faces.length) motivos.push(`fonte "${familia}": nenhum @font-face declarado`)
       else if (erro) motivos.push(`fonte "${familia}": @font-face em status "error" (arquivo faltando ou corrompido)`)
       else if (!carregada) motivos.push(`fonte "${familia}": nenhum @font-face chegou a "loaded" (status: ${faces.map(f => f.status).join(', ')})`)
@@ -179,7 +181,7 @@ async function conferirCarregamento(page, fontes) {
  */
 export async function porLargura(larguras, tarefa, { antesDeCarregar, pagina = 'index.html', movimento = false, dobra = false, semJs = false } = {}) {
   const vigia = vigiar()
-  const servidor = await subirServidor()
+  const servidor = await subirServidor(undefined, lerDist() ? { raiz: path.join(RAIZ, 'dist') } : {})
   const { navegador, fechar: fecharNavegador } = await abrirNavegador(vigia)
   const fontes = fontesDaPagina(pagina)
   const resultados = []

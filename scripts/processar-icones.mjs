@@ -102,9 +102,9 @@ for (const nome of NOMES) {
 
 // ───────────── ilustração do painel do IAVA (#o-que-e) ─────────────
 // Mesmo "color to alpha" dos ícones, mas SEM recorte de margem (as trilhas vão até as
-// bordas; quem esfuma as pontas é a máscara radial no CSS). WebP com transparência,
-// em 2× o maior tamanho de exibição (~604px → 1208px) e numa versão de 640px para o
-// celular. Nunca amplia.
+// bordas; quem esfuma as pontas é a máscara radial no CSS). AVIF + WebP com
+// transparência, em 2× o maior tamanho de exibição (560px → 1120px) e em 1× (560px),
+// medidos com npm run imagens. Nunca amplia.
 {
   const entrada = path.join(ORIGEM, 'ilustracao-iava.png')
   if (fs.existsSync(entrada)) {
@@ -121,15 +121,16 @@ for (const nome of NOMES) {
     }
     const antes = fs.statSync(entrada).size
     console.log(`\nilustracao-iava: original ${info.width}×${info.height} · ${kb(antes)}`)
-    for (const largura of [1208, 640]) {
+    for (const largura of [1120, 560]) {
       const w = Math.min(largura, info.width)
-      const nome = largura === 1208 ? 'ilustracao-iava.webp' : `ilustracao-iava-${w}.webp`
-      const buf = await sharp(rgba, { raw: { width: info.width, height: info.height, channels: 4 } })
-        .resize(w, null, { kernel: 'lanczos3' })
-        .webp({ quality: 70, alphaQuality: 60, effort: 6 }) // alfa ruidoso: q82 dava 768 KB
-        .toBuffer()
-      fs.writeFileSync(path.join(DESTINO, nome), buf)
-      console.log(`  → ${nome}: ${w}×${Math.round((w * info.height) / info.width)} · ${kb(buf.length)}`)
+      for (const [fmt, op] of [['avif', { quality: 50, effort: 6 }], ['webp', { quality: 70, alphaQuality: 60, effort: 6 }]]) { // alfa ruidoso: WebP q82 dava 768 KB
+        const nome = `ilustracao-iava-${w}.${fmt}`
+        const buf = await sharp(rgba, { raw: { width: info.width, height: info.height, channels: 4 } })
+          .resize(w, null, { kernel: 'lanczos3' })[fmt](op)
+          .toBuffer()
+        fs.writeFileSync(path.join(DESTINO, nome), buf)
+        console.log(`  → ${nome}: ${w}×${Math.round((w * info.height) / info.width)} · ${kb(buf.length)}`)
+      }
     }
   }
 }

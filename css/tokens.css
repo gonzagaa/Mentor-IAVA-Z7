@@ -97,8 +97,10 @@
 
   /* NCS Radhiumz: SEMPRE em caixa alta, e só pela classe .display (componentes.css).
      Nenhum outro seletor usa var(--fonte-display) — `npm run tokens` fiscaliza. */
-  --fonte-display: 'NCS Radhiumz', system-ui, sans-serif; /* um peso só: 400 */
-  --fonte-corpo: 'Inter', system-ui, sans-serif;
+  /* cada fonte tem uma RESERVA com as mesmas medidas (css/fontes.css, calibrada por
+     scripts/fontes-reserva.mjs): a troca de fonte não mexe no layout */
+  --fonte-display: 'NCS Radhiumz', 'NCS Radhiumz Reserva', system-ui, sans-serif; /* um peso só: 400 */
+  --fonte-corpo: 'Inter', 'Inter Reserva', system-ui, sans-serif;
   /* reserva OFL documentada, se a licença da Radhiumz não vier. NÃO é carregada em
      página nenhuma; trocar = apontar --fonte-display para cá e declarar o @font-face. */
   --fonte-display-alternativa: 'Unbounded', system-ui, sans-serif;
@@ -180,7 +182,11 @@
 
   /* medida de leitura: ~65 caracteres reais por linha. O "ch" é a largura do "0", mais
      larga que a letra média do Inter: 52ch ≈ 65–68 caracteres de texto corrido */
-  --medida-leitura: 52ch;
+  /* 1ch da Inter, FIXO em em (medido: 0,62–0,63em). O ch "de verdade" muda com a fonte
+     — na troca da fonte reserva para a Inter a caixa mudava de largura e o texto
+     requebrava (CLS). Com --ch a medida é a mesma nas duas fontes. */
+  --ch: 0.625em;
+  --medida-leitura: calc(52 * var(--ch));
   --respiro-descendente: 0.12em; /* texto com gradiente não corta a cedilha */
   --respiro-acento: 0.2em; /* nem o acento da maiúscula (Ê, Ã, É) */
 
@@ -209,13 +215,15 @@
   /* RITMO: respiro vertical entre seções — todas as seções usam este token */
   --respiro-secao: clamp(6rem, 4.8906rem + 5.546vw, 10rem); /* 96 → 160 */
   --medida-perfis: 36rem; /* 576: lista de perfis em 1 coluna — ~60 caracteres por linha */
+  --alvo-toque-minimo: 1.5rem; /* 24px: alvo de toque mínimo (WCAG 2.2, 2.5.8 AA) */
+  --selo-ra-altura: 4.75rem; /* 76px: altura do selo do Reclame Aqui (medida em produção) */
   --coluna-estreita: 45rem; /* 720: seções de leitura em sequência (#dor) — teto */
   /* #dor ≥ 1080px: a pergunta d2.p2 numa linha só, no maior tamanho que cabe no
      wrapper. 17.17 = largura da frase em NCS Radhiumz ÷ font-size (medida no
      navegador); 0.97 deixa 3% de folga. */
   --pergunta-proporcao: 17.17;
   --fs-pergunta-linha: calc(var(--largura-max) * 0.97 / var(--pergunta-proporcao));
-  --medida-virada: 75ch; /* d2.p6: nunca mais de 75 caracteres por linha */
+  --medida-virada: calc(75 * var(--ch)); /* d2.p6: nunca mais de 75 caracteres por linha */
   --alvo-toque: 2.75rem; /* 44 */
 
   /* ───────────────────────────── FORMA ───────────────────────────── */

@@ -138,13 +138,18 @@
 }
 
 /* o ícone: caixa de tamanho fixo, reservada antes da imagem chegar (CLS 0) */
+/* o <picture> só escolhe o formato (AVIF/WebP): não participa do layout */
+.analise__icone > picture {
+  display: contents;
+}
+
 .analise__icone {
   display: flex;
   align-items: center;
   block-size: var(--tamanho-icone);
 }
 
-.analise__icone > img {
+.analise__icone img {
   inline-size: var(--tamanho-icone);
   block-size: var(--tamanho-icone);
   object-fit: contain;
@@ -191,7 +196,7 @@
   }
 
   .analise__card--chat .analise__icone,
-  .analise__card--chat .analise__icone > img {
+  .analise__card--chat .analise__icone img {
     inline-size: var(--tamanho-icone-grande);
     block-size: var(--tamanho-icone-grande);
   }
@@ -215,7 +220,7 @@
 
 /* o ícone de chat fica menor, ao lado do texto */
 .analise__card--chat .analise__icone,
-.analise__card--chat .analise__icone > img {
+.analise__card--chat .analise__icone img {
   inline-size: var(--tamanho-icone);
   block-size: var(--tamanho-icone);
 }
@@ -235,7 +240,7 @@
   }
 
   .analise__card--chat .analise__icone,
-  .analise__card--chat .analise__icone > img {
+  .analise__card--chat .analise__icone img {
     inline-size: var(--tamanho-icone);
     block-size: var(--tamanho-icone);
   }
