@@ -361,12 +361,11 @@
   --escala-play-hover: 1.08;
 
 
-  /* faixa do chat (#analise): o palco decide a altura; o print passa dele e some no
-     preto pela máscara. Duas colunas no desktop: texto 45%, print 55%. */
+  /* faixa do chat (#analise): duas colunas no desktop (texto 45%, moldura 55%) e um
+     degradê DENTRO da imagem, dos 70% para baixo — a conversa some na cor de fundo da
+     tela e a moldura fica inteira nos quatro lados. */
   --colunas-chat: 45fr 55fr;
-  --chat-palco: clamp(11rem, 7rem + 14vw, 17rem); /* 176 → 272px */
-  --chat-sangra: clamp(3rem, 1.5rem + 5vw, 7rem); /* quanto o print passa da borda */
-  --mascara-sangra: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+  --mascara-conversa: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
 
   /* moldura .tela (print real na faixa do chat): vidro escuro, borda que acende no
      topo, barra com três pontos, glow MÉDIO, reflexo suave embaixo */

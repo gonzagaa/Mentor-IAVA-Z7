@@ -183,20 +183,17 @@
 }
 
 /* ─────────────────────── faixa do chat (fora da grade) ───────────────────────
-   Card destaque na largura do wrapper, logo abaixo da grade. O print fica numa
-   moldura .tela e SANGRA para fora da borda de baixo da faixa, com máscara de
-   degradê que o dissolve no preto: assim a altura da faixa vem do palco (token),
-   não do tamanho do print.
-     ≥ 1081px  → duas colunas: texto à esquerda (45%, centrado na vertical),
-                 palco do print à direita (55%)
-     641–1080  → texto em cima, print embaixo (palco mais baixo)
-     até 640px → igual, e o print passa a ser o recorte SÓ DA PERGUNTA
-                 (img/plataforma/chat-pergunta-*): no tamanho disponível o texto da
-                 conversa inteira ficaria com ~6px, ilegível (ver CONTEXTO.md) */
+   Card destaque na largura do wrapper, logo abaixo da grade. O print fica numa moldura
+   .tela FECHADA nos quatro lados — nada sangra, nada é cortado pela borda. Quem dá a
+   ideia de que a conversa continua é um degradê INTERNO, só na imagem: dos 70% da
+   altura para baixo ela some até a cor de fundo da própria tela (--tela-fundo). No
+   recorte de 920×500 esses 70% caem no meio do segundo item da resposta.
+     ≥ 1081px  → duas colunas (45fr/55fr): texto à esquerda centrado na vertical,
+                 moldura à direita; a altura da faixa é a da moldura mais o respiro
+     641–1080  → texto em cima, moldura inteira embaixo
+     até 640px → mesma coisa, com o recorte só da pergunta (chat-pergunta) */
 
 .analise__chat {
-  position: relative;
-  overflow: visible; /* o print sangra para fora da borda de baixo */
   margin-block-start: var(--esp-6);
   display: grid;
   gap: var(--esp-6);
@@ -214,26 +211,13 @@
   color: var(--texto);
 }
 
-/* palco: a altura que o print ocupa DENTRO da faixa. O resto sangra para fora. */
-.analise__chat-palco {
-  position: relative;
-  block-size: var(--chat-palco);
-}
-
-.analise__chat-palco .tela {
-  position: absolute;
-  inset-inline: 0;
-  inset-block-start: 0;
-  overflow: hidden; /* corta o pé do print dentro da moldura */
-  max-block-size: calc(var(--chat-palco) + var(--chat-sangra));
-  -webkit-mask-image: var(--mascara-sangra);
-  mask-image: var(--mascara-sangra);
-}
-
+/* o degradê é da imagem, não da moldura: a borda de baixo continua inteira */
 .analise__chat-tela img {
   display: block;
   inline-size: 100%;
   block-size: auto;
+  -webkit-mask-image: var(--mascara-conversa);
+  mask-image: var(--mascara-conversa);
 }
 
 /* o ícone do chat é o maior da seção: a faixa é o fecho do bloco */
@@ -243,18 +227,12 @@
   block-size: var(--tamanho-icone-grande);
 }
 
-/* até 640px o print é o recorte SÓ DA PERGUNTA: é curto e termina sozinho, então não
-   há o que sangrar — altura natural, sem palco e sem máscara */
-@media (max-width: 40rem) {
-  .analise__chat-palco {
-    block-size: auto;
-  }
-
-  .analise__chat-palco .tela {
-    position: static;
-    max-block-size: none;
-    -webkit-mask-image: none;
-    mask-image: none;
+/* 641–1080px: a moldura não cresce até a largura toda do card — a faixa fecha a
+   seção, não domina (em 1024 ela passava a altura da grade) */
+@media (min-width: 40.0625rem) and (max-width: 67.5rem) {
+  .analise__chat-tela {
+    max-inline-size: 40rem;
+    margin-inline: auto;
   }
 }
 

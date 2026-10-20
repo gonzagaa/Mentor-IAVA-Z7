@@ -35,12 +35,23 @@ const RECORTES = [
     larguras: [400, 797],
   },
   {
-    nome: 'chat',
+    nome: 'chat-conversa',
     arquivo: 'chat.png',
-    // a segunda pergunta "Como eu posso melhorar?" (o print tem duas iguais) e a
-    // resposta do Mentor até o fim, com o carimbo "Mentor · 15:00"
-    area: { left: 612, top: 250, width: 920, height: 716 },
-    larguras: [480, 844], // exibido até 422px (npm run imagens): 2× = 844
+    // faixa do chat (#analise), 641px para cima: a pergunta "Como eu posso melhorar?"
+    // (o print tem duas iguais), a abertura da resposta e os DOIS primeiros itens. O
+    // degradê interno do CSS começa a 70% da altura — no meio do segundo item (que vai
+    // de y 305 a 383 neste recorte) — e some até o fim: a conversa parece continuar.
+    area: { left: 612, top: 250, width: 920, height: 500 },
+    larguras: [480, 920],
+  },
+  {
+    nome: 'chat-pergunta',
+    arquivo: 'chat.png',
+    // até 640px: SÓ a pergunta e o carimbo "Você · 15:00". O recorte largo ali ficaria
+    // com ~6px de texto (ilegível); neste, a 470px de largura, o texto fica em ~70% do
+    // tamanho original. Os 30px finais entram no degradê (o alto da resposta).
+    area: { left: 612, top: 250, width: 470, height: 135 },
+    larguras: [470], // é a largura real do recorte: 2× seria ampliar
   },
 ]
 

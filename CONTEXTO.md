@@ -397,14 +397,20 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
     mais, 61–62px no card mais curto.
   - **Faixa do chat** (`.analise__chat`, fora da `<ul>`): card destaque na largura do
     wrapper. ≥ 1081px em 2 colunas (`--colunas-chat` 45fr/55fr): texto à esquerda
-    centrado na vertical, print à direita. O print fica numa `.tela` ABSOLUTA sobre um
-    palco (`--chat-palco`, 176→272px) e SANGRA para fora da borda de baixo
-    (`--chat-sangra`), dissolvido por `--mascara-sangra`: a altura da faixa é do palco,
-    não do print. Sangra 31–79px no desktop, e ainda sobram 81–95px até a #demonstracao.
-    641–1080px: texto em cima, print embaixo, com a mesma sangria. **Até 640px**: o print
-    é outro recorte, `img/plataforma/chat-pergunta-*` (só a pergunta), em altura natural
-    e sem sangria — o recorte inteiro ali daria ~6px de texto, ilegível (ver o relato da
-    rodada). Sem hover; entra com o revelar.js depois dos 5 cards.
+    centrado na vertical em relação à moldura (desalinho medido: 0px), print à direita.
+    **A moldura `.tela` fecha nos QUATRO lados em todas as larguras** — a sangria de
+    20/10 saiu (com a barra de três pontos no topo e o pé cortado, parecia janela
+    quebrada). Quem sugere que a conversa continua é um degradê INTERNO, só na imagem
+    (`--mascara-conversa`): dos 70% da altura para baixo ela some na cor de fundo da
+    própria tela. A altura da faixa é a da moldura mais o respiro.
+  - **Recortes do chat** (scripts/processar-plataforma.mjs): `chat-conversa` (920×500 do
+    original: pergunta, abertura e os dois primeiros itens — os 70% caem no meio do
+    segundo item) de 641px para cima; `chat-pergunta` (470×135: só a pergunta e o
+    carimbo) até 640px, porque o recorte largo ali daria ~6px de texto. Medido: moldura
+    de 349/403/404px em 1280/1474/1920 (faixa pedida: 340–420) e print a 64%/75%/75% do
+    tamanho original (mínimo pedido: 60%). De 641 a 1080px a moldura para em 40rem, para
+    a faixa não passar a altura da grade. Os recortes antigos (`chat-480`, `chat-844`)
+    ficaram órfãos, no repositório e fora do dist/.
   - Ícones: estrategias, horarios, disciplina, numeros, padroes e chat — **icone-tilt e
     icone-dias ficaram órfãos** (no repositório, fora do dist/). Halo azul suave atrás da
     grade. Nada focável na seção.
