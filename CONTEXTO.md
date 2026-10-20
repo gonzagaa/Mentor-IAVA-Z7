@@ -131,7 +131,7 @@ a proposta é mais agressiva e futurista**.
     roda e a página rola no scroll nativo (um salto, sem suavização); durante uma
     rolagem suave o iframe não captura a roda e ela continua suave.
   - **Revelação** (`js/revelar.js`, GSAP ScrollTrigger): TODA animação de entrada passa
-    por ele (revelações, "Talvez", glow do card IAVA, inclinação das molduras, contagem). Nenhuma animação de entrada em CSS. Mesma API: `data-revelar`
+    por ele (revelações, inclinação das molduras, contagem). Nenhuma animação de entrada em CSS. Mesma API: `data-revelar`
     (opacidade + subida de 12px, 400ms), `="acender"`, `data-revelar-atraso="N"` (N ×
     150ms RELATIVO ao lote que entra junto: quem entra sozinho anima na hora). Uma vez
     por elemento, com o elemento ~15% dentro da tela. O GSAP só escreve VARIÁVEIS CSS
@@ -144,9 +144,6 @@ a proposta é mais agressiva e futurista**.
     set por elemento custava ~0,6s de tarefa longa no celular 4×).
   - Diagnóstico: `npm run diagnostico-movimento` (quadros da rolagem + pisca/pulo/nunca/
     repete/tempo morto, CLS, scroll lateral e console, com o Lenis ativo).
-- **Lista com barra acesa** (`.lista-barra`, ref. 04): itens com barra vertical à
-  esquerda; com `data-revelar="acender"`, a barra acende em azul e o texto vai de
-  `--texto-3` a `--texto`, um item de cada vez.
 - **Hierarquia de luz** (toda seção nova respeita): o arco é a assinatura da página.
   **Forte**: só o arco da hero (com o cone) e o arco da #origem. **Médio**: cards
   destaque, painel de dados da #provas, palco do vídeo e glow das molduras `.tela`
@@ -206,7 +203,7 @@ a proposta é mais agressiva e futurista**.
 index.html
 amostra.html  página de amostra do sistema visual (NÃO vai para produção)
 css/          tokens.css, base.css, componentes.css, fundos.css, hero.css, dor.css, analise.css,
-              para-quem.css, o-que-e.css, demo.css, provas.css, origem.css, rodape.css,
+              para-quem.css, demo.css, provas.css, origem.css, rodape.css,
               pendente.css
               amostra.css (NÃO vai para produção)
 js/           rolagem.js, revelar.js, ano.js, video.js; vendor/ (GSAP, ScrollTrigger,
@@ -255,6 +252,7 @@ servidor sozinhos.
 | `npm run desempenho` | celular (CPU 4×, 4G lento) × desktop: LCP, FCP, TBT, CLS, peso, requisições; e CLS com rede lenta nas 9 larguras (`--dist` mede o pacote; `--bloquear=x` isola um arquivo) |
 | `npm run acessibilidade` | axe-core nas 9 larguras (0 sérias/críticas), títulos, landmarks, ordem do Tab com foco visível, contraste dos gradientes na cor mais escura |
 | `npm run imagens` | inventário das imagens: dimensões, peso e tamanho de exibição nas 9 larguras |
+| `npm run morto` | classe no CSS que ninguém usa e token definido e nunca usado (olha index.html, amostra.html e js/); whitelist com motivo dentro do script |
 | `npm run pixel` | Meta Pixel: registra toda requisição externa no carregamento (PageView), nos cliques dos botões de compra (InitiateCheckout antes de ir ao checkout) e no play (ViewContent); `--dist`: com a CSP ativa, lista violações |
 | `npm run diagnostico-movimento` | quadros da rolagem + pisca/pulo/nunca/repete/tempo morto, CLS, scroll lateral e console, com o Lenis |
 | `node scripts/processar-imagens.mjs` | banner, ícones e bandeiras em AVIF/WebP no tamanho de exibição (×2) |
@@ -349,6 +347,10 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 
 **Todas as seções prontas, rodapé incluso.**
 
+**Ordem das seções** (reajuste de 20/10/2026): hero → #dor → #analise → #demonstracao →
+#para-quem → #provas → #origem → rodapé. A #demonstracao subiu (vinha depois da
+#para-quem) e a #o-que-e foi removida inteira.
+
 - **Hero** (sem cabeçalho, sem menu, sem logo): selo (`d1.apoio`, frase única em branco,
   ponto "ao vivo" pulsando) → H1 `.display` estático, luz radial azul → branco → prata →
   subtítulo → um botão (`d1.cta1`, **60px**). **Checkout** (2026-09-22): os dois botões de
@@ -373,13 +375,11 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   POR DIA ANALISANDO / CADA OPERAÇÃO SUA.). Assim a fonte reserva monta as mesmas linhas
   (conferido nas 9 larguras) e a troca de fonte não mexe o H1 (CLS).
 - **#dor**: sequência narrativa em coluna estreita (até 1079px); termina com o
-  feixe-ponte, que para exatamente na borda da seção, sempre no centro. **≥ 1080px**
-  (fase 14): a seção ocupa a largura do wrapper — d2.p1 centrado; a pergunta do d2.p2
-  numa linha só no maior tamanho que cabe (`--fs-pergunta-linha` = wrapper × 0,97 ÷
-  17,17; ~68px em 1280, ~79px em 1474/1920, MAIOR que o H1, por pedido); a resposta
-  centrada embaixo; os três "Talvez" em 3 colunas de mesma altura, com a barra no TOPO
-  de cada card acendendo da esquerda para a direita (0 → 450 → 900ms, um lote só);
-  d2.p6 com no máximo 75 caracteres (`--medida-virada`). Sem hover.
+  feixe-ponte, que para exatamente na borda da seção, sempre no centro. Desde 20/10 a
+  seção é só d2.p1 → pergunta (d2.p2) → d2.p7 "É aí que o IAVA entra." (os três "Talvez"
+  e o d2.p6 saíram, com os cards e a animação de acender). **≥ 1080px**: a seção ocupa a
+  largura do wrapper — d2.p1 centrado; a pergunta numa linha só no maior tamanho que cabe
+  (`--fs-pergunta-linha` = wrapper × 0,97 ÷ 17,17); a resposta centrada embaixo. Sem hover.
 - **#analise**: o feixe pousa no topo (ponto de luz + linha fina, no respiro, nunca sobre
   texto) → d3.titulo em `.display` H2 com "e destrincha isso para você." no gradiente
   de acento (via `<span>`), centrado em todas as larguras; a partir de 1080px em 3
@@ -390,34 +390,21 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   direita). Cards no fundo original do card base; só o chat em
   destaque (gradiente azul suave). Halo azul suave atrás da grade. Cards revelam em
   sequência; não reagem ao mouse (não são clicáveis). Nada focável na seção.
-- **#para-quem**: ≥ 1080px em duas colunas (5fr/7fr) — d4.titulo em `.display` H2
-  fixo (sticky, solta no fim da lista sem sobrepor) sobre feixes verticais suaves; à
-  direita o d4.p1, UM `<p>` com as 6 frases em `<span>` display:block (abertura em
-  `--fs-virada` + 5 perfis com fio de 1px e marcador quadrado aceso em CSS),
-  revelando em sequência. Abaixo de 1080px, uma coluna. Depois, card destaque de
+- **#para-quem**: o d4.p1 (os 6 perfis) saiu em 20/10, e com ele a lista, os marcadores
+  e as duas colunas com título fixo. Sobrou d4.titulo + card destaque de
   virada com d4.p2 e d4.p3 (em 2 colunas dentro do card a partir de 1080px, 60/40, o d4.p3 centrado na
   vertical; abaixo,
   empilhados na medida de leitura), cada um com o trecho final no gradiente de acento.
-- **#o-que-e**, parte A: d5.titulo (.display H2, centrado) + d5.p1 na medida → comparativo
-  lado a lado (1 coluna < 768px, planilha em cima), mesma altura: painel da planilha
-  (d5.p2, d5.p3; neutro, sem azul, grade de células em CSS sem números) e card destaque
-  do IAVA (`img/icones/ilustracao-iava.webp`, 1208 e 640px, preto → transparência sem
-  recorte, bordas esfumadas por máscara radial, altura reservada na proporção real 4:3
-  + d5.p4).
-  A planilha revela primeiro; o IAVA depois, e o glow dele sobe de 0 (só opacity, no
-  `::after`). Parte B: d5.subtitulo (.display H3) + d5.intro → item 1 (H4 Inter
-  semibold + texto) e item 2 (só texto, sem rótulo) ligados por trilha de circuito SVG
-  (horizontal ≥ 768px; vertical no celular), e de cada um desce uma trilha até o item 3
-  (card destaque na largura dos dois, frase centrada na medida). Sem numeração.
 - **Prints reais da plataforma** (`scripts/processar-plataforma.mjs`: só recorte e
   otimização, AVIF/WebP com croma cheio; originais em `img/plataforma/originais/` fora do
   dist): **topo** — SAIU da hero na fase 14 (os arquivos `img/plataforma/topo-*` ficam
   no repositório mas NÃO vão para o dist/; alt marcado "oculto" no copy.json); **chat**
   no card do chat da #analise (≥ 1081px: print e texto lado a lado, 1.1fr/1fr — o dono
-  pediu o print menor); **evidencias** (2×2 cards) no painel do IAVA; o chip foi para o
-  fundo dos itens 1 e 2 da #o-que-e (nível sutil). **alerta**: removido (o print da
-  notificação não vai existir; decisão do Gustavo). Componente `.tela` (componentes.css): vidro, --raio-z7, borda acesa no
-  topo, três pontos, glow médio, reflexo. Alts em `alt.*` no copy.json (checados pelo
+  pediu o print menor); **evidencias** — ÓRFÃO desde 20/10 (saiu com a #o-que-e; os
+  arquivos `img/plataforma/evidencias-*` ficam no repositório, fora do dist/, e o alt saiu
+  do copy.json). **alerta**: removido (o print da notificação não vai existir; decisão do
+  Gustavo). O componente `.tela` saiu junto (não sobrou nenhuma moldura na página).
+  Alts em `alt.*` no copy.json (checados pelo
   `npm run copy`): evidências e chat APROVADOS pelo Gustavo (2026-09-22); o do topo
   segue no json, marcado "oculto" (o print saiu da página).
 - **#demonstracao**: d6.titulo (.display H2) + d6.texto → tela (card destaque, vidro,

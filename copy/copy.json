@@ -49,38 +49,6 @@
     "paragrafo_docx": 26
   },
   {
-    "id": "d2.p3",
-    "secao": "d2 · Segunda dobra (dor)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "Talvez você até saiba que foi por impulso.",
-    "paragrafo_docx": 27
-  },
-  {
-    "id": "d2.p4",
-    "secao": "d2 · Segunda dobra (dor)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "Talvez por ter operado mais do que deveria.",
-    "paragrafo_docx": 28
-  },
-  {
-    "id": "d2.p5",
-    "secao": "d2 · Segunda dobra (dor)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "Ou talvez tenha até terminado o dia no lucro e, mesmo assim, não saiba muito bem o que fez de diferente.",
-    "paragrafo_docx": 29
-  },
-  {
-    "id": "d2.p6",
-    "secao": "d2 · Segunda dobra (dor)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "O ponto é, lembrar das operações não é o mesmo que analisá-las.",
-    "paragrafo_docx": 30
-  },
-  {
     "id": "d2.p7",
     "secao": "d2 · Segunda dobra (dor)",
     "tipo": "copy",
@@ -233,14 +201,6 @@
     "paragrafo_docx": 61
   },
   {
-    "id": "d4.p1",
-    "secao": "d4 · Quarta dobra (para quem é)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "O IAVA é pra quem sabe que precisa olhar mais pra própria operação, mas não tem tempo nem paciência pra ficar horas em cima de planilhas. Pra quem repete os mesmos erros toda semana e não consegue entender de onde vem o problema. Pra quem entra por impulso, opera além do que deveria e depois não sabe explicar o que aconteceu. Pra quem não faz ideia de qual horário ou qual estratégia funciona melhor pra ele. Pra quem vive num sobe e desce, um dia ganha bem, no outro devolve tudo. Para quem cansou de depender da sorte e quer operar com base em dados de verdade.",
-    "paragrafo_docx": 63
-  },
-  {
     "id": "d4.p2",
     "secao": "d4 · Quarta dobra (para quem é)",
     "tipo": "copy",
@@ -255,96 +215,6 @@
     "papel": "parágrafo",
     "texto": "Até porque todo trader, em qualquer fase, precisa enxergar os próprios padrões pra evoluir. E é justamente isso que o IAVA entrega.",
     "paragrafo_docx": 65
-  },
-  {
-    "id": "d5.titulo",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "H2",
-    "texto": "O que é o Mentor IAVA?",
-    "paragrafo_docx": 76
-  },
-  {
-    "id": "d5.p1",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "O Mentor IAVA é uma aplicação web que utiliza IA para analisar o seu histórico operacional e transformar seus dados em um diagnóstico da sua performance",
-    "paragrafo_docx": 77
-  },
-  {
-    "id": "d5.p2",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "Não é apenas uma planilha com seus resultados.",
-    "paragrafo_docx": 79
-  },
-  {
-    "id": "d5.p3",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "Uma planilha mostra seus números.",
-    "paragrafo_docx": 81
-  },
-  {
-    "id": "d5.p4",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "parágrafo",
-    "texto": "O IAVA ajuda você a entender porque eles estão ali. Ele cruza suas operações para encontrar padrões de comportamento, desempenho, horários, estratégias e disciplina.",
-    "paragrafo_docx": 83
-  },
-  {
-    "id": "d5.subtitulo",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "H3",
-    "texto": "Por que ele supera a análise convencional?",
-    "paragrafo_docx": 88
-  },
-  {
-    "id": "d5.intro",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "introdução da lista",
-    "texto": "O algoritmo do IAVA foi treinado com base no comportamento de milhares de perfis operacionais, mapeando com clareza o  que separa os traders consistentes dos que quebram suas contas repetidas vezes:",
-    "paragrafo_docx": 89
-  },
-  {
-    "id": "d5.item1.rotulo",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "título do item",
-    "texto": "Banco de dados de padrões comportamentais",
-    "obs": "docx §90, antes dos dois-pontos"
-  },
-  {
-    "id": "d5.item1.texto",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "descrição do item",
-    "texto": "o sistema reconhece os micro padrões que antecedem, e aponta previamente, as vulnerabilidades do seu estilo de negociação;",
-    "obs": "docx §90, depois dos dois-pontos"
-  },
-  {
-    "id": "d5.item2.texto",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "item sem rótulo",
-    "texto": "A inteligência artificial avalia a interação entre volume financeiro, horário, tempo em posição, contexto de mercado e cumprimento do gerenciamento de risco;",
-    "paragrafo_docx": 91,
-    "obs": "este item não tem rótulo com dois-pontos na copy — NÃO inventar rótulo"
-  },
-  {
-    "id": "d5.item3.texto",
-    "secao": "d5 · Quinta dobra (o que é)",
-    "tipo": "copy",
-    "papel": "item sem rótulo",
-    "texto": "É basicamente como um mentor sênior ao seu lado revisando trade por trade, o que, humanamente falando,  levaria muito tempo e ainda custaria caro. O IAVA entrega essa precisão instantaneamente após cada pregão realizado e por muito menos.",
-    "paragrafo_docx": 92,
-    "obs": "este item não tem rótulo com dois-pontos na copy — NÃO inventar rótulo"
   },
   {
     "id": "d6.titulo",
@@ -657,14 +527,6 @@
     "texto": "Painel do Mentor IAVA com o briefing operacional e um alerta de revenge trading: risco de tilt alto e limite sugerido de 2 trades",
     "obs": "texto alternativo proposto pelo Claude Code em 2026-09-18 — AGUARDANDO APROVAÇÃO do Gustavo (ver ALTERACOES.md)",
     "oculto": "fora da página: o print do topo saiu da hero na fase 14 (pedido do Gustavo); os arquivos ficam em img/plataforma/ mas não vão para o dist/"
-  },
-  {
-    "id": "alt.plataforma.evidencias",
-    "secao": "textos alternativos de imagem",
-    "tipo": "alt",
-    "papel": "alt de imagem (atributo, não visível)",
-    "texto": "Painel de evidências estatísticas do Mentor IAVA com saldo do período, taxa de acerto, drawdown máximo e melhor trade",
-    "obs": "texto alternativo aprovado pelo Gustavo em 2026-09-22 (ver ALTERACOES.md)"
   },
   {
     "id": "alt.plataforma.chat",

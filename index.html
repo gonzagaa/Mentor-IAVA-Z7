@@ -40,7 +40,6 @@
   <link rel="stylesheet" href="css/dor.css">
   <link rel="stylesheet" href="css/analise.css">
   <link rel="stylesheet" href="css/para-quem.css">
-  <link rel="stylesheet" href="css/o-que-e.css">
   <link rel="stylesheet" href="css/demo.css">
   <link rel="stylesheet" href="css/provas.css">
   <link rel="stylesheet" href="css/origem.css">
@@ -61,7 +60,7 @@
 
   <main>
 
-    <!-- d1 · primeira dobra (hero) -->
+    <!-- d1 · hero (1ª seção) -->
     <section id="hero" class="hero">
       <!-- banner decorativo atrás de tudo (object-fit: cover, some para baixo) -->
       <picture class="hero__banner" aria-hidden="true">
@@ -87,23 +86,17 @@
 
     </section>
 
-    <!-- d2 · segunda dobra (dor) -->
+    <!-- d2 · dor (2ª) -->
     <section id="dor" class="secao dor">
       <div class="dor__coluna">
         <p class="degrau-2 dor__abertura" data-copy="d2.p1" data-revelar>Sabe quando você termina uma operação e pensa:</p>
         <p class="dor__pergunta" data-copy="d2.p2" data-revelar data-revelar-atraso="1"><span class="display degrau-destaque dor__pergunta-grande">“Onde foi que eu errei?”</span> <span class="degrau-2 dor__resposta">Sem ter ninguém para responder essa pergunta?</span></p>
-        <ul class="lista-barra dor__talvez">
-          <li class="degrau-2" data-revelar="acender"><p data-copy="d2.p3">Talvez você até saiba que foi por impulso.</p></li>
-          <li class="degrau-2" data-revelar="acender" data-revelar-atraso="3"><p data-copy="d2.p4">Talvez por ter operado mais do que deveria.</p></li>
-          <li class="degrau-2" data-revelar="acender" data-revelar-atraso="6"><p data-copy="d2.p5">Ou talvez tenha até terminado o dia no lucro e, mesmo assim, não saiba muito bem o que fez de diferente.</p></li>
-        </ul>
-        <p class="dor__virada" data-copy="d2.p6" data-revelar>O ponto é, lembrar das operações não é o mesmo que analisá-las.</p>
         <p class="display degrau-4 dor__entrada" data-copy="d2.p7" data-revelar>É aí que o IAVA entra.</p>
       </div>
       <div class="dor__ponte" aria-hidden="true"></div>
     </section>
 
-    <!-- d3 · terceira dobra (o que o IAVA analisa) -->
+    <!-- d3 · o que o IAVA analisa (3ª) -->
     <section id="analise" class="secao analise">
       <div class="analise__pouso" aria-hidden="true"></div>
       <div class="analise__largura">
@@ -163,76 +156,7 @@
       </div>
     </section>
 
-    <!-- d4 · quarta dobra (para quem é) -->
-    <section id="para-quem" class="secao para-quem">
-      <div class="para-quem__largura">
-        <div class="para-quem__grade">
-          <div class="para-quem__coluna-titulo">
-            <div class="feixes para-quem__feixes" aria-hidden="true"></div>
-            <h2 class="display degrau-4 para-quem__titulo" data-copy="d4.titulo"><span class="grupo">PARA QUEM É O</span> <span class="grupo">MENTOR IAVA?</span></h2>
-          </div>
-          <p class="perfis" data-copy="d4.p1"><span class="perfis__abertura" data-revelar>O IAVA é pra quem sabe que precisa olhar mais pra própria operação, mas não tem tempo nem paciência pra ficar horas em cima de planilhas.</span> <span class="perfis__item" data-revelar data-revelar-atraso="1">Pra quem repete os mesmos erros toda semana e não consegue entender de onde vem o problema.</span> <span class="perfis__item" data-revelar data-revelar-atraso="2">Pra quem entra por impulso, opera além do que deveria e depois não sabe explicar o que aconteceu.</span> <span class="perfis__item" data-revelar data-revelar-atraso="3">Pra quem não faz ideia de qual horário ou qual estratégia funciona melhor pra ele.</span> <span class="perfis__item" data-revelar data-revelar-atraso="4">Pra quem vive num sobe e desce, um dia ganha bem, no outro devolve tudo.</span> <span class="perfis__item" data-revelar data-revelar-atraso="5">Para quem cansou de depender da sorte e quer operar com base em dados de verdade.</span></p>
-        </div>
-        <div class="card card--destaque para-quem__virada" data-revelar>
-          <p class="para-quem__virada-1" data-copy="d4.p2">Mas a verdade é que o IAVA serve pra qualquer um que opere no mercado. Não importa se você está começando agora ou se já tem anos de mercado.  Se você já fechou o dia sem saber direito por que ganhou ou por que perdeu, <span class="texto-acento">o IAVA foi feito pra você.</span></p>
-          <p class="para-quem__virada-2" data-copy="d4.p3">Até porque todo trader, em qualquer fase, precisa enxergar os próprios padrões pra evoluir. <span class="texto-acento">E é justamente isso que o IAVA entrega.</span></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- d5 · quinta dobra (o que é) -->
-    <section id="o-que-e" class="secao o-que-e">
-      <div class="o-que-e__largura">
-
-        <div class="o-que-e__cabeca">
-          <h2 class="display degrau-4 o-que-e__titulo" data-copy="d5.titulo"><span class="grupo">O que é o</span> <span class="grupo">Mentor IAVA?</span></h2>
-          <p class="o-que-e__lead" data-copy="d5.p1">O Mentor IAVA é uma aplicação web que utiliza IA para analisar o seu histórico operacional e transformar seus dados em um diagnóstico da sua performance</p>
-        </div>
-
-        <div class="comparativo">
-          <div class="comparativo__planilha" data-revelar>
-            <div class="comparativo__celulas" aria-hidden="true"></div>
-            <p data-copy="d5.p2">Não é apenas uma planilha com seus resultados.</p>
-            <p data-copy="d5.p3">Uma planilha mostra seus números.</p>
-          </div>
-          <div class="card card--destaque comparativo__iava" data-revelar data-revelar-atraso="3">
-            <div class="tela comparativo__tela">
-              <div class="tela__barra" aria-hidden="true"></div>
-              <picture>
-                <source type="image/avif" srcset="img/plataforma/evidencias-400.avif 400w, img/plataforma/evidencias-797.avif 797w" sizes="(min-width: 768px) 620px, 88vw">
-                <img src="img/plataforma/evidencias-797.webp" srcset="img/plataforma/evidencias-400.webp 400w, img/plataforma/evidencias-797.webp 797w" sizes="(min-width: 768px) 620px, 88vw" width="797" height="414" alt="Painel de evidências estatísticas do Mentor IAVA com saldo do período, taxa de acerto, drawdown máximo e melhor trade" data-copy-alt="alt.plataforma.evidencias" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <p data-copy="d5.p4">O IAVA ajuda você a entender porque eles estão ali. Ele cruza suas operações para encontrar padrões de comportamento, desempenho, horários, estratégias e disciplina.</p>
-          </div>
-        </div>
-
-        <div class="o-que-e__porque">
-          <h3 class="display degrau-3 o-que-e__subtitulo" data-copy="d5.subtitulo"><span class="grupo">Por que ele</span> <span class="grupo">supera a análise</span> <span class="grupo">convencional?</span></h3>
-          <p class="o-que-e__intro" data-copy="d5.intro">O algoritmo do IAVA foi treinado com base no comportamento de milhares de perfis operacionais, mapeando com clareza o  que separa os traders consistentes dos que quebram suas contas repetidas vezes:</p>
-        </div>
-
-        <div class="circuito">
-          <picture class="circuito__chip-quadro"><source type="image/avif" srcset="img/icones/ilustracao-iava-560.avif 560w, img/icones/ilustracao-iava-1120.avif 1120w" sizes="(min-width: 768px) 560px, 80vw"><img class="circuito__chip" src="img/icones/ilustracao-iava-560.webp" srcset="img/icones/ilustracao-iava-560.webp 560w, img/icones/ilustracao-iava-1120.webp 1120w" sizes="(min-width: 768px) 560px, 80vw" width="1120" height="840" alt="" aria-hidden="true" loading="lazy" decoding="async"></picture>
-          <div class="card circuito__item circuito__item--a" data-revelar>
-            <h4 class="circuito__rotulo" data-copy="d5.item1.rotulo">Banco de dados de padrões comportamentais</h4>
-            <p data-copy="d5.item1.texto">o sistema reconhece os micro padrões que antecedem, e aponta previamente, as vulnerabilidades do seu estilo de negociação;</p>
-          </div>
-          <svg class="trilha trilha--h" viewBox="0 0 64 16" aria-hidden="true" focusable="false"><path class="trilha__linha" d="M5 8 H22 L27 3 H38 L43 8 H59"/><circle class="trilha__no" cx="5" cy="8" r="3"/><circle class="trilha__no" cx="59" cy="8" r="3"/></svg>
-          <svg class="trilha trilha--v circuito__v1" viewBox="0 0 16 64" aria-hidden="true" focusable="false"><path class="trilha__linha" d="M8 5 V22 L3 27 V38 L8 43 V59"/><circle class="trilha__no" cx="8" cy="5" r="3"/><circle class="trilha__no" cx="8" cy="59" r="3"/></svg>
-          <div class="card circuito__item circuito__item--b" data-revelar data-revelar-atraso="2">
-            <p data-copy="d5.item2.texto">A inteligência artificial avalia a interação entre volume financeiro, horário, tempo em posição, contexto de mercado e cumprimento do gerenciamento de risco;</p>
-          </div>
-          <svg class="trilha trilha--v circuito__v2" viewBox="0 0 16 64" aria-hidden="true" focusable="false"><path class="trilha__linha" d="M8 5 V22 L3 27 V38 L8 43 V59"/><circle class="trilha__no" cx="8" cy="5" r="3"/><circle class="trilha__no" cx="8" cy="59" r="3"/></svg>
-          <div class="card card--destaque circuito__item circuito__item--c" data-revelar data-revelar-atraso="4">
-            <p data-copy="d5.item3.texto">É basicamente como um mentor sênior ao seu lado revisando trade por trade, o que, humanamente falando,  levaria muito tempo e ainda custaria caro. O IAVA entrega essa precisão instantaneamente após cada pregão realizado e por muito menos.</p>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- d6 · sexta dobra (demonstração) -->
+    <!-- d6 · demonstração (4ª: subiu na reordenação de 20/10) -->
     <section id="demonstracao" class="secao demo">
       <div class="demo__largura">
         <div class="demo__cabeca">
@@ -262,7 +186,24 @@
       </div>
     </section>
 
-    <!-- d7 · sétima dobra (provas + fechamento) -->
+    <!-- d4 · para quem é (5ª) -->
+    <section id="para-quem" class="secao para-quem">
+      <div class="para-quem__largura">
+        <div class="para-quem__grade">
+          <div class="para-quem__coluna-titulo">
+            <div class="feixes para-quem__feixes" aria-hidden="true"></div>
+            <h2 class="display degrau-4 para-quem__titulo" data-copy="d4.titulo"><span class="grupo">PARA QUEM É O</span> <span class="grupo">MENTOR IAVA?</span></h2>
+          </div>
+        </div>
+        <div class="card card--destaque para-quem__virada" data-revelar>
+          <p class="para-quem__virada-1" data-copy="d4.p2">Mas a verdade é que o IAVA serve pra qualquer um que opere no mercado. Não importa se você está começando agora ou se já tem anos de mercado.  Se você já fechou o dia sem saber direito por que ganhou ou por que perdeu, <span class="texto-acento">o IAVA foi feito pra você.</span></p>
+          <p class="para-quem__virada-2" data-copy="d4.p3">Até porque todo trader, em qualquer fase, precisa enxergar os próprios padrões pra evoluir. <span class="texto-acento">E é justamente isso que o IAVA entrega.</span></p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- d7 · provas + fechamento (6ª) -->
     <section id="provas" class="secao provas">
       <div class="provas__largura">
         <ul class="provas__painel" data-revelar>
@@ -292,7 +233,7 @@
       </div>
     </section>
 
-    <!-- d8 · oitava dobra (origem Zero7) -->
+    <!-- d8 · origem Zero7 (7ª) -->
     <section id="origem" class="secao origem">
       <div class="arco origem__arco" aria-hidden="true"></div>
       <div class="origem__largura">

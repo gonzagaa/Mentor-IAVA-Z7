@@ -69,57 +69,11 @@
    só ESCREVE variáveis, sem ler estilo computado elemento a elemento):
      --revelar-opacidade, --revelar-y  entrada padrão (opacity + translate, que é uma
                                        propriedade separada de transform)
-     --acesa    0 → 1 (lista com barra acesa, glow do card IAVA da #o-que-e)
      --inclinar rotateX das molduras com data-inclinar */
 
-[data-revelar]:not([data-revelar='acender']) {
+[data-revelar] {
   opacity: var(--revelar-opacidade, 1);
   translate: 0 var(--revelar-y, 0px);
-}
-
-/* ═══════════════════════ LISTA COM BARRA ACESA ═══════════════════════
-   Itens com uma barra vertical à esquerda (ref. 04). Com data-revelar="acender",
-   cada item entra apagado (barra em --barra-apagada, texto em --texto-3) e acende
-   ao entrar na tela: a barra cresce em azul com brilho e o texto vai a --texto. */
-
-.lista-barra {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-3);
-  text-align: start;
-}
-
-.lista-barra > li {
-  position: relative;
-  padding: var(--esp-4) var(--esp-6) var(--esp-4) var(--esp-10);
-  border: var(--borda);
-  border-radius: var(--raio-card);
-  background: var(--superficie);
-  /* apagado (--texto-3) → aceso (--texto) com --acesa; sem JS, aceso */
-  color: color-mix(in srgb, var(--texto) calc(var(--acesa, 1) * 100%), var(--texto-3));
-}
-
-/* a barra: trilho apagado embaixo, luz azul por cima */
-.lista-barra > li::before,
-.lista-barra > li::after {
-  content: '';
-  position: absolute;
-  inset-block: var(--esp-4);
-  inset-inline-start: var(--esp-5);
-  inline-size: 2px;
-  border-radius: var(--raio-pilula);
-}
-
-.lista-barra > li::before {
-  background: var(--barra-apagada);
-}
-
-.lista-barra > li::after {
-  background: var(--barra-acesa);
-  box-shadow: var(--glow-sutil);
-  transform-origin: 50% 0;
-  opacity: var(--acesa, 1);
-  transform: scaleY(var(--acesa, 1));
 }
 
 /* ═══════════════════════════════ BOTÕES ═══════════════════════════════ */
@@ -338,40 +292,6 @@
   box-shadow: var(--glow-medio);
 }
 
-/* ═════════════════════════════ BORDA NEON ═════════════════════════════
-   Gradiente cônico girando via @property, 1px. Com parcimônia: um por seção. */
-
-.card--destaque,
-.borda-neon {
-  isolation: isolate;
-}
-
-.borda-neon {
-  position: relative;
-}
-
-.card--destaque::before,
-.borda-neon::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  padding: 1px;
-  border-radius: inherit;
-  background: var(--gradiente-neon), var(--gradiente-linha-forte);
-  -webkit-mask: var(--mascara-cheia) content-box, var(--mascara-cheia);
-  -webkit-mask-composite: xor;
-  mask: var(--mascara-cheia) content-box exclude, var(--mascara-cheia);
-  pointer-events: none;
-  animation: girar-neon var(--dur-giro) linear infinite;
-}
-
-@keyframes girar-neon {
-  to {
-    --angulo-neon: 360deg;
-  }
-}
-
 /* ═════════════════════════ LADRILHO DE ÍCONE ═════════════════════════
    Recebe os ícones 3D do Nano Banana (ref 02/08). */
 
@@ -414,102 +334,6 @@
 
 .slot-imagem::after {
   content: attr(data-arquivo);
-}
-
-/* ═══════════════════════ TÍTULO EM DUAS LINHAS ═══════════════════════
-   Primeira em --texto, segunda com o gradiente de acento.
-   SÓ quando a própria copy já tem duas partes (dois blocos do copy.json).
-   Nunca quebrar um título da copy em dois para caber no efeito. */
-
-/* as duas partes levam class="display degrau-N" — a fonte vem só da .display */
-.titulo-duas-linhas {
-  display: flex;
-  flex-direction: column;
-  gap: var(--esp-2);
-}
-
-.texto-acento,
-.titulo-duas-linhas > :last-child {
-  /* o gradiente só pinta dentro da caixa: sem respiro, o acento da maiúscula (Ê, Ã)
-     e a cedilha são cortados. A margem negativa devolve o espaço — layout igual. */
-  padding-block: var(--respiro-acento) var(--respiro-descendente);
-  margin-block-start: calc(-1 * var(--respiro-acento));
-  background: var(--gradiente-acento);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-/* mantém uma frase inteira na mesma linha quando cabe (não altera o texto) */
-.frase {
-  display: inline-block;
-}
-
-@media (forced-colors: active) {
-  .texto-acento,
-  .titulo-duas-linhas > :last-child {
-    background: none;
-    color: CanvasText;
-    -webkit-text-fill-color: CanvasText;
-  }
-}
-
-/* ═══════════════════════════ MOLDURA .tela ═══════════════════════════
-   Prints REAIS da plataforma (recortes em img/plataforma/). Vidro escuro, --raio-z7,
-   borda de 1px que acende no topo, barra mínima com três pontos (CSS, sem texto),
-   glow nível MÉDIO, reflexo suave embaixo. Não é clicável: sem hover.
-   Com data-inclinar (js/revelar.js) entra inclinada e endireita; reta sem JS ou com
-   reduced-motion. A imagem leva width/height: espaço reservado (CLS 0). */
-
-.tela {
-  position: relative;
-  border: var(--borda);
-  border-radius: var(--raio-z7);
-  background: var(--tela-fundo);
-  box-shadow: var(--brilho-interno), var(--glow-medio);
-  --inclinar-max: var(--tela-inclinar-max);
-  transform-origin: 50% 100%;
-  transform: perspective(var(--perspectiva-tela)) rotateX(var(--inclinar, 0deg));
-}
-
-/* borda que acende no topo */
-.tela::before {
-  content: '';
-  position: absolute;
-  inset-inline: var(--esp-8);
-  inset-block-start: -1px;
-  block-size: 1px;
-  background: var(--tela-borda-topo);
-  pointer-events: none;
-}
-
-/* reflexo suave embaixo (fora da caixa, absoluto: não ocupa espaço) */
-.tela::after {
-  content: '';
-  position: absolute;
-  inset-inline: 10%;
-  inset-block-start: 100%;
-  block-size: var(--esp-16);
-  background: var(--tela-reflexo);
-  pointer-events: none;
-}
-
-/* barra superior mínima: três pontos */
-.tela__barra {
-  block-size: var(--tela-barra);
-  border-block-end: var(--borda);
-  background:
-    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) var(--esp-4) 50% / var(--esp-3) var(--esp-3) no-repeat,
-    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) calc(var(--esp-4) + var(--esp-5)) 50% / var(--esp-3) var(--esp-3) no-repeat,
-    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) calc(var(--esp-4) + var(--esp-10)) 50% / var(--esp-3) var(--esp-3) no-repeat;
-}
-
-.tela img {
-  display: block;
-  inline-size: 100%;
-  block-size: auto;
-  border-end-end-radius: calc(var(--raio-g) - 1px);
 }
 
 /* ═════════════════════════ PONTO "AO VIVO" ═════════════════════════

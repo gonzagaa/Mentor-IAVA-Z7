@@ -8,9 +8,7 @@
 //
 //   data-revelar            → opacidade + subida curta (--revelar-deslocamento), via
 //                             --revelar-opacidade / --revelar-y lidas pelo CSS
-//   data-revelar="acender"  → não some: acende (--acesa 0 → 1; .lista-barra da #dor)
 //   data-revelar-atraso="N" → N × --revelar-passo DENTRO do lote que entra junto
-//   .comparativo__iava      → + o glow do card sobe (--acesa no ::after)
 //   .provas__painel         → + contagem dos [data-contar]
 //   data-inclinar           → a moldura endireita conforme sobe na tela (--inclinar)
 //
@@ -62,8 +60,7 @@
     const escrever = (els, props) => {
       for (const el of els) for (const [k, v] of Object.entries(props)) { el.style.setProperty(k, v); escritos.push([el, k]) }
     }
-    escrever(alvos.filter(el => el.dataset.revelar !== 'acender'), { '--revelar-opacidade': '0', '--revelar-y': `${DESLOCAMENTO}px` })
-    escrever(alvos.filter(el => el.dataset.revelar === 'acender' || el.matches('.comparativo__iava')), { '--acesa': '0' })
+    escrever(alvos, { '--revelar-opacidade': '0', '--revelar-y': `${DESLOCAMENTO}px` })
     // moldura já na tela ao carregar: quem define a inclinação é o gatilho (pela posição)
     for (const { el, max, abaixo } of molduras) if (abaixo) escrever([el], { '--inclinar': `${max}deg` })
 
@@ -100,14 +97,7 @@
 
     const entrar = (el, espera) => {
       const tl = gsap.timeline({ delay: espera })
-      if (el.dataset.revelar === 'acender') {
-        tl.to(el, { '--acesa': 1, duration: DUR, ease: SAIDA })
-      } else {
-        tl.to(el, { '--revelar-opacidade': 1, '--revelar-y': '0px', duration: DUR, ease: SAIDA, clearProps: '--revelar-opacidade,--revelar-y' })
-      }
-      if (el.matches('.comparativo__iava')) {
-        tl.to(el, { '--acesa': 1, duration: DUR, ease: SAIDA_SUAVE }, 2 * PASSO)
-      }
+      tl.to(el, { '--revelar-opacidade': 1, '--revelar-y': '0px', duration: DUR, ease: SAIDA, clearProps: '--revelar-opacidade,--revelar-y' })
       if (el.matches('.provas__painel')) {
         for (const n of el.querySelectorAll('[data-contar]')) {
           const t = contar(n)

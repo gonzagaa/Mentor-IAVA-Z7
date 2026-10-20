@@ -37,3 +37,9 @@ alterado, na ordem em que aconteceu. Sem linha nesta tabela, a copy não muda.
 | 2026-09-22 | `d1.cta.destino` | *(pendente: destino dos CTAs de compra)* | https://app.zero7.com.br/checkout/cad61e — link do checkout enviado pelo Gustavo, nos dois botões de compra (d1.cta1 e d6.cta) | Gustavo |
 | 2026-09-22 | `cookies.texto`, `cookies.aceitar`, `cookies.recusar` | *(aviso de cookies aprovado)* | *(removidos: o Pixel passa a disparar sem pedir consentimento — decisão do Gustavo; implementação guardada em docs/aviso-cookies.md)* | Gustavo |
 | 2026-09-22 | `rodape.cookie` | Cookie *(reabria o aviso de cookies)* | Cookie *(de volta ao href vazio, cópia da home)* | Gustavo |
+| 2026-10-20 | `d5.*` (10 blocos) | seção "O que é o Mentor IAVA?" (comparativo planilha × IAVA e "Por que ele supera a análise convencional?") | *(seção removida inteira)* — reajustes aprovados pelo Gustavo, 20/10/2026 | Gustavo |
+| 2026-10-20 | `d2.p3`, `d2.p4`, `d2.p5` | os três "Talvez" da #dor | *(removidos, com os cards e a animação de acender)* — reajustes aprovados pelo Gustavo, 20/10/2026 | Gustavo |
+| 2026-10-20 | `d2.p6` | O ponto é, lembrar das operações não é o mesmo que analisá-las. | *(removido)* — reajustes aprovados pelo Gustavo, 20/10/2026 | Gustavo |
+| 2026-10-20 | `d4.p1` | parágrafo dos 6 perfis da #para-quem | *(removido, com a lista, os marcadores e as duas colunas com título fixo)* — reajustes aprovados pelo Gustavo, 20/10/2026 | Gustavo |
+| 2026-10-20 | `alt.plataforma.evidencias` | alt do print de evidências | *(removido: o print saiu com a seção #o-que-e)* — reajustes aprovados pelo Gustavo, 20/10/2026 | Gustavo |
+| 2026-10-20 | *(ordem das seções)* | hero → dor → analise → para-quem → o-que-e → demonstracao → provas → origem | hero → dor → analise → **demonstracao** → para-quem → provas → origem — reajustes aprovados pelo Gustavo, 20/10/2026 | Gustavo |

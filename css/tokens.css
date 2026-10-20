@@ -69,15 +69,6 @@
     radial-gradient(120% 70% at 50% 0%, rgb(0 128 201 / 10%) 0%, transparent 60%),
     linear-gradient(180deg, var(--destaque-topo) 0%, var(--superficie) 70%);
   --gradiente-ladrilho: linear-gradient(145deg, var(--superficie-2) 0%, var(--preto-2) 100%);
-  --gradiente-linha-forte: linear-gradient(var(--linha-forte), var(--linha-forte));
-  --gradiente-neon: conic-gradient(
-    from var(--angulo-neon),
-    transparent 0% 55%,
-    var(--azul) 68%,
-    var(--ciano) 80%,
-    var(--azul-eletrico) 88%,
-    transparent 100%
-  );
 
   /* estado desabilitado */
   --desabilitado-fundo: rgb(255 255 255 / 6%);
@@ -214,7 +205,6 @@
   --gutter: clamp(1rem, 0.5rem + 2.5vw, 2.5rem); /* 16 → 40 */
   /* RITMO: respiro vertical entre seções — todas as seções usam este token */
   --respiro-secao: clamp(6rem, 4.8906rem + 5.546vw, 10rem); /* 96 → 160 */
-  --medida-perfis: 36rem; /* 576: lista de perfis em 1 coluna — ~60 caracteres por linha */
   --alvo-toque-minimo: 1.5rem; /* 24px: alvo de toque mínimo (WCAG 2.2, 2.5.8 AA) */
   --coluna-estreita: 45rem; /* 720: seções de leitura em sequência (#dor) — teto */
   /* #dor ≥ 1080px: a pergunta d2.p2 numa linha só, no maior tamanho que cabe no
@@ -222,7 +212,6 @@
      navegador); 0.97 deixa 3% de folga. */
   --pergunta-proporcao: 17.17;
   --fs-pergunta-linha: calc(var(--largura-max) * 0.97 / var(--pergunta-proporcao));
-  --medida-virada: calc(75 * var(--ch)); /* d2.p6: nunca mais de 75 caracteres por linha */
   --alvo-toque: 2.75rem; /* 44 */
 
   /* ───────────────────────────── FORMA ───────────────────────────── */
@@ -270,12 +259,10 @@
     0 0 0 5px var(--linha-forte);
 
   /* halos (radial-gradient) para fundos */
-  --halo-azul: radial-gradient(closest-side, rgb(0 128 201 / 45%), rgb(0 59 102 / 22%) 55%, transparent 100%);
   --halo-noite: radial-gradient(closest-side, var(--azul-noite), transparent 100%);
 
   /* arco de horizonte — altura no :root para outras peças se alinharem à curva */
   --arco-altura: clamp(12rem, 7rem + 22vw, 28rem); /* 192 → 448 */
-  --arco-borda: var(--ciano);
   --arco-luz:
     0 -1px 0 0 var(--ciano),
     0 -4px 10px 0 rgb(92 225 255 / 90%),
@@ -331,32 +318,8 @@
   /* halo azul muito suave atrás de uma grade de cards */
   --halo-grade: radial-gradient(ellipse 55% 50% at 50% 50%, rgb(0 128 201 / 11%) 0%, rgb(0 59 102 / 8%) 45%, transparent 75%);
 
-  /* marcador aceso dos perfis (#para-quem): quadradinho azul com brilho */
-  --marcador: 0.5rem;
-  --marcador-cor: var(--azul-eletrico);
   /* feixes verticais em baixa intensidade (fundo de coluna de título) */
   --feixes-suave: 0.45;
-  --topo-fixo: var(--esp-16); /* distância do topo da tela de um título sticky */
-
-  /* painel da planilha (#o-que-e): morto de propósito — neutro, SEM azul */
-  --planilha-fundo: #0b0b0c;
-  --planilha-linha: rgb(255 255 255 / 6%);
-  --planilha-celula: rgb(255 255 255 / 3.5%);
-  --planilha-col: 5.5rem;
-  --planilha-lin: 2rem;
-  --planilha-altura-min: 16rem;
-  --planilha-mascara: linear-gradient(180deg, #000 0%, rgb(0 0 0 / 55%) 60%, transparent 100%);
-
-  /* ilustração do painel do IAVA: altura reservada (CLS 0) */
-  --ilustracao-proporcao: 1448 / 1086; /* proporção real do chip (4:3) */
-  /* esfuma as bordas: as trilhas somem no escuro do card, sem ponta cortada */
-  --mascara-ilustracao: radial-gradient(ellipse 50% 50% at 50% 50%, #000 55%, transparent 100%);
-
-  /* trilhas de circuito (ref. 03): linha fina + nós luminosos */
-  --trilha-linha: rgb(31 163 255 / 60%);
-  --trilha-no: var(--ciano);
-  --trilha-brilho: drop-shadow(0 0 0.25rem rgb(92 225 255 / 70%));
-  --trilha-h: 4rem; /* comprimento da trilha entre os cards */
 
   /* HIERARQUIA DE LUZ (CONTEXTO.md): forte = só os arcos (hero + cone, #origem);
      médio = cards destaque, palco, glow de molduras; sutil = marcadores, trilhas, barras,
@@ -391,21 +354,9 @@
   --perspectiva-tela: 1400px;
   --escala-play-hover: 1.08;
 
-  /* moldura .tela (prints reais da plataforma): vidro escuro, borda que acende no
-     topo, barra mínima com três pontos, glow nível MÉDIO, reflexo suave embaixo */
-  --tela-fundo: #070b12;
-  --tela-borda-topo: linear-gradient(90deg, transparent 0%, rgb(92 225 255 / 70%) 30%, rgb(31 163 255 / 80%) 50%, rgb(92 225 255 / 70%) 70%, transparent 100%);
-  --tela-barra: 1.75rem;
-  --tela-ponto: rgb(255 255 255 / 18%);
-  --tela-reflexo: radial-gradient(ellipse 50% 100% at 50% 0%, rgb(31 163 255 / 14%) 0%, transparent 100%);
-  --tela-inclinar-max: 10deg;
   /* print do chat × coluna de texto (≥ 1081px): o dono pediu o print menor e mais
      espaço para o texto — fica abaixo dos 60% do recorte por decisão dele */
   --colunas-chat: 1.1fr 1fr;
-  /* chip ao fundo dos itens da #o-que-e: nível SUTIL */
-  --chip-fundo-opacidade: 0.35;
-  --chip-largura: clamp(18rem, 12rem + 25vw, 35rem);
-  --chip-topo: 7rem; /* altura da trilha entre os itens 1 e 2 */
 
   /* painel de dados da #provas */
   --painel-fundo: #05080d;
@@ -415,9 +366,6 @@
   --fs-numero-painel: calc(var(--fs-5) * 1.05);
   --fechamento-perto: clamp(4rem, 2.8rem + 3vw, 6rem); /* 64 → 96: painel → fechamento */
 
-  /* lista com barra acesa (ref. 04) */
-  --barra-apagada: var(--linha-forte);
-  --barra-acesa: var(--azul-eletrico);
   --banner-opacidade: 0.7; /* banner de teste da hero, um pouco apagado */
 
   /* hero: H1 branco iluminado de cima */
@@ -453,7 +401,6 @@
   --feixe-dobra: rgb(0 26 46 / 55%);
 
   /* máscaras (alfa, não cor) */
-  --mascara-cheia: linear-gradient(#000 0 0);
   --mascara-arco: linear-gradient(180deg, transparent 0%, #000 40%, #000 72%, transparent 100%);
   --mascara-cone: linear-gradient(180deg, #000 0%, #000 25%, transparent 100%);
   --mascara-baixo: linear-gradient(180deg, #000 0%, #000 45%, transparent 100%); /* some para baixo */
@@ -472,7 +419,6 @@
   --dur-rapida: 150ms;
   --dur-media: 200ms;
   --dur-lenta: 400ms;
-  --dur-giro: 6s; /* borda neon */
   --dur-respiro: 6s; /* luz de cima */
   --dur-pulso: 2.4s; /* ponto "ao vivo" do selo */
   --dur-contagem: 1200; /* ms: contagem dos números da #provas (lido pelo js/revelar.js) */
