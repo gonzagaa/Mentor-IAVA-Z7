@@ -126,6 +126,12 @@
     min(-0.105rem + 7.682vw, 1.4325rem + 1.973vw, 2.4238rem + 0.8969vw),
     3.5rem
   ); /* 22,9 · 27,1 · 28,3 · 31,4 · 38,1 · 43,1 · 48,2 · 52 · 56 */
+  /* H1 da hero: com o título curto de 20/10 ("Seu Mentor de trading 24h por dia.")
+     dá para crescer. O teto NÃO é o espaço — medido, cabem 62,5px no bloco de 900px
+     e 32,8px em 320 — é a regra do CONTEXTO "h2 entre 0,65 e 0,85 do h1": como o h2 é
+     0,72 do --fs-5, o h1 pode ir no máximo a 1,108 × --fs-5 (razão 0,65). 1,08 deixa
+     margem: razão 0,667. Dá 24,7 · 30,6 (390) · 41,1 (768) · 56,2 (1474) · 60,5px (1920). */
+  --fs-h1: calc(var(--fs-5) * 1.08);
   --fs-6: clamp(2.5rem, 1.638rem + 4.333vw, 5.625rem); /* 40 → 90   manchete */
   /* destaque: entre o H2 e o H1 (média dos dois) — ex.: a pergunta da #dor */
   --fs-destaque: calc((var(--fs-4) + var(--fs-5)) / 2);
@@ -354,9 +360,6 @@
   --perspectiva-tela: 1400px;
   --escala-play-hover: 1.08;
 
-  /* print do chat × coluna de texto (≥ 1081px): o dono pediu o print menor e mais
-     espaço para o texto — fica abaixo dos 60% do recorte por decisão dele */
-  --colunas-chat: 1.1fr 1fr;
 
   /* painel de dados da #provas */
   --painel-fundo: #05080d;

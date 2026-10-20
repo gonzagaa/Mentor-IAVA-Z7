@@ -369,11 +369,16 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
 - **H1 com quebras FIXAS, sem <br>** (regra do projeto: proibido <br> em copy): `<span class="quebra quebra--celular">` /
   `<span class="quebra quebra--desktop">` VAZIOS (sem texto: o textContent é o da copy),
   `display: none` e `display: block` só na faixa em que a quebra existe — um bloco vazio
-  no meio do texto encerra a linha. Mesmas linhas que o balanceamento dava com a NCS:
-  6 no celular (< 768px: SEU NOVO / MENTOR DE / TRADING / 24 HORAS POR DIA / ANALISANDO
-  CADA / OPERAÇÃO SUA.) e 4 a partir de 768px (SEU NOVO MENTOR / DE TRADING 24 HORAS /
-  POR DIA ANALISANDO / CADA OPERAÇÃO SUA.). Assim a fonte reserva monta as mesmas linhas
+  no meio do texto encerra a linha. Refeitas em 20/10 para o título curto:
+  **< 768px em 3 linhas** (SEU MENTOR / DE TRADING / 24H POR DIA.) e **≥ 768px em 2**
+  (SEU MENTOR DE / TRADING 24H POR DIA.). Assim a fonte reserva monta as mesmas linhas
   (conferido nas 9 larguras) e a troca de fonte não mexe o H1 (CLS).
+- **Tamanho do H1** (20/10): token próprio `--fs-h1 = --fs-5 × 1,08` — 24,7 · 29,3 ·
+  30,5 (390) · 33,9 · 41,1 (768) · 46,6 · 52 · 56,2 (1474) · 60,5px (1920). O teto não é
+  o espaço (medido: cabem 62,5px no bloco de 900px e 32,8px em 320), é a regra h2/h1:
+  como o h2 é 0,72 do --fs-5, o h1 pode ir até 1,108 × --fs-5; com 1,08 a razão fica
+  0,667, dentro da faixa 0,65–0,85. Botão da hero visível sem rolar nas 9 alturas,
+  inclusive 320×568 (87px de sobra).
 - **#dor**: sequência narrativa em coluna estreita (até 1079px); termina com o
   feixe-ponte, que para exatamente na borda da seção, sempre no centro. Desde 20/10 a
   seção é só d2.p1 → pergunta (d2.p2) → d2.p7 "É aí que o IAVA entra." (os três "Talvez"
@@ -381,20 +386,23 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   largura do wrapper — d2.p1 centrado; a pergunta numa linha só no maior tamanho que cabe
   (`--fs-pergunta-linha` = wrapper × 0,97 ÷ 17,17); a resposta centrada embaixo. Sem hover.
 - **#analise**: o feixe pousa no topo (ponto de luz + linha fina, no respiro, nunca sobre
-  texto) → d3.titulo em `.display` H2 com "e destrincha isso para você." no gradiente
-  de acento (via `<span>`), centrado em todas as larguras; a partir de 1080px em 3
-  linhas fixas e equilibradas (o acento na última) → d3.intro → grade de 7 cards (ícone de 64px reservado, H3 em Inter
-  semibold, descrição) + card destaque do chat. Grade: 1 coluna até 640px; 2 colunas
-  até 1080px (4 linhas de pares, item 7 + chat na última); 3 acima (item 7 + chat em
-  2 colunas fecham a última linha, o chat com ícone grande à esquerda e texto à
-  direita). Cards no fundo original do card base; só o chat em
+  texto) → d3.titulo em `.display` H2, centrado (desde 20/10 é curto e sem acento) →
+  d3.intro → grade de **5 cards** (ícone de 64px reservado, rótulo H3 Inter semibold,
+  descrição) + card destaque do chat (print + ícone + d3.chat.titulo + d3.chat.texto).
+  Grade: 6 cards, sem célula vazia e sem card sozinho em nenhuma faixa — 1 coluna até
+  640px (6 linhas); 2 colunas até 1080px (3 linhas de 2, o chat ao lado do item 5);
+  3 acima (2 linhas de 3, o chat fecha a segunda). Ícones: estrategias, horarios,
+  disciplina, numeros e padroes — **icone-tilt e icone-dias ficaram órfãos** (arquivos no
+  repositório, fora do dist/). Cards no fundo original do card base; só o chat em
   destaque (gradiente azul suave). Halo azul suave atrás da grade. Cards revelam em
   sequência; não reagem ao mouse (não são clicáveis). Nada focável na seção.
 - **#para-quem**: o d4.p1 (os 6 perfis) saiu em 20/10, e com ele a lista, os marcadores
   e as duas colunas com título fixo. Sobrou d4.titulo + card destaque de
   virada com d4.p2 e d4.p3 (em 2 colunas dentro do card a partir de 1080px, 60/40, o d4.p3 centrado na
   vertical; abaixo,
-  empilhados na medida de leitura), cada um com o trecho final no gradiente de acento.
+  empilhados na medida de leitura), cada um com um trecho no gradiente de acento: no
+  d4.p2 "o IAVA foi feito para você." e no d4.p3 "precisa enxergar os próprios padrões
+  para evoluir." (a frase acentuada antiga saiu com a copy nova).
 - **Prints reais da plataforma** (`scripts/processar-plataforma.mjs`: só recorte e
   otimização, AVIF/WebP com croma cheio; originais em `img/plataforma/originais/` fora do
   dist): **topo** — SAIU da hero na fase 14 (os arquivos `img/plataforma/topo-*` ficam

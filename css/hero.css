@@ -114,6 +114,7 @@
   /* bloco proporcional, com respiro dos lados (ref. 01): no desktop não passa de
      ~900px; no celular fica na largura útil, dentro do gutter */
   max-inline-size: min(var(--titulo-bloco-max), 100%);
+  font-size: var(--fs-h1); /* acima do degrau-5: o título é curto (ver tokens.css) */
   padding-block: var(--respiro-acento) var(--respiro-descendente);
   margin-block: calc(-1 * var(--respiro-acento)) calc(-1 * var(--respiro-descendente));
   background: var(--gradiente-h1);
@@ -124,12 +125,12 @@
   filter: var(--brilho-h1);
 }
 
-/* Quebras de linha FIXAS — as mesmas que o balanceamento dava com a NCS Radhiumz:
-   6 linhas no celular, 4 a partir de 768px. Com elas a fonte reserva (antes de a NCS
-   chegar) monta as MESMAS linhas: a troca de fonte não mexe o H1 (CLS).
-   Sem <br> (regra do projeto): cada quebra é um <span class="quebra"> VAZIO — sem texto,
-   o textContent do H1 é o da copy — que só vira bloco na faixa de largura em que a
-   quebra existe. Um bloco vazio no meio do texto encerra a linha, sem altura própria. */
+/* Quebras de linha FIXAS (sem <br>: <span> vazio que vira bloco só na faixa em que a
+   quebra existe). Refeitas em 20/10 para o título novo, pelas larguras medidas:
+     < 768px  → 3 linhas: SEU MENTOR / DE TRADING / 24H POR DIA.
+     ≥ 768px  → 2 linhas: SEU MENTOR DE / TRADING 24H POR DIA.
+   Nenhuma linha com uma palavra curta sozinha e nenhuma palavra partida. Com as
+   quebras fixas, a fonte reserva monta as MESMAS linhas: a troca não mexe o H1. */
 .hero__titulo .quebra {
   display: none;
 }
@@ -143,15 +144,6 @@
 @media (min-width: 48rem) {
   .hero__titulo .quebra--desktop {
     display: block;
-  }
-}
-
-/* grupos que não se separam no celular: prendem cada palavra curta (≤ 5
-   caracteres) à vizinha, para nenhuma ficar sozinha na linha. Os <span> não mudam
-   o texto. */
-@media (max-width: 47.99rem) {
-  .hero__titulo .grupo {
-    white-space: nowrap;
   }
 }
 

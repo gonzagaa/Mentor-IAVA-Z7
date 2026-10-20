@@ -4,7 +4,7 @@
     "secao": "d1 · Primeira dobra (hero)",
     "tipo": "copy",
     "papel": "H1",
-    "texto": "Seu novo mentor de trading 24 horas por dia analisando cada operação sua.",
+    "texto": "Seu Mentor de trading 24h por dia.",
     "paragrafo_docx": 11
   },
   {
@@ -21,7 +21,7 @@
     "secao": "d1 · Primeira dobra (hero)",
     "tipo": "copy",
     "papel": "subtítulo",
-    "texto": "O Mentor IAVA transforma o histórico das suas operações em uma análise completa da sua performance, identificando padrões de erro, impulsividade, horários, estratégias e comportamentos que podem estar prejudicando seus resultados.",
+    "texto": "O mentor IAVA transforma o histórico de suas operações em uma análise completa da sua performance, identificando erros e comportamentos que podem estar prejudicando seus resultados.",
     "paragrafo_docx": 14
   },
   {
@@ -29,7 +29,7 @@
     "secao": "d1 · Primeira dobra (hero)",
     "tipo": "copy",
     "papel": "botão primário",
-    "texto": "Experimentar agora o IAVA",
+    "texto": "Quero meu Mentor IAVA",
     "obs": "alterado em 2026-09-18 a pedido do Gustavo — ver ALTERACOES.md (original: docx §16)"
   },
   {
@@ -61,7 +61,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "H2",
-    "texto": "O IAVA mostra exatamente o que está acontecendo na sua operação e destrincha isso para você.",
+    "texto": "Descubra os padrões da sua operação.",
     "paragrafo_docx": 36
   },
   {
@@ -69,7 +69,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "introdução da lista",
-    "texto": "A partir dos seus próprios dados operacionais, ele analisa:",
+    "texto": "Veja o que seu histórico revela sobre a sua performance.",
     "paragrafo_docx": 37
   },
   {
@@ -77,7 +77,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "título do item",
-    "texto": "Quais estratégias te dão lucro",
+    "texto": "Estratégias",
     "obs": "docx §38, texto antes dos dois-pontos"
   },
   {
@@ -85,7 +85,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "descrição do item",
-    "texto": "o IAVA mostra claramente quais setups funcionam de verdade pra você e quais não dão muito certo;",
+    "texto": "Compare os resultados dos seus setups.",
     "obs": "docx §38, texto depois dos dois-pontos"
   },
   {
@@ -93,7 +93,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "título do item",
-    "texto": "Melhores e piores horários",
+    "texto": "Dias e horários",
     "obs": "docx §40, texto antes dos dois-pontos"
   },
   {
@@ -101,7 +101,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "descrição do item",
-    "texto": "ele aponta exatamente os horários em que você opera bem e os momentos em que você mais perde pra você saber quando entrar e quando parar;",
+    "texto": "Identifique os períodos de melhor e pior desempenho.",
     "obs": "docx §40, texto depois dos dois-pontos"
   },
   {
@@ -109,7 +109,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "título do item",
-    "texto": "Onde sua disciplina tem baixa",
+    "texto": "Disciplina e impulsividade",
     "obs": "docx §42, texto antes dos dois-pontos"
   },
   {
@@ -117,7 +117,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "descrição do item",
-    "texto": "o IAVA identifica o momento do dia em que seu foco acaba e os erros começam a aparecer;",
+    "texto": "Reconheça padrões de comportamento que podem prejudicar sua operação.",
     "obs": "docx §42, texto depois dos dois-pontos"
   },
   {
@@ -125,7 +125,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "título do item",
-    "texto": "Tilt e impulsividade",
+    "texto": "Indicadores de performance",
     "obs": "docx §44, texto antes dos dois-pontos"
   },
   {
@@ -133,7 +133,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "descrição do item",
-    "texto": "ele calcula o prejuízo exato que o descontrole causando por uma operação impulsiva causa na sua conta, para você que você veja na prática o quão prejudicial está sendo;",
+    "texto": "Consulte taxa de acerto, média de trades e melhores e piores operações.",
     "obs": "docx §44, texto depois dos dois-pontos"
   },
   {
@@ -141,7 +141,7 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "título do item",
-    "texto": "Melhores e piores dias",
+    "texto": "Padrões recorrentes",
     "obs": "docx §46, texto antes dos dois-pontos"
   },
   {
@@ -149,55 +149,29 @@
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
     "papel": "descrição do item",
-    "texto": "quais dias da semana você tem o maior saldo positivo, e o pior, com maior saldo negativo;",
+    "texto": "Encontre comportamentos que se repetem no seu histórico.",
     "obs": "docx §46, texto depois dos dois-pontos"
   },
   {
-    "id": "d3.item6.rotulo",
+    "id": "d3.chat.titulo",
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
-    "papel": "título do item",
-    "texto": "Números da sua performance",
-    "obs": "docx §48, texto antes dos dois-pontos"
+    "papel": "título do card do chat",
+    "texto": "Também pergunte diretamente ao IAVA sobre suas operações."
   },
   {
-    "id": "d3.item6.texto",
+    "id": "d3.chat.texto",
     "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
     "tipo": "copy",
-    "papel": "descrição do item",
-    "texto": "taxa de acerto, média de trades por dia, melhor e pior operação, tudo organizado e fácil de ler e identificar;.",
-    "obs": "docx §48, texto depois dos dois-pontos"
-  },
-  {
-    "id": "d3.item7.rotulo",
-    "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
-    "tipo": "copy",
-    "papel": "título do item",
-    "texto": "Padrões que se repetem",
-    "obs": "docx §50, texto antes dos dois-pontos"
-  },
-  {
-    "id": "d3.item7.texto",
-    "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
-    "tipo": "copy",
-    "papel": "descrição do item",
-    "texto": "o IAVA encontra coisas no seu histórico que você dificilmente veria sozinho, por mais que ficasse um bom tempo analisando seus dados.",
-    "obs": "docx §50, texto depois dos dois-pontos"
-  },
-  {
-    "id": "d3.chat",
-    "secao": "d3 · Terceira dobra (o que o IAVA analisa)",
-    "tipo": "copy",
-    "papel": "parágrafo de fechamento (chat com a IA)",
-    "texto": "Além de todos os relatórios estruturados, você tem à disposição um chat conversacional direto: se você quiser aprofundar uma dúvida ou entender uma operação específica, basta perguntar diretamente para a IA",
-    "paragrafo_docx": 52
+    "papel": "texto do card do chat",
+    "texto": "Use o chat para tirar dúvidas e aprofundar a análise do seu histórico."
   },
   {
     "id": "d4.titulo",
     "secao": "d4 · Quarta dobra (para quem é)",
     "tipo": "copy",
     "papel": "H2",
-    "texto": "PARA QUEM É O MENTOR IAVA?",
+    "texto": "Para quem é?",
     "paragrafo_docx": 61
   },
   {
@@ -205,7 +179,7 @@
     "secao": "d4 · Quarta dobra (para quem é)",
     "tipo": "copy",
     "papel": "parágrafo",
-    "texto": "Mas a verdade é que o IAVA serve pra qualquer um que opere no mercado. Não importa se você está começando agora ou se já tem anos de mercado.  Se você já fechou o dia sem saber direito por que ganhou ou por que perdeu, o IAVA foi feito pra você.",
+    "texto": "A verdade é que o IAVA serve para qualquer um que opere no mercado. Não importa se você está começando agora ou se já tem anos de mercado. Se você já fechou o dia sem saber direito por que ganhou ou porque perdeu, o IAVA foi feito para você.",
     "paragrafo_docx": 64
   },
   {
@@ -213,7 +187,7 @@
     "secao": "d4 · Quarta dobra (para quem é)",
     "tipo": "copy",
     "papel": "parágrafo",
-    "texto": "Até porque todo trader, em qualquer fase, precisa enxergar os próprios padrões pra evoluir. E é justamente isso que o IAVA entrega.",
+    "texto": "Até porque todo trader, em qualquer fase, precisa enxergar os próprios padrões para evoluir.",
     "paragrafo_docx": 65
   },
   {
@@ -221,7 +195,7 @@
     "secao": "d6 · Sexta dobra (demonstração)",
     "tipo": "copy",
     "papel": "H2",
-    "texto": "Veja o Mentor IAVA funcionando na prática",
+    "texto": "Veja como o IAVA funciona na prática.",
     "obs": "definido pelo Gustavo em 2026-09-18 — ver ALTERACOES.md"
   },
   {
@@ -229,7 +203,7 @@
     "secao": "d6 · Sexta dobra (demonstração)",
     "tipo": "copy",
     "papel": "parágrafo",
-    "texto": "Assista a uma demonstração de como o Mentor IAVA analisa suas operações em segundos.",
+    "texto": "Conheça os relatórios e veja como analisar suas operações.",
     "paragrafo_docx": 106
   },
   {
@@ -237,7 +211,7 @@
     "secao": "d6 · Sexta dobra (demonstração)",
     "tipo": "copy",
     "papel": "botão primário",
-    "texto": "GARANTA AQUI SEU MENTOR IAVA",
+    "texto": "GARANTA AQUI O SEU MENTOR IAVA",
     "obs": "docx §119, colchetes removidos"
   },
   {
@@ -325,7 +299,7 @@
     "secao": "d7 · Sétima dobra (provas + fechamento)",
     "tipo": "copy",
     "papel": "parágrafo",
-    "texto": "Então tenha um Mentor do seu lado e pare de terminar uma operação olhando apenas para o resultado.",
+    "texto": "Por isso do Mentor IAVA, pare de terminar uma operação olhando apenas para o resultado.",
     "paragrafo_docx": 139
   },
   {
@@ -333,7 +307,7 @@
     "secao": "d7 · Sétima dobra (provas + fechamento)",
     "tipo": "copy",
     "papel": "frase de destaque (H3 na copy)",
-    "texto": "Comece a olhar para o que fez com que chegasse nele e saiba exatamente o que está fazendo e qual próximo passo dar.",
+    "texto": "Comece a olhar para como chegou nele e qual próximo passo dar.",
     "paragrafo_docx": 140
   },
   {

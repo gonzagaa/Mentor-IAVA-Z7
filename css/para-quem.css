@@ -34,9 +34,6 @@
 }
 
 /* "PARA QUEM É O" / "MENTOR IAVA?": as curtas (É, O, IAVA?) nunca ficam sozinhas */
-.para-quem__titulo .grupo {
-  white-space: nowrap;
-}
 
 /* feixes verticais (fundos.css, 5d) em baixa intensidade, atrás da coluna do título —
    nunca atrás da lista */
