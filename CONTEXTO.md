@@ -386,16 +386,28 @@ de blocos e isenta só o texto de `.rotulo-tecnico`.
   largura do wrapper — d2.p1 centrado; a pergunta numa linha só no maior tamanho que cabe
   (`--fs-pergunta-linha` = wrapper × 0,97 ÷ 17,17); a resposta centrada embaixo. Sem hover.
 - **#analise**: o feixe pousa no topo (ponto de luz + linha fina, no respiro, nunca sobre
-  texto) → d3.titulo em `.display` H2, centrado (desde 20/10 é curto e sem acento) →
-  d3.intro → grade de **5 cards** (ícone de 64px reservado, rótulo H3 Inter semibold,
-  descrição) + card destaque do chat (print + ícone + d3.chat.titulo + d3.chat.texto).
-  Grade: 6 cards, sem célula vazia e sem card sozinho em nenhuma faixa — 1 coluna até
-  640px (6 linhas); 2 colunas até 1080px (3 linhas de 2, o chat ao lado do item 5);
-  3 acima (2 linhas de 3, o chat fecha a segunda). Ícones: estrategias, horarios,
-  disciplina, numeros e padroes — **icone-tilt e icone-dias ficaram órfãos** (arquivos no
-  repositório, fora do dist/). Cards no fundo original do card base; só o chat em
-  destaque (gradiente azul suave). Halo azul suave atrás da grade. Cards revelam em
-  sequência; não reagem ao mouse (não são clicáveis). Nada focável na seção.
+  texto) → d3.titulo em `.display` H2, centrado (curto desde 20/10, sem acento; numa
+  linha só a partir de 1080px, em duas abaixo) → d3.intro → grade de **5 cards** (ícone
+  de 64px reservado, rótulo H3 Inter semibold, descrição) → **faixa do chat**.
+  - **Grade de 6 colunas** (divide em 2 e em 3 sem sobra): até 640px 1 coluna;
+    641–1080px 2 por linha (span 3) com o item 5 na largura toda (span 6); ≥ 1081px
+    linha 1 com 3 (span 2) e linha 2 com 2 (span 3). Nenhuma célula vazia, nenhum card
+    sozinho numa linha estreita. Cards da mesma linha com a mesma altura: a sobra abaixo
+    do último texto é o padding do card (25–33px) e, quando o vizinho tem uma linha a
+    mais, 61–62px no card mais curto.
+  - **Faixa do chat** (`.analise__chat`, fora da `<ul>`): card destaque na largura do
+    wrapper. ≥ 1081px em 2 colunas (`--colunas-chat` 45fr/55fr): texto à esquerda
+    centrado na vertical, print à direita. O print fica numa `.tela` ABSOLUTA sobre um
+    palco (`--chat-palco`, 176→272px) e SANGRA para fora da borda de baixo
+    (`--chat-sangra`), dissolvido por `--mascara-sangra`: a altura da faixa é do palco,
+    não do print. Sangra 31–79px no desktop, e ainda sobram 81–95px até a #demonstracao.
+    641–1080px: texto em cima, print embaixo, com a mesma sangria. **Até 640px**: o print
+    é outro recorte, `img/plataforma/chat-pergunta-*` (só a pergunta), em altura natural
+    e sem sangria — o recorte inteiro ali daria ~6px de texto, ilegível (ver o relato da
+    rodada). Sem hover; entra com o revelar.js depois dos 5 cards.
+  - Ícones: estrategias, horarios, disciplina, numeros, padroes e chat — **icone-tilt e
+    icone-dias ficaram órfãos** (no repositório, fora do dist/). Halo azul suave atrás da
+    grade. Nada focável na seção.
 - **#para-quem**: o d4.p1 (os 6 perfis) saiu em 20/10, e com ele a lista, os marcadores
   e as duas colunas com título fixo. Sobrou d4.titulo + card destaque de
   virada com d4.p2 e d4.p3 (em 2 colunas dentro do card a partir de 1080px, 60/40, o d4.p3 centrado na

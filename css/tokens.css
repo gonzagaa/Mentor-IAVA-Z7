@@ -361,6 +361,21 @@
   --escala-play-hover: 1.08;
 
 
+  /* faixa do chat (#analise): o palco decide a altura; o print passa dele e some no
+     preto pela máscara. Duas colunas no desktop: texto 45%, print 55%. */
+  --colunas-chat: 45fr 55fr;
+  --chat-palco: clamp(11rem, 7rem + 14vw, 17rem); /* 176 → 272px */
+  --chat-sangra: clamp(3rem, 1.5rem + 5vw, 7rem); /* quanto o print passa da borda */
+  --mascara-sangra: linear-gradient(180deg, #000 0%, #000 55%, transparent 100%);
+
+  /* moldura .tela (print real na faixa do chat): vidro escuro, borda que acende no
+     topo, barra com três pontos, glow MÉDIO, reflexo suave embaixo */
+  --tela-fundo: #070b12;
+  --tela-borda-topo: linear-gradient(90deg, transparent 0%, rgb(92 225 255 / 70%) 30%, rgb(31 163 255 / 80%) 50%, rgb(92 225 255 / 70%) 70%, transparent 100%);
+  --tela-barra: 1.75rem;
+  --tela-ponto: rgb(255 255 255 / 18%);
+  --tela-reflexo: radial-gradient(ellipse 50% 100% at 50% 0%, rgb(31 163 255 / 14%) 0%, transparent 100%);
+
   /* painel de dados da #provas */
   --painel-fundo: #05080d;
   --fio-vertical: linear-gradient(180deg, transparent 0%, rgb(31 163 255 / 55%) 50%, transparent 100%);

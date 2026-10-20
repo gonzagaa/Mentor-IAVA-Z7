@@ -58,22 +58,11 @@
   margin-inline: auto;
 }
 
-/* o trecho em acento sempre na sua própria linha */
-.analise__linha.texto-acento {
-  display: block;
-}
-
-/* ≥ 1080px: três linhas equilibradas, fixas, centradas (pedido do dono):
-   O IAVA MOSTRA EXATAMENTE O QUE / ESTÁ ACONTECENDO NA SUA OPERAÇÃO /
-   E DESTRINCHA ISSO PARA VOCÊ. — só <span>, o texto não muda */
+/* ≥ 1080px o título curto (20/10) cabe numa linha só: sem o teto de medida ele não
+   quebra deixando "OPERAÇÃO." sozinha. Abaixo disso quebra em duas, equilibradas. */
 @media (min-width: 67.5rem) {
   .analise__titulo {
     max-inline-size: none;
-  }
-
-  .analise__linha {
-    display: block;
-    white-space: nowrap;
   }
 }
 
@@ -84,12 +73,13 @@
 /* centralizado em todas as larguras (pedido do dono) */
 
 /* ─────────────────────────────── grade ───────────────────────────────
-   1 coluna até 640px · 2 colunas até 1080px · 3 acima. 5 itens + o card do chat = 6
-   cards, sempre múltiplo das 3 faixas: nenhuma célula vazia e nenhum card sozinho
-   numa linha.
-     1 coluna  → 6 linhas de 1
-     2 colunas → 3 linhas de 2 (o chat fecha a última, ao lado do item 5)
-     3 colunas → 2 linhas de 3 (o chat fecha a segunda, ao lado dos itens 4 e 5)
+   Só os 5 itens (o chat virou faixa larga, logo abaixo). Grade de 6 colunas, que
+   divide em 2 ou 3 sem sobra:
+     até 640px   → 1 coluna
+     641–1080px  → 2 por linha (span 3); o item 5 ocupa a largura toda (span 6)
+     ≥ 1081px    → linha 1 com 3 cards (span 2), linha 2 com 2 cards (span 3)
+   Nenhuma célula vazia e nenhum card sozinho numa linha estreita. Cards da mesma
+   linha com a mesma altura (stretch), vinda do conteúdo.
    Cards da mesma linha com a mesma altura (stretch da grade). */
 
 .analise__area {
@@ -116,17 +106,33 @@
 
 @media (min-width: 40.0625rem) {
   .analise__grade {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: var(--esp-5);
+  }
+
+  .analise__card {
+    grid-column: span 3; /* duas por linha */
+  }
+
+  /* o 5º fecharia a linha sozinho: ocupa a largura toda em vez de meia */
+  .analise__card:nth-child(5) {
+    grid-column: span 6;
   }
 }
 
 @media (min-width: 67.5625rem) {
   .analise__grade {
-    grid-template-columns: repeat(3, 1fr);
     gap: var(--esp-6);
   }
 
+  .analise__card {
+    grid-column: span 2; /* linha 1: três cards */
+  }
+
+  .analise__card:nth-child(4),
+  .analise__card:nth-child(5) {
+    grid-column: span 3; /* linha 2: dois cards */
+  }
 }
 
 /* ─────────────────────────────── cards ─────────────────────────────── */
@@ -176,21 +182,52 @@
   color: var(--texto-2);
 }
 
-/* chat: card destaque, texto um degrau acima dos demais */
-.analise__card--chat p {
+/* ─────────────────────── faixa do chat (fora da grade) ───────────────────────
+   Card destaque na largura do wrapper, logo abaixo da grade. O print fica numa
+   moldura .tela e SANGRA para fora da borda de baixo da faixa, com máscara de
+   degradê que o dissolve no preto: assim a altura da faixa vem do palco (token),
+   não do tamanho do print.
+     ≥ 1081px  → duas colunas: texto à esquerda (45%, centrado na vertical),
+                 palco do print à direita (55%)
+     641–1080  → texto em cima, print embaixo (palco mais baixo)
+     até 640px → igual, e o print passa a ser o recorte SÓ DA PERGUNTA
+                 (img/plataforma/chat-pergunta-*): no tamanho disponível o texto da
+                 conversa inteira ficaria com ~6px, ilegível (ver CONTEXTO.md) */
+
+.analise__chat {
+  position: relative;
+  overflow: visible; /* o print sangra para fora da borda de baixo */
+  margin-block-start: var(--esp-6);
+  display: grid;
+  gap: var(--esp-6);
+}
+
+.analise__chat-texto {
+  display: grid;
+  gap: var(--esp-3);
+  align-content: center;
+}
+
+.analise__chat p {
   font-size: var(--fs-2);
   line-height: var(--lh-2);
   color: var(--texto);
 }
 
-/* cards não são clicáveis: nenhum hover (regra do CONTEXTO.md) */
+/* palco: a altura que o print ocupa DENTRO da faixa. O resto sangra para fora. */
+.analise__chat-palco {
+  position: relative;
+  block-size: var(--chat-palco);
+}
 
-/* ───────────── chat: o print é o visual principal do card ───────────── */
-.analise__chat-tela {
-  overflow: hidden;
-  border: var(--borda);
-  border-radius: var(--raio-z7-p);
-  background: var(--tela-fundo);
+.analise__chat-palco .tela {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  overflow: hidden; /* corta o pé do print dentro da moldura */
+  max-block-size: calc(var(--chat-palco) + var(--chat-sangra));
+  -webkit-mask-image: var(--mascara-sangra);
+  mask-image: var(--mascara-sangra);
 }
 
 .analise__chat-tela img {
@@ -199,10 +236,32 @@
   block-size: auto;
 }
 
-/* o ícone de chat fica menor, ao lado do texto */
-.analise__card--chat .analise__icone,
-.analise__card--chat .analise__icone img {
-  inline-size: var(--tamanho-icone);
-  block-size: var(--tamanho-icone);
+/* o ícone do chat é o maior da seção: a faixa é o fecho do bloco */
+.analise__chat .analise__icone,
+.analise__chat .analise__icone img {
+  inline-size: var(--tamanho-icone-grande);
+  block-size: var(--tamanho-icone-grande);
 }
 
+/* até 640px o print é o recorte SÓ DA PERGUNTA: é curto e termina sozinho, então não
+   há o que sangrar — altura natural, sem palco e sem máscara */
+@media (max-width: 40rem) {
+  .analise__chat-palco {
+    block-size: auto;
+  }
+
+  .analise__chat-palco .tela {
+    position: static;
+    max-block-size: none;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+}
+
+@media (min-width: 67.5625rem) {
+  .analise__chat {
+    grid-template-columns: var(--colunas-chat);
+    align-items: center;
+    column-gap: var(--esp-10);
+  }
+}

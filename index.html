@@ -131,18 +131,29 @@
             <h3 class="analise__rotulo" data-copy="d3.item5.rotulo">Padrões recorrentes</h3>
             <p data-copy="d3.item5.texto">Encontre comportamentos que se repetem no seu histórico.</p>
           </li>
-          <li class="card card--destaque analise__card analise__card--chat" data-revelar data-revelar-atraso="5">
-            <div class="analise__chat-tela">
-              <picture>
-                <source type="image/avif" srcset="img/plataforma/chat-480.avif 480w, img/plataforma/chat-844.avif 844w" sizes="(min-width: 1081px) 400px, (min-width: 641px) 45vw, 88vw">
-                <img src="img/plataforma/chat-844.webp" srcset="img/plataforma/chat-480.webp 480w, img/plataforma/chat-844.webp 844w" sizes="(min-width: 1081px) 400px, (min-width: 641px) 45vw, 88vw" width="844" height="657" alt="Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações" data-copy-alt="alt.plataforma.chat" loading="lazy" decoding="async">
-              </picture>
-            </div>
-            <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-chat.avif"><img src="img/icones/icone-chat.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
-            <h3 class="analise__rotulo" data-copy="d3.chat.titulo">Também pergunte diretamente ao IAVA sobre suas operações.</h3>
-            <p data-copy="d3.chat.texto">Use o chat para tirar dúvidas e aprofundar a análise do seu histórico.</p>
-          </li>
           </ul>
+
+          <!-- faixa do chat: fora da grade, largura do wrapper. O print sangra para
+               fora da borda de baixo, com máscara de degradê — a altura da faixa é do
+               texto, não do print. -->
+          <div class="card card--destaque analise__chat" data-revelar data-revelar-atraso="5">
+            <div class="analise__chat-texto">
+              <div class="analise__icone"><picture><source type="image/avif" srcset="img/icones/icone-chat.avif"><img src="img/icones/icone-chat.webp" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></div>
+              <h3 class="analise__rotulo" data-copy="d3.chat.titulo">Também pergunte diretamente ao IAVA sobre suas operações.</h3>
+              <p data-copy="d3.chat.texto">Use o chat para tirar dúvidas e aprofundar a análise do seu histórico.</p>
+            </div>
+            <div class="analise__chat-palco">
+              <div class="tela analise__chat-tela">
+                <div class="tela__barra" aria-hidden="true"></div>
+                <picture>
+                  <source media="(max-width: 40rem)" type="image/avif" srcset="img/plataforma/chat-pergunta-470.avif 470w, img/plataforma/chat-pergunta-940.avif 940w" sizes="88vw">
+                  <source media="(max-width: 40rem)" type="image/webp" srcset="img/plataforma/chat-pergunta-470.webp 470w, img/plataforma/chat-pergunta-940.webp 940w" sizes="88vw">
+                  <source type="image/avif" srcset="img/plataforma/chat-480.avif 480w, img/plataforma/chat-844.avif 844w" sizes="(min-width: 1081px) 55vw, 88vw">
+                  <img src="img/plataforma/chat-844.webp" srcset="img/plataforma/chat-480.webp 480w, img/plataforma/chat-844.webp 844w" sizes="(min-width: 1081px) 55vw, 88vw" width="844" height="657" alt="Conversa com o Mentor IAVA: o trader pergunta “Como eu posso melhorar?” e recebe ajustes baseados nas próprias operações" data-copy-alt="alt.plataforma.chat" loading="lazy" decoding="async">
+                </picture>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

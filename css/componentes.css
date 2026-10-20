@@ -336,6 +336,82 @@
   content: attr(data-arquivo);
 }
 
+/* ═══════════════════════════ TEXTO EM ACENTO ═══════════════════════════
+   Trecho da copy com o gradiente de acento (<span class="texto-acento">), sem mudar
+   uma letra do texto. */
+.texto-acento {
+  /* o gradiente só pinta dentro da caixa: sem respiro, o acento da maiúscula (Ê, Ã)
+     e a cedilha são cortados. A margem negativa devolve o espaço — layout igual. */
+  padding-block: var(--respiro-acento) var(--respiro-descendente);
+  margin-block-start: calc(-1 * var(--respiro-acento));
+  background: var(--gradiente-acento);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (forced-colors: active) {
+  .texto-acento {
+    background: none;
+    color: CanvasText;
+    -webkit-text-fill-color: CanvasText;
+  }
+}
+
+/* ═══════════════════════════ MOLDURA .tela ═══════════════════════════
+   Prints REAIS da plataforma (recortes em img/plataforma/). Vidro escuro, --raio-z7,
+   borda de 1px que acende no topo, barra mínima com três pontos (CSS, sem texto),
+   glow nível MÉDIO, reflexo suave embaixo. Não é clicável: sem hover.
+   A imagem leva width/height: espaço reservado (CLS 0). Reta: a faixa do chat não inclina. */
+
+.tela {
+  position: relative;
+  border: var(--borda);
+  border-radius: var(--raio-z7);
+  background: var(--tela-fundo);
+  box-shadow: var(--brilho-interno), var(--glow-medio);
+}
+
+/* borda que acende no topo */
+.tela::before {
+  content: '';
+  position: absolute;
+  inset-inline: var(--esp-8);
+  inset-block-start: -1px;
+  block-size: 1px;
+  background: var(--tela-borda-topo);
+  pointer-events: none;
+}
+
+/* reflexo suave embaixo (fora da caixa, absoluto: não ocupa espaço) */
+.tela::after {
+  content: '';
+  position: absolute;
+  inset-inline: 10%;
+  inset-block-start: 100%;
+  block-size: var(--esp-16);
+  background: var(--tela-reflexo);
+  pointer-events: none;
+}
+
+/* barra superior mínima: três pontos */
+.tela__barra {
+  block-size: var(--tela-barra);
+  border-block-end: var(--borda);
+  background:
+    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) var(--esp-4) 50% / var(--esp-3) var(--esp-3) no-repeat,
+    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) calc(var(--esp-4) + var(--esp-5)) 50% / var(--esp-3) var(--esp-3) no-repeat,
+    radial-gradient(circle, var(--tela-ponto) 0 3.5px, transparent 4px) calc(var(--esp-4) + var(--esp-10)) 50% / var(--esp-3) var(--esp-3) no-repeat;
+}
+
+.tela img {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+  border-end-end-radius: calc(var(--raio-g) - 1px);
+}
+
 /* ═════════════════════════ PONTO "AO VIVO" ═════════════════════════
    O mesmo do selo da hero, como peça solta: ponto azul + anel pulsando devagar (só
    transform + opacity). Decorativo (aria-hidden). Para com reduced-motion. */

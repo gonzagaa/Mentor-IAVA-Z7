@@ -60,6 +60,7 @@ const CLASSES_OK = {
   'lenis-stopped': 'idem',
   'lenis-smooth': 'idem',
   'is-disabled': 'estado do componente botão, a par de .is-hover/.is-active/.is-focus (amostra)',
+  contato: 'div do rodapé copiado da home: não tem estilo próprio (regras são do #footer)',
   pendente: 'componente de PENDENTE (regra 4): existe para quando um texto faltar; os scripts o procuram',
 }
 const TOKENS_OK = {
@@ -81,6 +82,17 @@ const tokensMortos = defTokens.filter(t => {
   return usos === 0 && !citado && !TOKENS_OK[t]
 })
 
+// o contrário: var(--x) sem nenhuma definição (quebra silenciosa — a propriedade cai
+// para o valor inicial). Ignora os que têm reserva: var(--x, algo).
+const usadosSemReserva = new Set()
+for (const f of [...CSS, ...JS, ...HTML]) {
+  for (const m of ler(f).matchAll(/var\(\s*(--[\w-]+)\s*([,)])/g)) if (m[2] === ')') usadosSemReserva.add(m[1])
+}
+// definições em QUALQUER css (tokens.css ou dentro de um componente)
+// definições em qualquer CSS ou em style="" no HTML (a amostra define --c inline)
+const defTodos = new Set([...CSS, ...HTML].flatMap(f => [...ler(f).matchAll(/(--[\w-]+)\s*:/g)].map(m => m[1])))
+const semDefinicao = [...usadosSemReserva].filter(t => !defTodos.has(t))
+
 const lista = (titulo, itens, fmt = x => x) => {
   console.log(`\n${titulo}: ${itens.length}`)
   for (const i of itens) console.log('  ' + fmt(i))
@@ -88,8 +100,9 @@ const lista = (titulo, itens, fmt = x => x) => {
 lista('classes no CSS que ninguém usa', mortas, ([c, fs_]) => `.${c}  (${fs_.join(', ')})`)
 lista('classes no HTML sem regra no CSS (aviso)', semRegra, c => `.${c}`)
 lista('tokens definidos e nunca usados', tokensMortos)
+lista('tokens usados SEM definição (var(--x) sem reserva)', semDefinicao)
 
-if ((mortas.length || tokensMortos.length) && !process.argv.includes('--so-aviso')) {
+if ((mortas.length || tokensMortos.length || semDefinicao.length || semRegra.filter(c => !CLASSES_OK[c]).length) && !process.argv.includes('--so-aviso')) {
   console.error('\nFALHOU: há código morto (classe ou token sem uso)')
   process.exit(1)
 }
